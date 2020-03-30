@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>MuQuiz start</title>
@@ -10,6 +10,20 @@
 
 <a href="/questions">Questions</a>
 <a href="/results">Results</a>
+<p>
+    <b><span>Vilken film beskrivs?</span></b>
+</p>
+
+<i><span th:text="${overview}"></span></i>
+<p>
+    <img th:src="${url}">
+</p>
+<p>
+    <form action="/start" method="post">
+    <input type="text" name="movieId" placeholder="ange id">
+    <input type="submit">
+</form>
+</p>
 
 </body>
 </html>
