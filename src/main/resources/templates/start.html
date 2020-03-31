@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>MuQuiz questions</title>
 </head>
 <body>
 
-<h1>MuQuiz: START</h1>
+<h1>MuQuiz: </h1>
 
-<form method="post" action="/start">
-    <input type="text" name="player" placeholder="Enter name">
+<form method="get" action="/questions">
+    <input type="text" name="username" placeholder="Enter name">
     <input type="submit" value="Start">
 </form>
 

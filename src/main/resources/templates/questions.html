@@ -6,8 +6,9 @@
 </head>
 <body>
 
-<h1>MuQuiz: questions
-</h1>
+<h1>MuQuiz: <span th:text="${username}"></span></h1>
+<div id="countdown"></div>
+
 
 <form action="/questions" method="post">
     <input type="submit" value="nästa">
@@ -29,6 +30,17 @@
 <p>
 
 </p>
-
+<script>
+var score = 10000 ;
+var scoreTimer= setInterval(function(){
+  if(score <= 0){
+    clearInterval(scoreTimer);
+    document.getElementById("countdown").innerHTML = "Times up";
+  } else {
+    document.getElementById("countdown").innerHTML = "Score: " + score;
+  }
+  score -= 1;
+}, 1);
+</script>
 </body>
 </html>

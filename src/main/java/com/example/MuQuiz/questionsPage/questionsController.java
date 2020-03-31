@@ -20,6 +20,7 @@ public class questionsController {
 
 int counter  = 0;
 
+
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
         Questions qu = new Questions();
@@ -39,7 +40,7 @@ int counter  = 0;
     }
 
     @PostMapping("/questions")
-    public String postShow(RestTemplate restTemplate, Model model, @RequestParam Long answer){
+    public String postShow(RestTemplate restTemplate,Model model){
         Questions qu = new Questions();
         List<Movie> movies = new ArrayList<>();
         movies = qu.questionDesc(restTemplate);
