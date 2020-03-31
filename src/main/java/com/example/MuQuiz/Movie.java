@@ -4,6 +4,7 @@ public class Movie {
 
     //repository?
 
+    public Long id;
     private boolean adult;
     private String backdrop_path;
     private String belongs_to_collection;
