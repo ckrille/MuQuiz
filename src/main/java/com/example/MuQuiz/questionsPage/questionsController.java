@@ -40,7 +40,7 @@ int counter  = 0;
     }
 
     @PostMapping("/questions")
-    public String postShow(RestTemplate restTemplate,Model model){
+    public String postShow(RestTemplate restTemplate,Model model,@RequestParam Long answer){
         Questions qu = new Questions();
         List<Movie> movies = new ArrayList<>();
         movies = qu.questionDesc(restTemplate);
