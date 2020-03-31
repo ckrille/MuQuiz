@@ -2,14 +2,22 @@ package com.example.MuQuiz;
 
 public class Movie {
 
-    public boolean adult;
-    String backdrop_path;
-    String belongs_to_collection;
-    public int budget;
+    //repository?
+
+    private boolean adult;
+    private String backdrop_path;
+    private String belongs_to_collection;
+    private int budget;
     public String overview;
     public String poster_path;
 
-   /* public boolean isAdult() {
+    //tjall på linan med getter för JSON-importerna så la overview som public
+
+ /*   public String getOverview() {
+        return overview;
+    }
+
+    public boolean isAdult() {
         return adult;
     }
 
@@ -41,9 +49,7 @@ public class Movie {
         this.budget = budget;
     }
 
-    public String getOverview() {
-        return overview;
-    }
+
 
     public void setOverview(String overview) {
         this.overview = overview;
