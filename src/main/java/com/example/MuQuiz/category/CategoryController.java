@@ -1,16 +1,12 @@
 package com.example.MuQuiz.category;
 import com.example.MuQuiz.Cast;
-import com.example.MuQuiz.Genre;
 
-import com.example.MuQuiz.Genres;
 import com.example.MuQuiz.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @Controller
 public class CategoryController {
@@ -29,6 +25,7 @@ public class CategoryController {
 
         model.addAttribute("movie", movie.getTitle());
         model.addAttribute("movieCharacter", cast.getCharacter());
+
 
 
         return "/genres";

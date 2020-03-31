@@ -1,12 +1,13 @@
 package com.example.MuQuiz.questionsPage;
 
 import com.example.MuQuiz.Movie;
+import com.example.MuQuiz.Results;
+import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class Questions {
@@ -16,6 +17,7 @@ public class Questions {
     private String APIkey = "21c95e422f1845eea7a7274d9e67524b";
     private Long movieId;
     private Long answer;
+
 
     public Questions() {
     }
@@ -30,11 +32,18 @@ public class Questions {
     public List<Movie> questionDesc(RestTemplate restTemplate) {
       /*  Random rand  =new Random(100);
         movieId = rand.nextLong();*/
-      movieId = 100L;
+        CategoryService categoryService = new CategoryService();
+
+
         List<Movie> movieList = new ArrayList<>();
 
+
+
+
         for (int i = 0; i < 3; i++) {
-            Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + (movieId + i) + "?api_key=" + APIkey + "&language=en-US", Movie.class);
+            Results results = categoryService.getRandomMovie(restTemplate);
+            movieId = results.getId();
+            Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + APIkey + "&language=en-US", Movie.class);
             movieList.add(movie);
         }
 
@@ -45,9 +54,11 @@ public class Questions {
     }
 
     public List<Movie> questionName(RestTemplate restTemplate) {
-        movieId = 100L;
+        CategoryService categoryService = new CategoryService();
+        Results results = categoryService.getRandomMovie(restTemplate);
+        movieId = results.getId();
         List<Movie> movieList = new ArrayList<>();
-        Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + (movieId + 5) + "?api_key=" + APIkey + "&language=en-US", Movie.class);
+        Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId  + "?api_key=" + APIkey + "&language=en-US", Movie.class);
         movieList.add(movie);
         this.theQuestion = "Vilken film är det på bilden?";
         return movieList;
