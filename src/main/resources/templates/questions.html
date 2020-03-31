@@ -1,15 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>MuQuiz questions</title>
+    <title>MuQuiz start</title>
 </head>
 <body>
 
 <h1>MuQuiz: questions</h1>
 
-<a href="/start">Start</a>
+<form action="/questions" method="post">
+    <input type="submit" value="nästa">
+</form>
+
+<a href="/questions">Questions</a>
 <a href="/results">Results</a>
+
+
+<i><span th:text="${overview}"></span></i>
+<p>
+    <ul th:each="urlList : ${url}">
+    <img th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}">
+</ul>
+</p>
+<p>
+
+</p>
 
 </body>
 </html>
