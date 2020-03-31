@@ -1,4 +1,4 @@
-package com.example.MuQuiz.questionsPage;
+package com.example.MuQuiz.startPage;
 
 import com.example.MuQuiz.Movie;
 import com.example.MuQuiz.Questions;
@@ -13,10 +13,16 @@ import org.springframework.web.client.RestTemplate;
 @Controller
 public class startController {
 
-    @GetMapping("/start")
-    public String showQuestions(){
+    @GetMapping("/")
+    public String home() {
+        return "/start";
+    }
 
-        return "start";
+    @PostMapping("/start")
+    public String showQuestions(@RequestParam String player){
+
+
+        return "redirect:/questions";
     }
 
 }

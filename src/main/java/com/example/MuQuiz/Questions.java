@@ -1,7 +1,9 @@
 package com.example.MuQuiz;
 
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Service
 public class Questions {
 
     public boolean adult;
