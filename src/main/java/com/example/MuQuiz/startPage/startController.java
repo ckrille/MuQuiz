@@ -16,12 +16,16 @@ public class startController {
     @GetMapping("/start")
     public String showStart(RestTemplate restTemplate, Model model){
 
-        movieId = 640;
+        movieId = 100;
 
         Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+movieId +"?api_key=" +APIkey +"&language=en-US", Movie.class);
+        Movie movie2 = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+(movieId+5) +"?api_key=" +APIkey +"&language=en-US", Movie.class);
+        Movie movie3 = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+(movieId+10) +"?api_key=" +APIkey +"&language=en-US", Movie.class);
 
         model.addAttribute("overview",movie.overview);
         model.addAttribute("url","https://image.tmdb.org/t/p/w200/" +movie.poster_path);
+        model.addAttribute("url2","https://image.tmdb.org/t/p/w200/" +movie2.poster_path);
+        model.addAttribute("url3","https://image.tmdb.org/t/p/w200/" +movie3.poster_path);
 
 
         return "start";
@@ -30,9 +34,13 @@ public class startController {
     @PostMapping("/start")
     public String postShow(Model model, RestTemplate restTemplate, @RequestParam Integer movieId){
         Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+movieId +"?api_key=" +APIkey +"&language=en-US", Movie.class);
+        Movie movie2 = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+(movieId+5) +"?api_key=" +APIkey +"&language=en-US", Movie.class);
+        Movie movie3 = restTemplate.getForObject("https://api.themoviedb.org/3/movie/"+(movieId+10) +"?api_key=" +APIkey +"&language=en-US", Movie.class);
 
         model.addAttribute("overview",movie.overview);
         model.addAttribute("url","https://image.tmdb.org/t/p/w200/" +movie.poster_path);
+        model.addAttribute("url2","https://image.tmdb.org/t/p/w200/" +movie2.poster_path);
+        model.addAttribute("url3","https://image.tmdb.org/t/p/w200/" +movie3.poster_path);
 
         return "start";
     }
