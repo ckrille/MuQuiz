@@ -18,10 +18,12 @@
 <i><span th:text="${overview}"></span></i>
 <p>
 <div style="display: flex; flex-direction: row">
-    <img th:src="'https://image.tmdb.org/t/p/w200/' +${url.poster_path}">
-    <ul th:each="ans : ${answer}">
+    <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
+    <ul th:each="ans, iter : ${answer}">
         <form action="/questions" method="post">
-            <button type="submit" th:value="${ans.id}" name="answer"></button>
+            <button th:if="${ans.release_date}" type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button>
+            <button th:if="${ans.release_date == null}" type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button>
+            <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
         </form>
     </ul>
 </div>
@@ -29,8 +31,9 @@
 
 <a href="/">Start</a>
 <a href="/results">Results</a>
+</body>
 <script>
-var score = 10000 ;
+var score = 10000;
 
 var scoreTimer = setInterval(count,1);
 
@@ -42,12 +45,13 @@ function count() {
     else {
         document.getElementById("countdown").innerHTML = "Score: " + score;
         document.getElementById("myMeter").value = score;
+
         document.getElementById("score0").value = score;
         document.getElementById("score1").value = score;
         document.getElementById("score2").value = score;
+        document.getElementById("score3").value = score;
         }
   score -= 1;
 }
 </script>
-</body>
 </html>

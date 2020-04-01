@@ -20,15 +20,28 @@ int counter  = 0;
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
 
-        if(counter % 2 == 0) {
+        if(counter % 3 == 0) {
             qu = qu.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url",qu.getMovieList());
         }
-        else{
-            qu = qu.getCharacterQuestion(restTemplate);
-            model.addAttribute("url",qu.getCastList());
-            //qu = qu.getWhatYearQuestion(restTemplate);
+        if(counter % 3 == 1){
+           /* qu = qu.getCharacterQuestion(restTemplate);*/
+            qu = qu.getWhatYearQuestion(restTemplate);
+
+            model.addAttribute("url",qu.getMovieList().get(qu.getRandForQandA()).poster_path);
+            model.addAttribute("answer", qu.getMovieList());
+            model.addAttribute("what", "release_date");
+            counter++;
+            return "questiontype1";
             //qu = qu.getPosterQuestion(restTemplate);
+        }
+        if (counter % 3 == 2) {
+            qu = qu.getCharacterQuestion(restTemplate);
+
+            model.addAttribute("url", qu.getCastList().get(qu.getRandForQandA()).profile_path);
+            model.addAttribute("answer", qu.getCastList());
+            model.addAttribute("what", "character");
+            return "questiontype1";
         }
 
         model.addAttribute("overview",qu.getTheQuestion());

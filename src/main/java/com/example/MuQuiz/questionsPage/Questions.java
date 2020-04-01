@@ -19,6 +19,7 @@ public class Questions {
     private List<Results> movieList;
     private List<Cast> castList;
     private Long correctAnswer;
+    private int randForQandA;
 
     public Questions() {
     }
@@ -49,6 +50,7 @@ public class Questions {
         questions.theQuestion = "What is the name of the character this actor plays in "+ castList.get(randForQandA).getTitle() +"?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
+        questions.randForQandA = randForQandA;
 
 
         return questions;
@@ -162,5 +164,13 @@ public class Questions {
 
     public void setCastList(List<Cast> castList) {
         this.castList = castList;
+    }
+
+    public int getRandForQandA() {
+        return randForQandA;
+    }
+
+    public void setRandForQandA(int randForQandA) {
+        this.randForQandA = randForQandA;
     }
 }
