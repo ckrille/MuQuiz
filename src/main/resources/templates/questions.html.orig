@@ -4,6 +4,18 @@
     <meta charset="UTF-8">
     <title>MuQuiz questions</title>
 </head>
+<style>
+#Progress_Status {
+  width: 50%;
+  background-color: #ddd;
+}
+
+#myprogressBar {
+  width: 2%;
+  height: 20px;
+  background-color: #4CAF50;
+}
+</style>
 <body>
 
 <h1>MuQuiz: <span th:text="${username}"></span></h1>
@@ -26,6 +38,7 @@
 
 <i><span th:text="${overview}"></span></i>
 <p>
+<<<<<<< HEAD
     <ul th:each="urlList,iter : ${url}">
         <form action="/questions" method="post">
             <button type="submit" th:value="${urlList.id}" name="answer">
@@ -33,6 +46,16 @@
             <img th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
         </form>
     </ul>
+=======
+<div style="display:flex; flex-direction: row">
+    <ul th:each="urlList : ${url}">
+        <form action="/questions" method="post">
+            <button type="submit" th:value="${urlList.id}" name="answer">
+                <img th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
+        </form>
+    </ul>
+</div>
+>>>>>>> 969a342b5bfe26ffabac632f65da379ef8de2a91
 </p>
 
 <p>
@@ -56,7 +79,12 @@ function count() {
         document.getElementById("score2").value = score;
         }
   score -= 1;
+<<<<<<< HEAD
 }
+=======
+}, 1);
+
+>>>>>>> 969a342b5bfe26ffabac632f65da379ef8de2a91
 </script>
 
 </body>

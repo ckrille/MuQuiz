@@ -1,6 +1,5 @@
 package com.example.MuQuiz.questionsPage;
 
-        import com.example.MuQuiz.Movie;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
         import org.springframework.ui.Model;
@@ -9,47 +8,40 @@ package com.example.MuQuiz.questionsPage;
         import org.springframework.web.bind.annotation.RequestParam;
         import org.springframework.web.client.RestTemplate;
 
-        import java.util.ArrayList;
-        import java.util.List;
-
 @Controller
 public class questionsController {
 
-   @Autowired
-   Questions questions;
+    @Autowired
+    Questions qu;
 
 int counter  = 0;
 
 
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
-        Questions qu = new Questions();
-        List<Movie> movies = new ArrayList<>();
 
         if(counter % 2 == 0) {
-            movies = qu.questionDesc(restTemplate);
+            qu = qu.getDescQuestion(restTemplate);
         }
         else{
-            movies = qu.questionName(restTemplate);
+            qu = qu.getPosterQuestion(restTemplate);
         }
-        model.addAttribute("url",movies);
+        model.addAttribute("url",qu.getMovieList());
         model.addAttribute("overview",qu.getTheQuestion());
         counter++;
-        System.out.println("counter " +counter);
         return "questions";
     }
 
     @PostMapping("/questions")
     public String postShow(RestTemplate restTemplate,Model model,@RequestParam Long answer){
-        Questions qu = new Questions();
-        List<Movie> movies = new ArrayList<>();
-        movies = qu.questionDesc(restTemplate);
 
-        if(qu.getAnswer() == answer) {
+        if(qu.getCorrectAnswer().equals(answer)) {
+            System.out.println("RÄTT SVAR!!!");
             System.out.println(answer);
         }
-
-
+        else{
+            System.err.println("Fel svar!");
+        }
         return "redirect:/questions";
     }
 

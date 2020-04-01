@@ -1,67 +1,64 @@
 package com.example.MuQuiz.questionsPage;
 
-import com.example.MuQuiz.Movie;
-import com.example.MuQuiz.ApiClasses.MovieRefactor;
+
+import com.example.MuQuiz.Results;
 import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Service
 public class Questions {
 
     private String theQuestion;
-    private List<Movie> movieList;
-    private String APIkey = "21c95e422f1845eea7a7274d9e67524b";
-    private Long movieId;
-    private Long answer;
-
+    private List<Results> movieList;
+    private Long correctAnswer;
 
     public Questions() {
     }
 
-    public Questions(String theQuestion, List<Movie> movieList, Long answer) {
+    public Questions(String theQuestion, List<Results> movieList, Long correctAnswer) {
         this.theQuestion = theQuestion;
         this.movieList = movieList;
-        this.answer = answer;
+        this.correctAnswer = correctAnswer;
     }
 
+    public Questions getDescQuestion(RestTemplate restTemplate){
 
-    public List<Movie> questionDesc(RestTemplate restTemplate) {
-      /*  Random rand  =new Random(100);
-        movieId = rand.nextLong();*/
+        List<Results> movieList = new ArrayList<>();
+        Random rand = new Random();
         CategoryService categoryService = new CategoryService();
-
-
-        List<Movie> movieList = new ArrayList<>();
-
-
-
 
         for (int i = 0; i < 3; i++) {
-            MovieRefactor movieRefactor = categoryService.getRandomMovie(restTemplate);
-            movieId = movieRefactor.getId();
-            Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + APIkey + "&language=en-US", Movie.class);
-            movieList.add(movie);
+            Results results = categoryService.getRandomMovie(restTemplate);
+            movieList.add(results);
         }
 
-        this.answer = movieId;
-
-        this.theQuestion = "Vilken film är det enligt beskrivningen? \n" + movieList.get(0).overview;
-        return movieList;
+        int randForQandA = rand.nextInt(2);
+        correctAnswer = movieList.get(randForQandA).getId();
+        System.out.println("FACIT: " +movieList.get(randForQandA).getTitle());
+       Questions questions = new Questions(("Vilken film är det enligt beskrivningen? \n" + movieList.get(randForQandA).getOverview())
+               ,movieList
+               , correctAnswer);
+        return questions;
     }
 
-    public List<Movie> questionName(RestTemplate restTemplate) {
+    public Questions getPosterQuestion(RestTemplate restTemplate){
         CategoryService categoryService = new CategoryService();
-        MovieRefactor movieRefactor = categoryService.getRandomMovie(restTemplate);
-        movieId = movieRefactor.getId();
-        List<Movie> movieList = new ArrayList<>();
-        Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId  + "?api_key=" + APIkey + "&language=en-US", Movie.class);
-        movieList.add(movie);
+        Results results = categoryService.getRandomMovie(restTemplate);
+        List<Results> movieList = new ArrayList<>();
+
+        movieList.add(results);
         this.theQuestion = "Vilken film är det på bilden?";
-        return movieList;
+        this.correctAnswer = results.getId();
+
+        Questions questions = new Questions("Vilken film är det på bilden? \n"
+                ,movieList
+                ,correctAnswer);
+        return questions;
     }
 
     public String getTheQuestion() {
@@ -72,19 +69,19 @@ public class Questions {
         this.theQuestion = theQuestion;
     }
 
-    public List<Movie> getMovieList() {
+    public List<Results> getMovieList() {
         return movieList;
     }
 
-    public void setMovieList(List<Movie> movieList) {
+    public void setMovieList(List<Results> movieList) {
         this.movieList = movieList;
     }
 
-    public Long getAnswer() {
-        return answer;
+    public Long getCorrectAnswer() {
+        return correctAnswer;
     }
 
-    public void setAnswer(Long answer) {
-        this.answer = answer;
+    public void setCorrectAnswer(Long correctAnswer) {
+        this.correctAnswer = correctAnswer;
     }
 }
