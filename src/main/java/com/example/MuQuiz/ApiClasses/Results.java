@@ -18,6 +18,7 @@ public class Results {
     public Double vote_average;
     public String overview;
     public String release_date;
+    public String character;
 
     public Results() {
     }
@@ -132,5 +133,13 @@ public class Results {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    public String getCharacter() {
+        return character;
+    }
+
+    public void setCharacter(String character) {
+        this.character = character;
     }
 }

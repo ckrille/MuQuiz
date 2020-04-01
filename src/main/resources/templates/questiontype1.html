@@ -21,8 +21,8 @@
     <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
     <ul th:each="ans, iter : ${answer}">
         <form action="/questions" method="post">
-            <button th:if="${ans.release_date}" type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button>
-            <button th:if="${ans.release_date == null}" type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button>
+            <div th:if="${ans.release_date != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
+            <div th:if="${ans.character != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
             <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
         </form>
     </ul>

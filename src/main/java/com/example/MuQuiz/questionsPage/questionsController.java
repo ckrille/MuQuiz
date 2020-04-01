@@ -23,6 +23,7 @@ int counter  = 0;
         if(counter % 3 == 0) {
             qu = qu.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url",qu.getMovieList());
+          
         }
         if(counter % 3 == 1){
            /* qu = qu.getCharacterQuestion(restTemplate);*/
@@ -37,7 +38,7 @@ int counter  = 0;
         }
         if (counter % 3 == 2) {
             qu = qu.getCharacterQuestion(restTemplate);
-
+            counter++;
             model.addAttribute("url", qu.getCastList().get(qu.getRandForQandA()).profile_path);
             model.addAttribute("answer", qu.getCastList());
             model.addAttribute("what", "character");

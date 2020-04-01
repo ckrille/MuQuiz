@@ -44,7 +44,7 @@ public class Questions {
 
         int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
-        correctAnswer = movieList.get(randForQandA).getId();
+        correctAnswer = castList.get(randForQandA).getId();
         System.out.println("FACIT: " +castList.get(randForQandA).getCharacter());
 
         questions.theQuestion = "What is the name of the character this actor plays in "+ castList.get(randForQandA).getTitle() +"?";
