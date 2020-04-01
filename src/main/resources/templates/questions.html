@@ -26,6 +26,7 @@
 
 <i><span th:text="${overview}"></span></i>
 <p>
+<div style="display: flex; flex-direction: row">
     <ul th:each="urlList,iter : ${url}">
         <form action="/questions" method="post">
             <button type="submit" th:value="${urlList.id}" name="answer">
@@ -33,6 +34,7 @@
             <img th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
         </form>
     </ul>
+</div>
 </p>
 
 <p>

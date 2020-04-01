@@ -28,6 +28,7 @@ int counter  = 0;
         }
         model.addAttribute("url",qu.getMovieList());
         model.addAttribute("overview",qu.getTheQuestion());
+        model.addAttribute("correctId", qu.getCorrectAnswer());
         counter++;
         return "questions";
     }
