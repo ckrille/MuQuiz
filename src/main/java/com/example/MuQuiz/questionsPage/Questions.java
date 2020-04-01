@@ -1,7 +1,7 @@
 package com.example.MuQuiz.questionsPage;
 
 
-import com.example.MuQuiz.Results;
+import com.example.MuQuiz.ApiClasses.Results;
 import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
