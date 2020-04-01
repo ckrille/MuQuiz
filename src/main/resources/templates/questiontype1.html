@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+</head>
+<body>
+
+<h1>MuQuiz: <span th:text="${username}"></span></h1>
+
+<div id="countdown"></div>
+
+<p>Score:
+    <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
+    </meter>
+</p>
+
+<i><span th:text="${overview}"></span></i>
+<p>
+<div style="display: flex; flex-direction: row">
+    <img th:src="'https://image.tmdb.org/t/p/w200/' +${url.poster_path}">
+    <ul th:each="ans : ${answer}">
+        <form action="/questions" method="post">
+            <button type="submit" th:value="${ans.id}" name="answer"></button>
+        </form>
+    </ul>
+</div>
+</p>
+
+<a href="/">Start</a>
+<a href="/results">Results</a>
+<script>
+var score = 10000 ;
+
+var scoreTimer = setInterval(count,1);
+
+function count() {
+    if(score <= 0){
+        clearInterval(scoreTimer);
+        document.getElementById("countdown").innerHTML = "Times up";
+    }
+    else {
+        document.getElementById("countdown").innerHTML = "Score: " + score;
+        document.getElementById("myMeter").value = score;
+        document.getElementById("score0").value = score;
+        document.getElementById("score1").value = score;
+        document.getElementById("score2").value = score;
+        }
+  score -= 1;
+}
+</script>
+</body>
+</html>
