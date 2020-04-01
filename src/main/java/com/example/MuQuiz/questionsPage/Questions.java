@@ -1,7 +1,7 @@
 package com.example.MuQuiz.questionsPage;
 
 import com.example.MuQuiz.Movie;
-import com.example.MuQuiz.Results;
+import com.example.MuQuiz.ApiClasses.MovieRefactor;
 import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -41,8 +41,8 @@ public class Questions {
 
 
         for (int i = 0; i < 3; i++) {
-            Results results = categoryService.getRandomMovie(restTemplate);
-            movieId = results.getId();
+            MovieRefactor movieRefactor = categoryService.getRandomMovie(restTemplate);
+            movieId = movieRefactor.getId();
             Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId + "?api_key=" + APIkey + "&language=en-US", Movie.class);
             movieList.add(movie);
         }
@@ -55,8 +55,8 @@ public class Questions {
 
     public List<Movie> questionName(RestTemplate restTemplate) {
         CategoryService categoryService = new CategoryService();
-        Results results = categoryService.getRandomMovie(restTemplate);
-        movieId = results.getId();
+        MovieRefactor movieRefactor = categoryService.getRandomMovie(restTemplate);
+        movieId = movieRefactor.getId();
         List<Movie> movieList = new ArrayList<>();
         Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movieId  + "?api_key=" + APIkey + "&language=en-US", Movie.class);
         movieList.add(movie);

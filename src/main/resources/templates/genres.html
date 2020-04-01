@@ -9,13 +9,15 @@
 <h1>MuQuiz: start</h1>
 
 <a href="/questions">Questions</a>
-<a href="/results">Results</a>
+<a href="/movieRefactor">Results</a>
 <p>
     <b><span>Vilken film beskrivs?</span></b>
 </p>
 
 <i><span th:text="'Random movie: ' + ${movie}"></span></i><br>
-<i><span th:text="'Random Movie Character: ' + ${movieCharacter}"></span></i>
+<i><span th:text="'Random Movie Character: ' + ${movieCharacter}"></span></i><br>
+<i><span th:text="'Random Actor: ' + ${RandomActor}"></span></i><br>
+<i><span th:text="'Random Actors Movie: ' + ${actorsMovies}"></span></i><br>
 <!--<p>
     <img th:src="${url}">
 </p>-->

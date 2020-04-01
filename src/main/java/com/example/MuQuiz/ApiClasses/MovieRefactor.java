@@ -1,8 +1,8 @@
-package com.example.MuQuiz;
+package com.example.MuQuiz.ApiClasses;
 
 import java.util.List;
 
-public class Results {
+public class MovieRefactor {
 
     public Float popularity;
     public Long vote_count;
@@ -19,7 +19,7 @@ public class Results {
     public String overview;
     public String release_date;
 
-    public Results() {
+    public MovieRefactor() {
     }
 
     public Float getPopularity() {

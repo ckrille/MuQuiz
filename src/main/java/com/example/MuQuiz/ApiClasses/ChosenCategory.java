@@ -1,4 +1,4 @@
-package com.example.MuQuiz;
+package com.example.MuQuiz.ApiClasses;
 
 import java.util.List;
 
@@ -7,12 +7,12 @@ public class ChosenCategory {
     public String page;
     public String total_results;
     public String total_pages;
-    public List<Results> results;
+    public List<MovieRefactor> results;
 
     public ChosenCategory() {
     }
 
-    public ChosenCategory(String page, String total_results, String total_pages, List<Results> results) {
+    public ChosenCategory(String page, String total_results, String total_pages, List<MovieRefactor> results) {
         this.page = page;
         this.total_results = total_results;
         this.total_pages = total_pages;
@@ -43,11 +43,11 @@ public class ChosenCategory {
         this.total_pages = total_pages;
     }
 
-    public List<Results> getResults() {
+    public List<MovieRefactor> getResults() {
         return results;
     }
 
-    public void setResults(List<Results> results) {
+    public void setResults(List<MovieRefactor> results) {
         this.results = results;
     }
 }
