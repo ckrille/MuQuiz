@@ -45,6 +45,7 @@ public class CategoryService {
 
         Credits credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Credits.class);
         Cast cast = credits.cast.get(random);
+        cast.setTitle(result.getTitle());
 
         return cast;
     }

@@ -21,12 +21,16 @@ int counter  = 0;
     public String showStart(RestTemplate restTemplate,Model model){
 
         if(counter % 2 == 0) {
-            qu = qu.getDescQuestion(restTemplate);
+            qu = qu.getYearForMovieQuestion(restTemplate);
+            model.addAttribute("url",qu.getMovieList());
         }
         else{
-            qu = qu.getPosterQuestion(restTemplate);
+            qu = qu.getCharacterQuestion(restTemplate);
+            model.addAttribute("url",qu.getCastList());
+            //qu = qu.getWhatYearQuestion(restTemplate);
+            //qu = qu.getPosterQuestion(restTemplate);
         }
-        model.addAttribute("url",qu.getMovieList());
+
         model.addAttribute("overview",qu.getTheQuestion());
         model.addAttribute("correctId", qu.getCorrectAnswer());
         counter++;
