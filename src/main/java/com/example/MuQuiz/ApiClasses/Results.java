@@ -1,4 +1,4 @@
-package com.example.MuQuiz;
+package com.example.MuQuiz.ApiClasses;
 
 import java.util.List;
 

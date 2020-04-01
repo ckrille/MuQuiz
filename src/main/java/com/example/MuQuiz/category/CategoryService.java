@@ -1,6 +1,6 @@
 package com.example.MuQuiz.category;
 
-import com.example.MuQuiz.*;
+import com.example.MuQuiz.ApiClasses.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.Random;
@@ -9,17 +9,25 @@ import java.util.Random;
 public class CategoryService {
 
     public Long getRandomCategory(RestTemplate restTemplate) {
-        Random rand = new Random();
-        int random = rand.nextInt(19);
+        Long category = 0L;
+        boolean categoryCheck = true;
 
-        Genre genre = restTemplate.getForObject("https://api.themoviedb.org/3/genre/movie/list?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Genre.class);
+        while (categoryCheck) {
+            Random rand = new Random();
+            int random = rand.nextInt(19);
 
-        return genre.genres.get(random).id;
+            Genre genre = restTemplate.getForObject("https://api.themoviedb.org/3/genre/movie/list?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Genre.class);
+            if(genre.genres.get(random).id != 99L && genre.genres.get(random).id != 10751L && genre.genres.get(random).id != 10402L && genre.genres.get(random).id != 10770L) {
+                category = genre.genres.get(random).id;
+                categoryCheck = false;
+            }
+        }
+        return category;
     }
 
     public Results getRandomMovie(RestTemplate restTemplate) {
         Random rand = new Random();
-        int random = rand.nextInt(20);
+        int random = rand.nextInt(10);
 
         Long id = getRandomCategory(restTemplate);
 
@@ -39,6 +47,19 @@ public class CategoryService {
         Cast cast = credits.cast.get(random);
 
         return cast;
+    }
+
+    public ActorsMovies getRandomActorCredits(RestTemplate restTemplate) {
+        Random rand = new Random();
+        int random = rand.nextInt(5);
+
+        Cast cast = getRandomMovieCharacter(restTemplate);
+
+        ActorsMoviesAPI actorsMoviesAPI = restTemplate.getForObject("https://api.themoviedb.org/3/person/" + cast.getId() + "/movie_credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsMoviesAPI.class);
+        ActorsMovies actorsMovies = actorsMoviesAPI.cast.get(random);
+        actorsMovies.setName(cast.getName());
+
+        return actorsMovies;
     }
 
 }

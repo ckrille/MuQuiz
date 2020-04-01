@@ -1,7 +1,8 @@
 package com.example.MuQuiz.category;
-import com.example.MuQuiz.Cast;
+import com.example.MuQuiz.ApiClasses.ActorsMovies;
+import com.example.MuQuiz.ApiClasses.Cast;
 
-import com.example.MuQuiz.Results;
+import com.example.MuQuiz.ApiClasses.Results;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,9 +23,12 @@ public class CategoryController {
 
         Results movie = categoryService.getRandomMovie(restTemplate);
         Cast cast = categoryService.getRandomMovieCharacter(restTemplate);
+        ActorsMovies actorsMovies = categoryService.getRandomActorCredits(restTemplate);
 
         model.addAttribute("movie", movie.getTitle());
         model.addAttribute("movieCharacter", cast.getCharacter());
+        model.addAttribute("RandomActor", actorsMovies.getName());
+        model.addAttribute("actorsMovies", actorsMovies.getTitle());
 
 
 
