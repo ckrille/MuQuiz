@@ -47,7 +47,7 @@ public class Questions {
         correctAnswer = castList.get(randForQandA).getId();
         System.out.println("FACIT: " +castList.get(randForQandA).getCharacter());
 
-        questions.theQuestion = "What is the name of the character this actor plays in "+ castList.get(randForQandA).getTitle() +"?";
+        questions.theQuestion = "What is the name of the character "+castList.get(randForQandA).getName() +" plays in "+ castList.get(randForQandA).getTitle() +"?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.randForQandA = randForQandA;
@@ -76,6 +76,7 @@ public class Questions {
         Questions questions = new Questions(("What date was "+ movieList.get(randForQandA).getTitle()) +" released?"
                 ,movieList
                 , correctAnswer);
+        questions.randForQandA = randForQandA;
         return questions;
     }
 

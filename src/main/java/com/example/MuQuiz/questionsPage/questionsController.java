@@ -23,15 +23,16 @@ int counter  = 0;
         if(counter % 3 == 0) {
             qu = qu.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url",qu.getMovieList());
-          
+
         }
         if(counter % 3 == 1){
            /* qu = qu.getCharacterQuestion(restTemplate);*/
             qu = qu.getWhatYearQuestion(restTemplate);
 
             model.addAttribute("url",qu.getMovieList().get(qu.getRandForQandA()).poster_path);
+            model.addAttribute("overview",qu.getTheQuestion());
             model.addAttribute("answer", qu.getMovieList());
-            model.addAttribute("what", "release_date");
+
             counter++;
             return "questiontype1";
             //qu = qu.getPosterQuestion(restTemplate);
@@ -40,8 +41,9 @@ int counter  = 0;
             qu = qu.getCharacterQuestion(restTemplate);
             counter++;
             model.addAttribute("url", qu.getCastList().get(qu.getRandForQandA()).profile_path);
+            model.addAttribute("overview",qu.getTheQuestion());
             model.addAttribute("answer", qu.getCastList());
-            model.addAttribute("what", "character");
+
             return "questiontype1";
         }
 
