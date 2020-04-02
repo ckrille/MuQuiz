@@ -1,0 +1,46 @@
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+.navbar {
+    background-color: #FF6347;
+    padding: 1% 0;
+    font-size: 1,2em;
+}
+
+.navbar-brand {
+    min-height: 55px;
+    padding: 0 15px 5px;
+}
+
+.navbar-default .navbar-nav li a {
+    color: #D5D5D5;
+}
+
+.navbar-default .navbar-nav li a:hover, .navbar-default .navbar-nav li a:active {
+    color: #FFF;
+}
+
+#start {
+    background: url(img/startBak.jpg);
+    display: table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    background-size: cover;
+}
+.landing-text {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 90px;
+    height: 100%;
+    color: #D5D5D5;
+}
+
+footer {
+    width: 100%;
+    background-color: #FF6347;
+    padding: 5% 5% 5% 5%;
+}

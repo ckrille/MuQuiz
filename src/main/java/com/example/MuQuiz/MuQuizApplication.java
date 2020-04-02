@@ -10,6 +10,4 @@ public class MuQuizApplication {
 		SpringApplication.run(MuQuizApplication.class, args);
 	}
 
-
-
 }
