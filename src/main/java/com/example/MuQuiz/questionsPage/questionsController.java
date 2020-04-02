@@ -38,7 +38,7 @@ int counter  = 0;
             //qu = qu.getPosterQuestion(restTemplate);
         }
         if (counter % 4 == 2) {
-            qu = qu.getActorNotInMovie(restTemplate);
+            qu = qu.getActorsInMovie(restTemplate);
             counter++;
             model.addAttribute("url", qu.getCastList());
             model.addAttribute("overview",qu.getTheQuestion());

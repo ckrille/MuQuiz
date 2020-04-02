@@ -23,7 +23,7 @@ public class CategoryController {
 
         Results movie = categoryService.getRandomMovie(restTemplate);
         Cast cast = categoryService.getRandomMovieCharacter(restTemplate);
-        ActorsMovies actorsMovies = categoryService.getRandomActorCredits(restTemplate);
+        ActorsMovies actorsMovies = categoryService.getRandomActorCredit(restTemplate);
 
         model.addAttribute("movie", movie.getTitle());
         model.addAttribute("movieCharacter", cast.getCharacter());

@@ -1,10 +1,7 @@
 package com.example.MuQuiz.questionsPage;
 
 
-import com.example.MuQuiz.ApiClasses.ActorsMovies;
-import com.example.MuQuiz.ApiClasses.Cast;
-import com.example.MuQuiz.ApiClasses.Credits;
-import com.example.MuQuiz.ApiClasses.Results;
+import com.example.MuQuiz.ApiClasses.*;
 import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -19,6 +16,7 @@ public class Questions {
     private String theQuestion;
     private List<Results> movieList;
     private List<Cast> castList;
+    private List<ActorsMovies> actorsMoviesList;
     private Long correctAnswer;
     private int randForQandA;
 
@@ -31,7 +29,38 @@ public class Questions {
         this.correctAnswer = correctAnswer;
     }
 
-    public Questions getActorNotInMovie(RestTemplate restTemplate){
+    //fråga utkommenterad, kanske använda framöver
+
+  /*  public Questions getActorNotInMovie(RestTemplate restTemplate){
+        Questions questions = new Questions();
+        List<ActorsMovies> actorsMoviesList = new ArrayList<>();
+        Random rand = new Random();
+        CategoryService categoryService = new CategoryService();
+
+        ActorsMoviesAPI credits = categoryService.getRandomActorCredits(restTemplate);
+
+        int randSort = rand.nextInt(3);
+        for (int i = 0; i < 4; i++) {
+            if(randSort == i){
+                ActorsMovies wrongAnswer = categoryService.getRandomActorCredit(restTemplate);
+                actorsMoviesList.add(wrongAnswer);
+            } else {
+                actorsMoviesList.add(credits.cast.get(i));
+            }
+        }
+
+        correctAnswer = castList.get(randSort).getId();
+        System.out.println("FACIT: " +castList.get(randSort).getName());
+
+        questions.theQuestion = "Which movie has "+ credits.cast.get(0).getName() +" not played in?";
+        questions.correctAnswer = correctAnswer;
+        questions.actorsMoviesList = actorsMoviesList;
+
+        return questions;
+    }*/
+
+
+    public Questions getActorsInMovie(RestTemplate restTemplate){
         Questions questions = new Questions();
         List<Cast> castList = new ArrayList<>();
         Random rand = new Random();
@@ -48,17 +77,12 @@ public class Questions {
             castList.add(credits.cast.get(i));
         }
 
-        // int randForQandA = rand.nextInt(3);
         correctAnswer = castList.get(randSort).getId();
         System.out.println("FACIT: " +castList.get(randSort).getName());
-        /*Questions questions = new Questions(("Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() +"?")
-                ,movieList
-                ,correctAnswer);*/
 
         questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() +"?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
-        // questions.randForQandA = randForQandA;
 
         return questions;
     }
@@ -208,5 +232,13 @@ public class Questions {
 
     public void setRandForQandA(int randForQandA) {
         this.randForQandA = randForQandA;
+    }
+
+    public List<ActorsMovies> getActorsMoviesList() {
+        return actorsMoviesList;
+    }
+
+    public void setActorsMoviesList(List<ActorsMovies> actorsMoviesList) {
+        this.actorsMoviesList = actorsMoviesList;
     }
 }
