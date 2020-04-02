@@ -4,9 +4,10 @@ html, body {
 }
 
 .navbar {
-    background-color: #FF6347;
+    background-color: #047364;
     padding: 1% 0;
     font-size: 1,2em;
+    border-bottom-width: 0px;
 }
 
 .navbar-brand {
@@ -26,7 +27,7 @@ html, body {
     background: url(img/startBak.jpg);
     display: table;
     height: 100%;
-    position: relative;
+    background-position: center center;
     width: 100%;
     background-size: cover;
 }
@@ -34,13 +35,14 @@ html, body {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    padding: 90px;
+    padding: 90px 0 300px;
     height: 100%;
     color: #D5D5D5;
+
 }
 
 footer {
     width: 100%;
-    background-color: #FF6347;
+    background-color: #047364;
     padding: 5% 5% 5% 5%;
 }
