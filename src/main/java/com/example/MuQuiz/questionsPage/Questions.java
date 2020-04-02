@@ -60,7 +60,7 @@ public class Questions {
     }*/
 
 
-    public Questions getActorsInMovie(RestTemplate restTemplate){
+    public Questions getActorsInMovie(RestTemplate restTemplate) {
         Questions questions = new Questions();
         List<Cast> castList = new ArrayList<>();
         Random rand = new Random();
@@ -70,24 +70,24 @@ public class Questions {
 
         int randSort = rand.nextInt(3);
         for (int i = 0; i < 4; i++) {
-            if(randSort == i){
+            if (randSort == i) {
                 Cast wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
                 castList.add(wrongAnswer);
             } else
-            castList.add(credits.cast.get(i));
+                castList.add(credits.cast.get(i));
         }
 
         correctAnswer = castList.get(randSort).getId();
-        System.out.println("FACIT: " +castList.get(randSort).getName());
+        System.out.println("FACIT: " + castList.get(randSort).getName());
 
-        questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() +"?";
+        questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() + "?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
 
         return questions;
     }
 
-    public Questions getCharacterQuestion(RestTemplate restTemplate){
+    public Questions getCharacterQuestion(RestTemplate restTemplate) {
         Questions questions = new Questions();
         List<Cast> castList = new ArrayList<>();
         Random rand = new Random();
@@ -102,9 +102,9 @@ public class Questions {
         int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
         correctAnswer = castList.get(randForQandA).getId();
-        System.out.println("FACIT: " +castList.get(randForQandA).getCharacter());
+        System.out.println("FACIT: " + castList.get(randForQandA).getCharacter());
 
-        questions.theQuestion = "What is the name of the character "+castList.get(randForQandA).getName() +" plays in "+ castList.get(randForQandA).getTitle() +"?";
+        questions.theQuestion = "What is the name of the character " + castList.get(randForQandA).getName() + " plays in " + castList.get(randForQandA).getTitle() + "?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.randForQandA = randForQandA;
@@ -113,7 +113,7 @@ public class Questions {
         return questions;
     }
 
-    public Questions getWhatYearQuestion(RestTemplate restTemplate){
+    public Questions getWhatYearQuestion(RestTemplate restTemplate) {
 
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
@@ -126,33 +126,48 @@ public class Questions {
 
 
         int randForQandA = rand.nextInt(3);
-       // correctAnswer = results.getRelease_date();
+        // correctAnswer = results.getRelease_date();
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
-        System.out.println("FACIT: " +movieList.get(randForQandA).getRelease_date());
-        Questions questions = new Questions(("What date was "+ movieList.get(randForQandA).getTitle()) +" released?"
-                ,movieList
+        System.out.println("FACIT: " + movieList.get(randForQandA).getRelease_date());
+        Questions questions = new Questions(("What date was " + movieList.get(randForQandA).getTitle()) + " released?"
+                , movieList
                 , correctAnswer);
         questions.randForQandA = randForQandA;
         return questions;
     }
 
-    public Questions getYearForMovieQuestion(RestTemplate restTemplate){
+    public Questions getYearForMovieQuestion(RestTemplate restTemplate) {
 
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
+        boolean isLika = false;
 
-        for (int i = 0; i < 4; i++) {
+        while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
-            movieList.add(results);
+            if (movieList.size() == 0) {
+                movieList.add(results);
+            }
+
+            for (int j = 0; j < movieList.size(); j++) {
+                if (movieList.get(j).getTitle().equals(results.getTitle())) {
+                    isLika = true;
+                    break;
+                } else {
+                    isLika = false;
+                }
+            }
+            if (isLika == false) {
+                movieList.add(results);
+            }
         }
 
         int randForQandA = rand.nextInt(3);
         correctAnswer = movieList.get(randForQandA).getId();
-        System.out.println("FACIT: " +movieList.get(randForQandA).getTitle());
-        Questions questions = new Questions(("Which movie was released " + movieList.get(randForQandA).getRelease_date()) +"?"
-                ,movieList
+        System.out.println("FACIT: " + movieList.get(randForQandA).getTitle());
+        Questions questions = new Questions(("Which movie was released " + movieList.get(randForQandA).getRelease_date()) + "?"
+                , movieList
                 , correctAnswer);
         return questions;
     }
