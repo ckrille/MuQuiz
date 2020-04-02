@@ -165,12 +165,12 @@ public class Questions {
         Random rand = new Random();
         CategoryService categoryService = new CategoryService();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             Results results = categoryService.getRandomMovie(restTemplate);
             movieList.add(results);
         }
 
-        int randForQandA = rand.nextInt(2);
+        int randForQandA = rand.nextInt(3);
         correctAnswer = movieList.get(randForQandA).getId();
         System.out.println("FACIT: " +movieList.get(randForQandA).getTitle());
        Questions questions = new Questions(("Vilken film är det enligt beskrivningen? \n" + movieList.get(randForQandA).getOverview())

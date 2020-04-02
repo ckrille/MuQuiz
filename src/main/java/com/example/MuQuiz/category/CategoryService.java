@@ -32,7 +32,7 @@ public class CategoryService {
 
         Long id = getRandomCategory(restTemplate);
 
-        ChosenCategory chosenCategory = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres="+ id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + page, ChosenCategory.class);
+        ChosenCategory chosenCategory = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres="+ id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1", ChosenCategory.class);
         Results results = chosenCategory.results.get(random);
 
         return results;
