@@ -20,12 +20,12 @@ int counter  = 0;
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
 
-        if(counter % 3 == 0) {
+        if(counter % 4 == 0) {
             qu = qu.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url",qu.getMovieList());
 
         }
-        if(counter % 3 == 1){
+        if(counter % 4 == 1){
            /* qu = qu.getCharacterQuestion(restTemplate);*/
             qu = qu.getWhatYearQuestion(restTemplate);
 
@@ -37,7 +37,17 @@ int counter  = 0;
             return "questiontype1";
             //qu = qu.getPosterQuestion(restTemplate);
         }
-        if (counter % 3 == 2) {
+        if (counter % 4 == 2) {
+            qu = qu.getActorNotInMovie(restTemplate);
+            counter++;
+            model.addAttribute("url", qu.getCastList());
+            model.addAttribute("overview",qu.getTheQuestion());
+            model.addAttribute("answer", qu.getCastList());
+
+            return "questions";
+        }
+
+        if (counter % 4 == 3) {
             qu = qu.getCharacterQuestion(restTemplate);
             counter++;
             model.addAttribute("url", qu.getCastList().get(qu.getRandForQandA()).profile_path);

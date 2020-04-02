@@ -19,6 +19,7 @@ public class Results {
     public String overview;
     public String release_date;
     public String character;
+    public String profile_path;
 
     public Results() {
     }
@@ -141,5 +142,13 @@ public class Results {
 
     public void setCharacter(String character) {
         this.character = character;
+    }
+
+    public String getProfile_path() {
+        return profile_path;
+    }
+
+    public void setProfile_path(String profile_path) {
+        this.profile_path = profile_path;
     }
 }

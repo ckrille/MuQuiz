@@ -12,6 +12,7 @@ public class Cast {
    public int order;
    public String profile_path;
    public String release_date;
+   public String poster_path;
 
     public Cast() {
     }
@@ -94,5 +95,13 @@ public class Cast {
 
     public void setRelease_date(String release_date) {
         this.release_date = release_date;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 }

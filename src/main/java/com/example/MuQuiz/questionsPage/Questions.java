@@ -3,6 +3,7 @@ package com.example.MuQuiz.questionsPage;
 
 import com.example.MuQuiz.ApiClasses.ActorsMovies;
 import com.example.MuQuiz.ApiClasses.Cast;
+import com.example.MuQuiz.ApiClasses.Credits;
 import com.example.MuQuiz.ApiClasses.Results;
 import com.example.MuQuiz.category.CategoryService;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,38 @@ public class Questions {
         this.theQuestion = theQuestion;
         this.movieList = movieList;
         this.correctAnswer = correctAnswer;
+    }
+
+    public Questions getActorNotInMovie(RestTemplate restTemplate){
+        Questions questions = new Questions();
+        List<Cast> castList = new ArrayList<>();
+        Random rand = new Random();
+        CategoryService categoryService = new CategoryService();
+
+        Credits credits = categoryService.getRandomMovieCharacters(restTemplate);
+
+        int randSort = rand.nextInt(3);
+        for (int i = 0; i < 4; i++) {
+            if(randSort == i){
+                Cast wrongAnswer = categoryService.getRandomMovieCharacter(restTemplate);
+                castList.add(wrongAnswer);
+            } else
+            castList.add(credits.cast.get(i));
+        }
+
+        // int randForQandA = rand.nextInt(3);
+        correctAnswer = castList.get(randSort).getId();
+        System.out.println("FACIT: " +castList.get(randSort).getName());
+        /*Questions questions = new Questions(("Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() +"?")
+                ,movieList
+                ,correctAnswer);*/
+
+        questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() +"?";
+        questions.correctAnswer = correctAnswer;
+        questions.castList = castList;
+        // questions.randForQandA = randForQandA;
+
+        return questions;
     }
 
     public Questions getCharacterQuestion(RestTemplate restTemplate){
@@ -100,7 +133,9 @@ public class Questions {
         return questions;
     }
 
-    public Questions getDescQuestion(RestTemplate restTemplate){
+    //DE TVÅ FRÅGORNA NEDAN ANVÄNDS INTE FÖR TILLFÄLLET
+
+  /*  public Questions getDescQuestion(RestTemplate restTemplate){
 
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
@@ -118,9 +153,9 @@ public class Questions {
                ,movieList
                , correctAnswer);
         return questions;
-    }
+    }*/
 
-    public Questions getPosterQuestion(RestTemplate restTemplate){
+  /*  public Questions getPosterQuestion(RestTemplate restTemplate){
         CategoryService categoryService = new CategoryService();
         Results results = categoryService.getRandomMovie(restTemplate);
         List<Results> movieList = new ArrayList<>();
@@ -133,7 +168,7 @@ public class Questions {
                 ,movieList
                 ,correctAnswer);
         return questions;
-    }
+    }*/
 
     public String getTheQuestion() {
         return theQuestion;

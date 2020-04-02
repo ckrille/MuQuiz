@@ -27,11 +27,12 @@ public class CategoryService {
 
     public Results getRandomMovie(RestTemplate restTemplate) {
         Random rand = new Random();
-        int random = rand.nextInt(10);
+        int random = rand.nextInt(20);
+        int page = rand.nextInt(  4)+1;
 
         Long id = getRandomCategory(restTemplate);
 
-        ChosenCategory chosenCategory = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres="+ id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1", ChosenCategory.class);
+        ChosenCategory chosenCategory = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres="+ id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + page, ChosenCategory.class);
         Results results = chosenCategory.results.get(random);
 
         return results;
@@ -61,6 +62,15 @@ public class CategoryService {
         actorsMovies.setName(cast.getName());
 
         return actorsMovies;
+    }
+
+    public Credits getRandomMovieCharacters(RestTemplate restTemplate) {
+        Results result = getRandomMovie(restTemplate);
+        Credits credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Credits.class);
+        for(int i = 0; i < credits.cast.size(); i++) {
+            credits.cast.get(i).setTitle(result.getTitle());
+        }
+        return credits;
     }
 
 }
