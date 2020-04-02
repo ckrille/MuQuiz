@@ -4,9 +4,10 @@ html, body {
 }
 
 .navbar {
-    background-color: #FF6347;
+    background-color: #047364;
     padding: 1% 0;
     font-size: 1,2em;
+    border-bottom-width: 0px;
 }
 
 .navbar-brand {
@@ -42,6 +43,6 @@ html, body {
 
 footer {
     width: 100%;
-    background-color: #FF6347;
+    background-color: #047364;
     padding: 5% 5% 5% 5%;
 }
