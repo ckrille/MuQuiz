@@ -2,7 +2,7 @@ package com.example.MuQuiz.questionsPage;
 
 
 import com.example.MuQuiz.ApiClasses.*;
-import com.example.MuQuiz.category.CategoryService;
+import com.example.MuQuiz.ApiClasses.ApiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -64,14 +64,14 @@ public class Questions {
         Questions questions = new Questions();
         List<Cast> castList = new ArrayList<>();
         Random rand = new Random();
-        CategoryService categoryService = new CategoryService();
+        ApiService apiService = new ApiService();
 
-        Credits credits = categoryService.getRandomMovieCharacters(restTemplate);
+        Credits credits = apiService.getRandomMovieCharacters(restTemplate);
 
         int randSort = rand.nextInt(3);
         for (int i = 0; i < 4; i++) {
             if(randSort == i){
-                Cast wrongAnswer = categoryService.getRandomMovieCharacter(restTemplate);
+                Cast wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
                 castList.add(wrongAnswer);
             } else
             castList.add(credits.cast.get(i));
@@ -91,10 +91,10 @@ public class Questions {
         Questions questions = new Questions();
         List<Cast> castList = new ArrayList<>();
         Random rand = new Random();
-        CategoryService categoryService = new CategoryService();
+        ApiService apiService = new ApiService();
 
         for (int i = 0; i < 4; i++) {
-            Cast results = categoryService.getRandomMovieCharacter(restTemplate);
+            Cast results = apiService.getRandomMovieCharacter(restTemplate);
             castList.add(results);
         }
 
@@ -117,10 +117,10 @@ public class Questions {
 
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
-        CategoryService categoryService = new CategoryService();
+        ApiService apiService = new ApiService();
 
         for (int i = 0; i < 4; i++) {
-            Results results = categoryService.getRandomMovie(restTemplate);
+            Results results = apiService.getRandomMovie(restTemplate);
             movieList.add(results);
         }
 
@@ -141,10 +141,10 @@ public class Questions {
 
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
-        CategoryService categoryService = new CategoryService();
+        ApiService apiService = new ApiService();
 
         for (int i = 0; i < 4; i++) {
-            Results results = categoryService.getRandomMovie(restTemplate);
+            Results results = apiService.getRandomMovie(restTemplate);
             movieList.add(results);
         }
 

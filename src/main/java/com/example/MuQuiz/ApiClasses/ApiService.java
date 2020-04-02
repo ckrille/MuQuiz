@@ -1,4 +1,4 @@
-package com.example.MuQuiz.category;
+package com.example.MuQuiz.ApiClasses;
 
 import com.example.MuQuiz.ApiClasses.*;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Random;
 
 @Service
-public class CategoryService {
+public class ApiService {
 
     public Long getRandomCategory(RestTemplate restTemplate) {
         Long category = 0L;
