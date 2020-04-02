@@ -28,10 +28,12 @@
 <p>
 <div style="display: flex; flex-direction: row">
     <ul th:each="urlList,iter : ${url}">
+        <img th:if="${urlList.poster_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
+        <img th:if="${urlList.profile_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.profile_path}"></button>
         <form action="/questions" method="post">
-            <button type="submit" th:value="${urlList.id}" name="answer">
+            <button th:if="${urlList.poster_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.original_title}"></button>
+            <button th:if="${urlList.profile_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.name}"></button>
             <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
-            <img th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
         </form>
     </ul>
 </div>
@@ -56,6 +58,7 @@ function count() {
         document.getElementById("score0").value = score;
         document.getElementById("score1").value = score;
         document.getElementById("score2").value = score;
+        document.getElementById("score3").value = score;
         }
   score -= 1;
 }
