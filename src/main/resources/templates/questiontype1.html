@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Questions</title>
+</head>
+<body>
+
+<h1>MuQuiz: <span th:text="${username}"></span></h1>
+
+<div id="countdown"></div>
+<div th:text="${score}"></div>
+<p>Score:
+    <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
+    </meter>
+</p>
+
+<i><span th:text="${overview}"></span></i>
+<p>
+<div style="display: flex; flex-direction: row">
+    <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
+    <ul th:each="ans, iter : ${answer}">
+        <form action="/questions" method="post">
+            <div th:if="${ans.release_date != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
+            <div th:if="${ans.character != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
+            <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
+        </form>
+    </ul>
+</div>
+</p>
+
+<a href="/">Start</a>
+<a href="/results">Results</a>
+</body>
+<script>
+var score = 10000;
+
+var scoreTimer = setInterval(count,1);
+
+function count() {
+    if(score <= 0){
+        clearInterval(scoreTimer);
+        document.getElementById("countdown").innerHTML = "Times up";
+    }
+    else {
+        document.getElementById("countdown").innerHTML = "Score: " + score;
+        document.getElementById("myMeter").value = score;
+
+        document.getElementById("score0").value = score;
+        document.getElementById("score1").value = score;
+        document.getElementById("score2").value = score;
+        document.getElementById("score3").value = score;
+        }
+  score -= 1;
+}
+</script>
+</html>

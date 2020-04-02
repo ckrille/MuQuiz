@@ -1,4 +1,4 @@
-package com.example.MuQuiz.category;
+package com.example.MuQuiz.ApiClasses;
 
 import com.example.MuQuiz.ApiClasses.*;
 import org.springframework.stereotype.Service;
@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Random;
 
 @Service
-public class CategoryService {
+public class ApiService {
 
     public Long getRandomCategory(RestTemplate restTemplate) {
         Long category = 0L;
@@ -27,7 +27,8 @@ public class CategoryService {
 
     public Results getRandomMovie(RestTemplate restTemplate) {
         Random rand = new Random();
-        int random = rand.nextInt(10);
+        int random = rand.nextInt(20);
+        int page = rand.nextInt(  4)+1;
 
         Long id = getRandomCategory(restTemplate);
 
@@ -45,11 +46,21 @@ public class CategoryService {
 
         Credits credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Credits.class);
         Cast cast = credits.cast.get(random);
+        cast.setTitle(result.getTitle());
 
         return cast;
     }
 
-    public ActorsMovies getRandomActorCredits(RestTemplate restTemplate) {
+    public Credits getRandomMovieCharacters(RestTemplate restTemplate) {
+        Results result = getRandomMovie(restTemplate);
+        Credits credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Credits.class);
+        for(int i = 0; i < credits.cast.size(); i++) {
+            credits.cast.get(i).setTitle(result.getTitle());
+        }
+        return credits;
+    }
+
+    public ActorsMovies getRandomActorCredit(RestTemplate restTemplate) {
         Random rand = new Random();
         int random = rand.nextInt(5);
 
@@ -60,6 +71,15 @@ public class CategoryService {
         actorsMovies.setName(cast.getName());
 
         return actorsMovies;
+    }
+
+    public ActorsMoviesAPI getRandomActorCredits(RestTemplate restTemplate) {
+        Cast cast = getRandomMovieCharacter(restTemplate);
+        ActorsMoviesAPI actorsMoviesAPI = restTemplate.getForObject("https://api.themoviedb.org/3/person/" + cast.getId() + "/movie_credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsMoviesAPI.class);
+        for(int i = 0; i < actorsMoviesAPI.cast.size(); i++) {
+            actorsMoviesAPI.cast.get(i).setName(cast.getName());
+        }
+        return actorsMoviesAPI;
     }
 
 }

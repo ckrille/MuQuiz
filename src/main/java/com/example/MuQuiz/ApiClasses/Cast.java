@@ -2,6 +2,7 @@ package com.example.MuQuiz.ApiClasses;
 
 public class Cast {
 
+   public String title;
    public Long cast_id;
    public String character;
    public String credit_id;
@@ -10,8 +11,18 @@ public class Cast {
    public String name;
    public int order;
    public String profile_path;
+   public String release_date;
+   public String poster_path;
 
     public Cast() {
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Long getCast_id() {
@@ -76,5 +87,21 @@ public class Cast {
 
     public void setProfile_path(String profile_path) {
         this.profile_path = profile_path;
+    }
+
+    public String getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
+
+    public String getPoster_path() {
+        return poster_path;
+    }
+
+    public void setPoster_path(String poster_path) {
+        this.poster_path = poster_path;
     }
 }
