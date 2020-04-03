@@ -85,7 +85,7 @@ int counter  = 0;
     @PostMapping("/questions")
     public String postShow(RestTemplate restTemplate,Model model,@RequestParam Long answer, Integer score){
 
-        qsDataService.setQuestions(qu, answer, score);
+    
 
         if(qu.getCorrectAnswer().equals(answer)) {
             System.out.println("RÄTT SVAR!!!");
@@ -95,10 +95,11 @@ int counter  = 0;
             highscore.setHighscore(currentScore);
 
             System.out.println("Highscore: "+ highscore.getHighscore());
-
+            qsDataService.setQuestions(qu, answer, score);
         }
         else{
             System.err.println("Fel svar!");
+            qsDataService.setQuestionsWithoutScore(qu, answer);
         }
 
 

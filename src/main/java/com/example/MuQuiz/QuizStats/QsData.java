@@ -14,10 +14,10 @@ public class QsData {
     private Long questionId;
     private Integer typeQuestion;
     private Long correctAnswer;
-    private Long wrongAnswer1;
-    private Long wrongAnswer2;
-    private Long wrongAnswer3;
-    private Long wrongAnswer4;
+    private Long answerAltOne;
+    private Long answerAltTwo;
+    private Long answerAltThree;
+    private Long answerAltFour;
     private Integer score;
     private Long userAnswer;
 
@@ -25,13 +25,13 @@ public class QsData {
     public QsData(){
     }
 
-    public QsData(Long specifiktQuizID, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long wrongAnswer2, Long wrongAnswer3, Integer score, Long userAnswer) {
+    public QsData(Long specifiktQuizID, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long answerAltTwo, Long answerAltThree, Integer score, Long userAnswer) {
         this.questionId = specifiktQuizID;
         this.typeQuestion = typeQuestion;
         this.correctAnswer = correctAnswer;
-        this.wrongAnswer1 = wrongAnswer1;
-        this.wrongAnswer2 = wrongAnswer2;
-        this.wrongAnswer3 = wrongAnswer3;
+        this.answerAltOne = wrongAnswer1;
+        this.answerAltTwo = answerAltTwo;
+        this.answerAltThree = answerAltThree;
         this.score = score;
         this.userAnswer = userAnswer;
     }
@@ -77,27 +77,27 @@ public class QsData {
     }
 
     public Long getWrongAnswer1() {
-        return wrongAnswer1;
+        return answerAltOne;
     }
 
     public void setWrongAnswer1(Long wrongAnswer1) {
-        this.wrongAnswer1 = wrongAnswer1;
+        this.answerAltOne = wrongAnswer1;
     }
 
-    public Long getWrongAnswer2() {
-        return wrongAnswer2;
+    public Long getAnswerAltTwo() {
+        return answerAltTwo;
     }
 
-    public void setWrongAnswer2(Long wrongAnswer2) {
-        this.wrongAnswer2 = wrongAnswer2;
+    public void setAnswerAltTwo(Long answerAltTwo) {
+        this.answerAltTwo = answerAltTwo;
     }
 
-    public Long getWrongAnswer3() {
-        return wrongAnswer3;
+    public Long getAnswerAltThree() {
+        return answerAltThree;
     }
 
-    public void setWrongAnswer3(Long wrongAnswer3) {
-        this.wrongAnswer3 = wrongAnswer3;
+    public void setAnswerAltThree(Long answerAltThree) {
+        this.answerAltThree = answerAltThree;
     }
 
     public Long getQuestionId() {
@@ -108,11 +108,11 @@ public class QsData {
         this.questionId = questionId;
     }
 
-    public Long getWrongAnswer4() {
-        return wrongAnswer4;
+    public Long getAnswerAltFour() {
+        return answerAltFour;
     }
 
-    public void setWrongAnswer4(Long wrongAnswer4) {
-        this.wrongAnswer4 = wrongAnswer4;
+    public void setAnswerAltFour(Long answerAltFour) {
+        this.answerAltFour = answerAltFour;
     }
 }

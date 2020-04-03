@@ -125,7 +125,7 @@ public class Questions {
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.randForQandA = randForQandA;
-        questions.typeQuestion = 1;
+        questions.typeQuestion = 2;
 
         return questions;
     }
@@ -170,7 +170,7 @@ public class Questions {
                 , movieList
                 , correctAnswer);
         questions.randForQandA = randForQandA;
-        questions.typeQuestion = 2;
+        questions.typeQuestion = 3;
         return questions;
     }
 
@@ -209,7 +209,7 @@ public class Questions {
         Questions questions = new Questions(("Which movie was released " + movieList.get(randForQandA).getRelease_date()) + "?"
                 , movieList
                 , correctAnswer);
-        questions.typeQuestion = 2;
+        questions.typeQuestion = 4;
         return questions;
     }
 
