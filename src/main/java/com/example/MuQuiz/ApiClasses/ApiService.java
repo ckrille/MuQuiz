@@ -68,6 +68,7 @@ public class ApiService {
 
     public Credits getRandomMovieCharacters(RestTemplate restTemplate) {
         boolean randomCharactersNull = true;
+        int approvedCharacters = 0;
         Credits credits = new Credits();
 
         while(randomCharactersNull) {
@@ -78,10 +79,10 @@ public class ApiService {
             }
             for(int i = 0; i < 4; i++) {
                 if (credits.cast.get(i).getName() != null && credits.cast.get(i).getCharacter() != null && credits.cast.get(i).getProfile_path() != null) {
-                    randomCharactersNull = false;
-                }
-                else {
-                    randomCharactersNull = true;
+                    approvedCharacters++;
+                    if(approvedCharacters == 4) {
+                        randomCharactersNull = false;
+                    }
                 }
             }
         }
