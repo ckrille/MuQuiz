@@ -61,7 +61,7 @@ public class ApiService {
             if(credits.cast.size() >= 2) {
                 cast = credits.cast.get(random);
                 cast.setTitle(result.getTitle());
-                if(cast.getName() != null && cast.getCharacter() != null && cast.getProfile_path() != null) {
+                if(cast.getName().length() >= 2 && cast.getCharacter().length() >= 2 && cast.getProfile_path() != null) {
                     randomCharacterNull = false;
                 }
             }
@@ -81,7 +81,7 @@ public class ApiService {
                 credits.cast.get(i).setTitle(result.getTitle());
             }
             for(int i = 0; i < 4; i++) {
-                if (credits.cast.get(i).getName() != null && credits.cast.get(i).getCharacter() != null && credits.cast.get(i).getProfile_path() != null) {
+                if (credits.cast.get(i).getName().length() >= 2 && credits.cast.get(i).getCharacter().length() >= 2 && credits.cast.get(i).getProfile_path() != null) {
                     approvedCharacters++;
                     if(approvedCharacters == 4) {
                         randomCharactersNull = false;
