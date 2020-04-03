@@ -97,9 +97,20 @@ public class Questions {
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
-        for (int i = 0; i < 4; i++) {
+//        for (int i = 0; i < 4; i++) {
+//            Cast results = apiService.getRandomMovieCharacter(restTemplate);
+//            castList.add(results);
+//        }
+        while (castList.size()<4){
             Cast results = apiService.getRandomMovieCharacter(restTemplate);
-            castList.add(results);
+            if (castList.size() == 0){
+                castList.add(results);
+                continue;
+            }
+
+            if (castList.get(0).getGender() == results.getGender()) {
+                castList.add(results);
+            }
         }
 
 
