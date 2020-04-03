@@ -6,6 +6,7 @@ import com.example.MuQuiz.ApiClasses.ApiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.ManyToOne;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -122,18 +123,21 @@ public class Questions {
         Random rand = new Random();
         ApiService apiService = new ApiService();
         boolean isLika = false;
+        int firstYear = 0;
 
         while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
             String year = results.release_date.substring(0,4);
             results.release_date = year;
+            int intYear = Integer.parseInt(year);
 
             if (movieList.size() == 0) {
                 movieList.add(results);
+                firstYear = Integer.parseInt(movieList.get(0).release_date);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date)) {
+                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date) || Math.abs(intYear - firstYear) > 10) {
                     isLika = true;
                     break;
                 } else {
@@ -144,7 +148,7 @@ public class Questions {
                 movieList.add(results);
             }
         }
-        
+
         // correctAnswer = results.getRelease_date();
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
