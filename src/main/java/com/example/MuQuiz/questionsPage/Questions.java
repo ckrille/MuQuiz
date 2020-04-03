@@ -21,6 +21,7 @@ public class Questions {
     private List<ActorsMovies> actorsMoviesList;
     private Long correctAnswer;
     private int randForQandA;
+    private int typeQuestion;
 
     public Questions() {
     }
@@ -85,6 +86,7 @@ public class Questions {
         questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() + "?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
+        questions.typeQuestion = 1;
 
         return questions;
     }
@@ -112,7 +114,7 @@ public class Questions {
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.randForQandA = randForQandA;
-
+        questions.typeQuestion = 1;
 
         return questions;
     }
@@ -157,6 +159,7 @@ public class Questions {
                 , movieList
                 , correctAnswer);
         questions.randForQandA = randForQandA;
+        questions.typeQuestion = 2;
         return questions;
     }
 
@@ -195,6 +198,7 @@ public class Questions {
         Questions questions = new Questions(("Which movie was released " + movieList.get(randForQandA).getRelease_date()) + "?"
                 , movieList
                 , correctAnswer);
+        questions.typeQuestion = 2;
         return questions;
     }
 
@@ -281,5 +285,13 @@ public class Questions {
 
     public void setActorsMoviesList(List<ActorsMovies> actorsMoviesList) {
         this.actorsMoviesList = actorsMoviesList;
+    }
+
+    public int getTypeQuestion() {
+        return typeQuestion;
+    }
+
+    public void setTypeQuestion(int typeQuestion) {
+        this.typeQuestion = typeQuestion;
     }
 }
