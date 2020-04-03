@@ -6,6 +6,7 @@ import com.example.MuQuiz.ApiClasses.ApiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -99,6 +100,8 @@ public class Questions {
         }
 
 
+
+
         int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
         correctAnswer = castList.get(randForQandA).getId();
@@ -119,13 +122,52 @@ public class Questions {
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
+        List<Integer> yearArr = new ArrayList<>();
+
         for (int i = 0; i < 4; i++) {
             Results results = apiService.getRandomMovie(restTemplate);
             movieList.add(results);
+            String date = movieList.get(i).release_date;
+            String yr = date.substring(0,4);
+            movieList.get(i).release_date = yr;
+        }
+        //Val av "rätt" film i listan
+        int randForQandA = rand.nextInt(3);
+
+        int year = Integer.parseInt(movieList.get(randForQandA).release_date);
+        yearArr.add(year);
+
+        Random addOrSub = new Random();
+        Random randomInt = new Random();
+        int thisYear = Year.now().getValue();
+        Boolean isAdd;
+
+        for (int j = 0; j < 4; j++) {
+            isAdd = addOrSub.nextBoolean();
+
+            boolean addYear = true;
+            do {
+                boolean validAdd = true;
+                if (j == randForQandA){
+                    break;
+                }
+                int slump = isAdd ? yearArr.get(0) + randomInt.nextInt(9) + 1  : yearArr.get(0) - (randomInt.nextInt(9) + 1);
+                for (int y : yearArr) {
+                    if (slump > thisYear || slump == y) {
+                        validAdd = false;
+                        break;
+                    }
+                }
+                if (validAdd) {
+                        yearArr.add(slump);
+                        String da = Integer.toString(slump);
+                        movieList.get(j).release_date = da;
+                        addYear = false;
+                }
+            } while (addYear);
         }
 
 
-        int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
@@ -146,19 +188,22 @@ public class Questions {
 
         while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
+            String year = results.release_date.substring(0,4);
+            results.release_date = year;
+
             if (movieList.size() == 0) {
                 movieList.add(results);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(results.getTitle())) {
+                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date)) {
                     isLika = true;
                     break;
                 } else {
                     isLika = false;
                 }
             }
-            if (isLika == false) {
+            if (!isLika) {
                 movieList.add(results);
             }
         }
