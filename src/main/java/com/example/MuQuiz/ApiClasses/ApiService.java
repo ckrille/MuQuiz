@@ -38,7 +38,7 @@ public class ApiService {
 
             ChosenCategory chosenCategory = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres=" + id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + page, ChosenCategory.class);
             results = chosenCategory.results.get(random);
-            if (results.getRelease_date().length() >= 4 && results.getPoster_path() != null) {
+            if (results.getRelease_date() != null && results.getRelease_date().length() >= 4 && results.getPoster_path() != null) {
                 randomMovieNull = false;
             }
 
@@ -61,7 +61,7 @@ public class ApiService {
             if(credits.cast.size() >= 2) {
                 cast = credits.cast.get(random);
                 cast.setTitle(result.getTitle());
-                if(cast.getName().length() >= 2 && cast.getCharacter().length() >= 2 && cast.getProfile_path() != null) {
+                if(cast.getName() != null && cast.getName().length() >= 2 && cast.getCharacter() != null && cast.getCharacter().length() >= 2 && cast.getProfile_path() != null) {
                     randomCharacterNull = false;
                 }
             }
@@ -81,7 +81,7 @@ public class ApiService {
                 credits.cast.get(i).setTitle(result.getTitle());
             }
             for(int i = 0; i < 4; i++) {
-                if (credits.cast.get(i).getName().length() >= 2 && credits.cast.get(i).getCharacter().length() >= 2 && credits.cast.get(i).getProfile_path() != null) {
+                if (credits.cast.get(i).getName() != null && credits.cast.get(i).getName().length() >= 2 && credits.cast.get(i).getCharacter() != null && credits.cast.get(i).getCharacter().length() >= 2 && credits.cast.get(i).getProfile_path() != null) {
                     approvedCharacters++;
                     if(approvedCharacters == 4) {
                         randomCharactersNull = false;
@@ -91,7 +91,8 @@ public class ApiService {
         }
         return credits;
     }
-
+    //Koden nedan har ingen validering och används inte just nu.
+/*
     public ActorsMovies getRandomActorCredit(RestTemplate restTemplate) {
         Random rand = new Random();
         int random = rand.nextInt(5);
@@ -113,5 +114,7 @@ public class ApiService {
         }
         return actorsMoviesAPI;
     }
+
+ */
 
 }
