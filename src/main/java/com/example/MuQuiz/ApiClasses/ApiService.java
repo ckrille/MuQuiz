@@ -57,10 +57,13 @@ public class ApiService {
         Results result = getRandomMovie(restTemplate);
 
             Credits credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Credits.class);
-            cast = credits.cast.get(random);
-            cast.setTitle(result.getTitle());
-            if(cast.getName() != null && cast.getCharacter() != null && cast.getProfile_path() != null) {
-                randomCharacterNull = false;
+
+            if(credits.cast.size() >= 2) {
+                cast = credits.cast.get(random);
+                cast.setTitle(result.getTitle());
+                if(cast.getName() != null && cast.getCharacter() != null && cast.getProfile_path() != null) {
+                    randomCharacterNull = false;
+                }
             }
         }
         return cast;
