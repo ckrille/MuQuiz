@@ -81,7 +81,6 @@ int counter  = 0;
         return "questions";
     }
 
-int countToCheckMethod = 0;
 
     @PostMapping("/questions")
     public String postShow(RestTemplate restTemplate,Model model,@RequestParam Long answer, Integer score){

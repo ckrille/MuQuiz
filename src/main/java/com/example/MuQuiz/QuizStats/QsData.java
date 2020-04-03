@@ -11,12 +11,13 @@ public class QsData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long specifiktQuizID;
+    private Long questionId;
     private Integer typeQuestion;
     private Long correctAnswer;
     private Long wrongAnswer1;
     private Long wrongAnswer2;
     private Long wrongAnswer3;
+    private Long wrongAnswer4;
     private Integer score;
     private Long userAnswer;
 
@@ -25,7 +26,7 @@ public class QsData {
     }
 
     public QsData(Long specifiktQuizID, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long wrongAnswer2, Long wrongAnswer3, Integer score, Long userAnswer) {
-        this.specifiktQuizID = specifiktQuizID;
+        this.questionId = specifiktQuizID;
         this.typeQuestion = typeQuestion;
         this.correctAnswer = correctAnswer;
         this.wrongAnswer1 = wrongAnswer1;
@@ -36,11 +37,11 @@ public class QsData {
     }
 
     public Long getSpecifiktQuizID() {
-        return specifiktQuizID;
+        return questionId;
     }
 
     public void setSpecifiktQuizID(Long specifiktQuizID) {
-        this.specifiktQuizID = specifiktQuizID;
+        this.questionId = specifiktQuizID;
     }
 
     public Integer getScore() {
@@ -99,5 +100,19 @@ public class QsData {
         this.wrongAnswer3 = wrongAnswer3;
     }
 
+    public Long getQuestionId() {
+        return questionId;
+    }
 
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
+    }
+
+    public Long getWrongAnswer4() {
+        return wrongAnswer4;
+    }
+
+    public void setWrongAnswer4(Long wrongAnswer4) {
+        this.wrongAnswer4 = wrongAnswer4;
+    }
 }
