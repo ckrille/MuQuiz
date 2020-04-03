@@ -6,6 +6,8 @@ import com.example.MuQuiz.ApiClasses.ApiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.ManyToOne;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -101,6 +103,8 @@ public class Questions {
         }
 
 
+
+
         int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
         correctAnswer = castList.get(randForQandA).getId();
@@ -120,14 +124,33 @@ public class Questions {
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
+        boolean isLika = false;
+        int firstYear = 0;
 
-        for (int i = 0; i < 4; i++) {
+        while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
-            movieList.add(results);
+            String year = results.release_date.substring(0,4);
+            results.release_date = year;
+            int intYear = Integer.parseInt(year);
+
+            if (movieList.size() == 0) {
+                movieList.add(results);
+                firstYear = Integer.parseInt(movieList.get(0).release_date);
+            }
+
+            for (int j = 0; j < movieList.size(); j++) {
+                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date) || Math.abs(intYear - firstYear) > 10) {
+                    isLika = true;
+                    break;
+                } else {
+                    isLika = false;
+                }
+            }
+            if (!isLika) {
+                movieList.add(results);
+            }
         }
 
-
-        int randForQandA = rand.nextInt(3);
         // correctAnswer = results.getRelease_date();
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
@@ -149,19 +172,22 @@ public class Questions {
 
         while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
+            String year = results.release_date.substring(0,4);
+            results.release_date = year;
+
             if (movieList.size() == 0) {
                 movieList.add(results);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(results.getTitle())) {
+                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date)) {
                     isLika = true;
                     break;
                 } else {
                     isLika = false;
                 }
             }
-            if (isLika == false) {
+            if (!isLika) {
                 movieList.add(results);
             }
         }
