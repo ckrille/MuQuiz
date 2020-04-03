@@ -121,53 +121,30 @@ public class Questions {
         List<Results> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
+        boolean isLika = false;
 
-        List<Integer> yearArr = new ArrayList<>();
-
-        for (int i = 0; i < 4; i++) {
+        while (movieList.size() < 4) {
             Results results = apiService.getRandomMovie(restTemplate);
-            movieList.add(results);
-            String date = movieList.get(i).release_date;
-            String yr = date.substring(0,4);
-            movieList.get(i).release_date = yr;
-        }
-        //Val av "rätt" film i listan
-        int randForQandA = rand.nextInt(3);
+            String year = results.release_date.substring(0,4);
+            results.release_date = year;
 
-        int year = Integer.parseInt(movieList.get(randForQandA).release_date);
-        yearArr.add(year);
+            if (movieList.size() == 0) {
+                movieList.add(results);
+            }
 
-        Random addOrSub = new Random();
-        Random randomInt = new Random();
-        int thisYear = Year.now().getValue();
-        Boolean isAdd;
-
-        for (int j = 0; j < 4; j++) {
-            isAdd = addOrSub.nextBoolean();
-
-            boolean addYear = true;
-            do {
-                boolean validAdd = true;
-                if (j == randForQandA){
+            for (int j = 0; j < movieList.size(); j++) {
+                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date)) {
+                    isLika = true;
                     break;
+                } else {
+                    isLika = false;
                 }
-                int slump = isAdd ? yearArr.get(0) + randomInt.nextInt(9) + 1  : yearArr.get(0) - (randomInt.nextInt(9) + 1);
-                for (int y : yearArr) {
-                    if (slump > thisYear || slump == y) {
-                        validAdd = false;
-                        break;
-                    }
-                }
-                if (validAdd) {
-                        yearArr.add(slump);
-                        String da = Integer.toString(slump);
-                        movieList.get(j).release_date = da;
-                        addYear = false;
-                }
-            } while (addYear);
+            }
+            if (!isLika) {
+                movieList.add(results);
+            }
         }
-
-
+        
         // correctAnswer = results.getRelease_date();
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
