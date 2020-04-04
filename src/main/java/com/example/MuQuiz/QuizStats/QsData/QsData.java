@@ -27,8 +27,8 @@ public class QsData {
     public QsData() {
     }
 
-    public QsData(Long specifiktQuizID, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long answerAltTwo, Long answerAltThree, Integer score, Long userAnswer) {
-        this.questionId = specifiktQuizID;
+    public QsData(Long questionId, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long answerAltTwo, Long answerAltThree, Integer score, Long userAnswer) {
+        this.questionId = questionId;
         this.typeQuestion = typeQuestion;
         this.correctAnswer = correctAnswer;
         this.answerAltOne = wrongAnswer1;

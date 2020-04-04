@@ -11,4 +11,5 @@ public interface QsDataRepository extends CrudRepository<QsData, Long> {
     @Query("SELECT score FROM QsData u WHERE u.quizId = ?1")
     Iterable<Integer> getTotalScoreFromQuizId(Long countQuizId);
 
+    public Iterable<QsData> findByQuizId(Long quizId);
 }

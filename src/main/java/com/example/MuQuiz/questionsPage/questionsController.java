@@ -36,6 +36,7 @@ public class questionsController {
         if(numOfQuestions == 4){
             numOfQuestions = 0;
             quizDataService.saveCompletedQuiz(quizId);
+            quizDataService.getCompleteQuiz(quizId);
             quizId++;
             return "redirect:/results";
         }
