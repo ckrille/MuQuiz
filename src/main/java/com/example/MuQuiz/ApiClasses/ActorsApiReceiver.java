@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ActorsApiReceiver {
     private Long id;
-    private List<Actors> cast;
+    private List<Actor> cast;
 
     public ActorsApiReceiver() {
     }
@@ -17,11 +17,11 @@ public class ActorsApiReceiver {
         this.id = id;
     }
 
-    public List<Actors> getCast() {
+    public List<Actor> getCast() {
         return cast;
     }
 
-    public void setCast(List<Actors> cast) {
+    public void setCast(List<Actor> cast) {
         this.cast = cast;
     }
 }

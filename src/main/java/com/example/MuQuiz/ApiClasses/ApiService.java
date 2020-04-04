@@ -45,9 +45,9 @@ public class ApiService {
         return movies;
     }
 
-    public Actors getRandomMovieCharacter(RestTemplate restTemplate) {
+    public Actor getRandomMovieCharacter(RestTemplate restTemplate) {
         boolean randomCharacterNull = true;
-        Actors cast = new Actors();
+        Actor actor = new Actor();
         while(randomCharacterNull) {
 
         Random rand = new Random();
@@ -55,32 +55,32 @@ public class ApiService {
 
         Movies result = getRandomMovie(restTemplate);
 
-            ActorsApiReceiver credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
+            ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
 
-            if(credits.getCast().size() >= 2) {
-                cast = credits.getCast().get(random);
-                cast.setTitle(result.getTitle());
-                if(cast.getName() != null && cast.getName().length() >= 2 && cast.getCharacter() != null && cast.getCharacter().length() >= 2 && cast.getProfile_path() != null) {
+            if(actorsApiReceiver.getCast().size() >= 2) {
+                actor = actorsApiReceiver.getCast().get(random);
+                actor.setTitle(result.getTitle());
+                if(actor.getName() != null && actor.getName().length() >= 2 && actor.getCharacter() != null && actor.getCharacter().length() >= 2 && actor.getProfile_path() != null) {
                     randomCharacterNull = false;
                 }
             }
         }
-        return cast;
+        return actor;
     }
 
     public ActorsApiReceiver getRandomMovieCharacters(RestTemplate restTemplate) {
         boolean randomCharactersNull = true;
         int approvedCharacters = 0;
-        ActorsApiReceiver credits = new ActorsApiReceiver();
+        ActorsApiReceiver actorsApiReceiver = new ActorsApiReceiver();
 
         while(randomCharactersNull) {
             Movies movies = getRandomMovie(restTemplate);
-            credits = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movies.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
-            for (int i = 0; i < credits.getCast().size(); i++) {
-                credits.getCast().get(i).setTitle(movies.getTitle());
+            actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movies.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
+            for (int i = 0; i < actorsApiReceiver.getCast().size(); i++) {
+                actorsApiReceiver.getCast().get(i).setTitle(movies.getTitle());
             }
             for(int i = 0; i < 4; i++) {
-                if (credits.getCast().get(i).getName() != null && credits.getCast().get(i).getName().length() >= 2 && credits.getCast().get(i).getCharacter() != null && credits.getCast().get(i).getCharacter().length() >= 2 && credits.getCast().get(i).getProfile_path() != null) {
+                if (actorsApiReceiver.getCast().get(i).getName() != null && actorsApiReceiver.getCast().get(i).getName().length() >= 2 && actorsApiReceiver.getCast().get(i).getCharacter() != null && actorsApiReceiver.getCast().get(i).getCharacter().length() >= 2 && actorsApiReceiver.getCast().get(i).getProfile_path() != null) {
                     approvedCharacters++;
                     if(approvedCharacters == 4) {
                         randomCharactersNull = false;
@@ -88,7 +88,7 @@ public class ApiService {
                 }
             }
         }
-        return credits;
+        return actorsApiReceiver;
     }
     //Koden nedan har ingen validering och används inte just nu.
 /*
@@ -96,7 +96,7 @@ public class ApiService {
         Random rand = new Random();
         int random = rand.nextInt(5);
 
-        Actors cast = getRandomMovieCharacter(restTemplate);
+        Actor cast = getRandomMovieCharacter(restTemplate);
 
         MoviesByActorApiReceiver actorsMoviesAPI = restTemplate.getForObject("https://api.themoviedb.org/3/person/" + cast.getId() + "/movie_credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", MoviesByActorApiReceiver.class);
         MoviesByActor actorsMovies = actorsMoviesAPI.cast.get(random);
@@ -106,7 +106,7 @@ public class ApiService {
     }
 
     public MoviesByActorApiReceiver getRandomActorCredits(RestTemplate restTemplate) {
-        Actors cast = getRandomMovieCharacter(restTemplate);
+        Actor cast = getRandomMovieCharacter(restTemplate);
         MoviesByActorApiReceiver actorsMoviesAPI = restTemplate.getForObject("https://api.themoviedb.org/3/person/" + cast.getId() + "/movie_credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", MoviesByActorApiReceiver.class);
         for(int i = 0; i < actorsMoviesAPI.cast.size(); i++) {
             actorsMoviesAPI.cast.get(i).setName(cast.getName());

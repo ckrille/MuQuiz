@@ -1,6 +1,6 @@
 package com.example.MuQuiz.ApiClasses;
 
-public class Actors {
+public class Actor {
 
    private String title;
    private Long cast_id;
@@ -14,7 +14,7 @@ public class Actors {
    private String release_date;
    private String poster_path;
 
-    public Actors() {
+    public Actor() {
     }
 
     public String getTitle() {

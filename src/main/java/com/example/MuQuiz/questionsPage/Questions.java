@@ -15,7 +15,7 @@ public class Questions {
 
     private String theQuestion;
     private List<Movies> movieList;
-    private List<Actors> castList;
+    private List<Actor> castList;
     private List<MoviesByActor> actorsMoviesList;
     private Long correctAnswer;
     private int randForQandA;
@@ -63,25 +63,25 @@ public class Questions {
 
     public Questions getActorsInMovie(RestTemplate restTemplate) {
         Questions questions = new Questions();
-        List<Actors> castList = new ArrayList<>();
+        List<Actor> castList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
-        ActorsApiReceiver credits = apiService.getRandomMovieCharacters(restTemplate);
+        ActorsApiReceiver actorsApiReceiver = apiService.getRandomMovieCharacters(restTemplate);
 
         int randSort = rand.nextInt(3);
         for (int i = 0; i < 4; i++) {
             if (randSort == i) {
-                Actors wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
+                Actor wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
                 castList.add(wrongAnswer);
             } else
-                castList.add(credits.getCast().get(i));
+                castList.add(actorsApiReceiver.getCast().get(i));
         }
 
         correctAnswer = castList.get(randSort).getId();
         System.out.println("FACIT: " + castList.get(randSort).getName());
 
-        questions.theQuestion = "Which actor does not have a role in the movie " + credits.getCast().get(0).getTitle() + "?";
+        questions.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(0).getTitle() + "?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.typeQuestion = 1;
@@ -91,23 +91,23 @@ public class Questions {
 
     public Questions getCharacterQuestion(RestTemplate restTemplate) {
         Questions questions = new Questions();
-        List<Actors> castList = new ArrayList<>();
+        List<Actor> castList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
 //        for (int i = 0; i < 4; i++) {
-//            Actors results = apiService.getRandomMovieCharacter(restTemplate);
+//            Actor results = apiService.getRandomMovieCharacter(restTemplate);
 //            castList.add(results);
 //        }
         while (castList.size()<4){
-            Actors results = apiService.getRandomMovieCharacter(restTemplate);
+            Actor actor = apiService.getRandomMovieCharacter(restTemplate);
             if (castList.size() == 0){
-                castList.add(results);
+                castList.add(actor);
                 continue;
             }
 
-            if (castList.get(0).getGender() == results.getGender()) {
-                castList.add(results);
+            if (castList.get(0).getGender() == actor.getGender()) {
+                castList.add(actor);
             }
         }
 
@@ -137,18 +137,18 @@ public class Questions {
         int firstYear = 0;
 
         while (movieList.size() < 4) {
-            Movies results = apiService.getRandomMovie(restTemplate);
-            String year = results.release_date.substring(0,4);
-            results.release_date = year;
+            Movies movies = apiService.getRandomMovie(restTemplate);
+            String year = movies.release_date.substring(0,4);
+            movies.release_date = year;
             int intYear = Integer.parseInt(year);
 
             if (movieList.size() == 0) {
-                movieList.add(results);
+                movieList.add(movies);
                 firstYear = Integer.parseInt(movieList.get(0).release_date);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date) || Math.abs(intYear - firstYear) > 10) {
+                if (movieList.get(j).getTitle().equals(movies.getTitle()) || movieList.get(j).release_date.equals(movies.release_date) || Math.abs(intYear - firstYear) > 10) {
                     isLika = true;
                     break;
                 } else {
@@ -156,7 +156,7 @@ public class Questions {
                 }
             }
             if (!isLika) {
-                movieList.add(results);
+                movieList.add(movies);
             }
         }
 
@@ -180,16 +180,16 @@ public class Questions {
         boolean isLika = false;
 
         while (movieList.size() < 4) {
-            Movies results = apiService.getRandomMovie(restTemplate);
-            String year = results.release_date.substring(0,4);
-            results.release_date = year;
+            Movies movies = apiService.getRandomMovie(restTemplate);
+            String year = movies.release_date.substring(0,4);
+            movies.release_date = year;
 
             if (movieList.size() == 0) {
-                movieList.add(results);
+                movieList.add(movies);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(results.getTitle()) || movieList.get(j).release_date.equals(results.release_date)) {
+                if (movieList.get(j).getTitle().equals(movies.getTitle()) || movieList.get(j).release_date.equals(movies.release_date)) {
                     isLika = true;
                     break;
                 } else {
@@ -197,7 +197,7 @@ public class Questions {
                 }
             }
             if (!isLika) {
-                movieList.add(results);
+                movieList.add(movies);
             }
         }
 
@@ -272,11 +272,11 @@ public class Questions {
         this.correctAnswer = correctAnswer;
     }
 
-    public List<Actors> getCastList() {
+    public List<Actor> getCastList() {
         return castList;
     }
 
-    public void setCastList(List<Actors> castList) {
+    public void setCastList(List<Actor> castList) {
         this.castList = castList;
     }
 
