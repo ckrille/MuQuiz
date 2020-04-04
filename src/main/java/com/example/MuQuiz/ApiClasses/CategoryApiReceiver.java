@@ -3,7 +3,7 @@ package com.example.MuQuiz.ApiClasses;
 import java.util.List;
 
 public class CategoryApiReceiver {
-   public List<Category> genres;
+   private List<Category> genres;
 
     public CategoryApiReceiver() {
     }

@@ -2,26 +2,26 @@ package com.example.MuQuiz.ApiClasses;
 
 import java.util.List;
 
-public class ActorsMovies {
+public class MoviesByActor {
 
-    public String name;
-    public String Character;
-    public String credit_id;
-    public String release_date;
-    public Long vote_count;
-    public Boolean video;
-    public Boolean adult;
-    public Double vote_average;
-    public String title;
-    public List<Integer> genre_ids;
-    public String original_title;
-    public Float popularity;
-    public Long id;
-    public String backdrop_path;
-    public String overview;
-    public String poster_path;
+    private String name;
+    private String Character;
+    private String credit_id;
+    private String release_date;
+    private Long vote_count;
+    private Boolean video;
+    private Boolean adult;
+    private Double vote_average;
+    private String title;
+    private List<Integer> genre_ids;
+    private String original_title;
+    private Float popularity;
+    private Long id;
+    private String backdrop_path;
+    private String overview;
+    private String poster_path;
 
-    public ActorsMovies() {
+    public MoviesByActor() {
     }
 
     public String getName() {

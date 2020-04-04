@@ -4,10 +4,10 @@ import java.util.List;
 
 public class MoviesApiReceiver {
 
-    public String page;
-    public String total_results;
-    public String total_pages;
-    public List<Movies> results;
+    private String page;
+    private String total_results;
+    private String total_pages;
+    private List<Movies> results;
 
     public MoviesApiReceiver() {
     }

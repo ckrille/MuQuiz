@@ -15,8 +15,8 @@ public class Questions {
 
     private String theQuestion;
     private List<Movies> movieList;
-    private List<Cast> castList;
-    private List<ActorsMovies> actorsMoviesList;
+    private List<Actors> castList;
+    private List<MoviesByActor> actorsMoviesList;
     private Long correctAnswer;
     private int randForQandA;
     private int typeQuestion;
@@ -34,16 +34,16 @@ public class Questions {
 
   /*  public Questions getActorNotInMovie(RestTemplate restTemplate){
         Questions questions = new Questions();
-        List<ActorsMovies> actorsMoviesList = new ArrayList<>();
+        List<MoviesByActor> actorsMoviesList = new ArrayList<>();
         Random rand = new Random();
         CategoryService categoryService = new CategoryService();
 
-        ActorsMoviesAPI credits = categoryService.getRandomActorCredits(restTemplate);
+        MoviesByActorApiReceiver credits = categoryService.getRandomActorCredits(restTemplate);
 
         int randSort = rand.nextInt(3);
         for (int i = 0; i < 4; i++) {
             if(randSort == i){
-                ActorsMovies wrongAnswer = categoryService.getRandomActorCredit(restTemplate);
+                MoviesByActor wrongAnswer = categoryService.getRandomActorCredit(restTemplate);
                 actorsMoviesList.add(wrongAnswer);
             } else {
                 actorsMoviesList.add(credits.cast.get(i));
@@ -63,25 +63,25 @@ public class Questions {
 
     public Questions getActorsInMovie(RestTemplate restTemplate) {
         Questions questions = new Questions();
-        List<Cast> castList = new ArrayList<>();
+        List<Actors> castList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
-        Credits credits = apiService.getRandomMovieCharacters(restTemplate);
+        ActorsApiReceiver credits = apiService.getRandomMovieCharacters(restTemplate);
 
         int randSort = rand.nextInt(3);
         for (int i = 0; i < 4; i++) {
             if (randSort == i) {
-                Cast wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
+                Actors wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
                 castList.add(wrongAnswer);
             } else
-                castList.add(credits.cast.get(i));
+                castList.add(credits.getCast().get(i));
         }
 
         correctAnswer = castList.get(randSort).getId();
         System.out.println("FACIT: " + castList.get(randSort).getName());
 
-        questions.theQuestion = "Which actor does not have a role in the movie " + credits.cast.get(0).getTitle() + "?";
+        questions.theQuestion = "Which actor does not have a role in the movie " + credits.getCast().get(0).getTitle() + "?";
         questions.correctAnswer = correctAnswer;
         questions.castList = castList;
         questions.typeQuestion = 1;
@@ -91,16 +91,16 @@ public class Questions {
 
     public Questions getCharacterQuestion(RestTemplate restTemplate) {
         Questions questions = new Questions();
-        List<Cast> castList = new ArrayList<>();
+        List<Actors> castList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
 //        for (int i = 0; i < 4; i++) {
-//            Cast results = apiService.getRandomMovieCharacter(restTemplate);
+//            Actors results = apiService.getRandomMovieCharacter(restTemplate);
 //            castList.add(results);
 //        }
         while (castList.size()<4){
-            Cast results = apiService.getRandomMovieCharacter(restTemplate);
+            Actors results = apiService.getRandomMovieCharacter(restTemplate);
             if (castList.size() == 0){
                 castList.add(results);
                 continue;
@@ -272,11 +272,11 @@ public class Questions {
         this.correctAnswer = correctAnswer;
     }
 
-    public List<Cast> getCastList() {
+    public List<Actors> getCastList() {
         return castList;
     }
 
-    public void setCastList(List<Cast> castList) {
+    public void setCastList(List<Actors> castList) {
         this.castList = castList;
     }
 
@@ -288,11 +288,11 @@ public class Questions {
         this.randForQandA = randForQandA;
     }
 
-    public List<ActorsMovies> getActorsMoviesList() {
+    public List<MoviesByActor> getActorsMoviesList() {
         return actorsMoviesList;
     }
 
-    public void setActorsMoviesList(List<ActorsMovies> actorsMoviesList) {
+    public void setActorsMoviesList(List<MoviesByActor> actorsMoviesList) {
         this.actorsMoviesList = actorsMoviesList;
     }
 

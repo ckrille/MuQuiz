@@ -4,22 +4,22 @@ import java.util.List;
 
 public class Movies {
 
-    public Float popularity;
-    public Long vote_count;
-    public Boolean video;
-    public String poster_path;
-    public Long id;
-    public Boolean adult;
-    public String backdrop_path;
-    public String original_language;
-    public String original_title;
-    public List<Long> genre_ids;
-    public String title;
-    public Double vote_average;
-    public String overview;
-    public String release_date;
-    public String character;
-    public String profile_path;
+    private Float popularity;
+    private Long vote_count;
+    private Boolean video;
+    private String poster_path;
+    private Long id;
+    private Boolean adult;
+    private String backdrop_path;
+    private String original_language;
+    private String original_title;
+    private List<Long> genre_ids;
+    private String title;
+    private Double vote_average;
+    private String overview;
+    public String release_date; //fungerade inte att get:a i oskars validering för year.
+    private String character;
+    private String profile_path;
 
     public Movies() {
     }

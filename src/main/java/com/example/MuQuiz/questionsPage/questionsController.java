@@ -49,7 +49,7 @@ public class questionsController {
            /* qu = qu.getCharacterQuestion(restTemplate);*/
             questions = questions.getWhatYearQuestion(restTemplate);
 
-            model.addAttribute("url", questions.getMovieList().get(questions.getRandForQandA()).poster_path);
+            model.addAttribute("url", questions.getMovieList().get(questions.getRandForQandA()).getPoster_path());
             model.addAttribute("overview", questions.getTheQuestion());
             model.addAttribute("answer", questions.getMovieList());
             model.addAttribute("score",highscore.getHighscore());
@@ -70,7 +70,7 @@ public class questionsController {
         if (numOfQuestions % 4 == 3) {
             questions = questions.getCharacterQuestion(restTemplate);
             numOfQuestions++;
-            model.addAttribute("url", questions.getCastList().get(questions.getRandForQandA()).profile_path);
+            model.addAttribute("url", questions.getCastList().get(questions.getRandForQandA()).getProfile_path());
             model.addAttribute("overview", questions.getTheQuestion());
             model.addAttribute("answer", questions.getCastList());
             model.addAttribute("score",highscore.getHighscore());

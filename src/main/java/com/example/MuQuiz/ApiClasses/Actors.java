@@ -1,20 +1,20 @@
 package com.example.MuQuiz.ApiClasses;
 
-public class Cast {
+public class Actors {
 
-   public String title;
-   public Long cast_id;
-   public String character;
-   public String credit_id;
-   public int gender;
-   public Long id;
-   public String name;
-   public int order;
-   public String profile_path;
-   public String release_date;
-   public String poster_path;
+   private String title;
+   private Long cast_id;
+   private String character;
+   private String credit_id;
+   private int gender;
+   private Long id;
+   private String name;
+   private int order;
+   private String profile_path;
+   private String release_date;
+   private String poster_path;
 
-    public Cast() {
+    public Actors() {
     }
 
     public String getTitle() {
