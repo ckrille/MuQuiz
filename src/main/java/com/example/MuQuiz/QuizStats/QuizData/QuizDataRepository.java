@@ -7,4 +7,5 @@ import org.springframework.stereotype.Repository;
 public interface QuizDataRepository extends CrudRepository<QuizData,Long> {
 
 
+    public Iterable<QuizData> findAllByOrderByTotalScoreDesc();
 }

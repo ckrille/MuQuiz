@@ -53,6 +53,12 @@
         <h1>Your score</h1>
 
         <h1 th:text="${score}"></h1>
+        <p></p>
+        <span>TEST HÄR UNDER</span>
+        <div th:each="highscorelist, iter : ${highscore}">
+            <span th:text="${iter.index+1} +' ' + ${highscorelist.quizPlayedBy}"></span>
+            <span th:text="${highscorelist.totalScore}"></span>
+        </div>
 
 
     </div>

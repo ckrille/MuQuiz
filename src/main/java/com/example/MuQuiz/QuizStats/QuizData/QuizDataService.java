@@ -20,6 +20,13 @@ public class QuizDataService {
     public QuizDataService() {
     }
 
+    public List <QuizData> getHighScores(){
+
+        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findAllByOrderByTotalScoreDesc();
+
+        return quizDataList;
+    }
+
     public Questions getCompleteQuiz(Long quizId){
         Questions questions = new Questions();
 
