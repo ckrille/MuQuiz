@@ -14,10 +14,11 @@ public class QsDataService {
     public QsDataService() {
     }
 
-    public void postQuestionsDataToDB(Questions questions, Long answer, Integer score, Long countQuizId) {
+    public void postQuestionsDataToDB(int counter, Questions questions, Long answer, Integer score, Long quizId) {
         QsData qsData = new QsData();
 
-        qsData.setCountQuizId(countQuizId);
+        qsData.setNumOfQuestionInQuiz(counter);
+        qsData.setQuizId(quizId);
         qsData.setScore(score);
         qsData.setUserAnswer(answer);
         qsData.setCorrectAnswer(questions.getCorrectAnswer());
@@ -38,10 +39,11 @@ public class QsDataService {
         qsDataRepository.save(qsData);
     }
 
-    public void postQuestionsDataToDB(Questions questions, Long answer, Long countQuizId) {
+    public void postQuestionsDataToDB(int counter,Questions questions, Long answer, Long quizId) {
         QsData qsData = new QsData();
 
-        qsData.setCountQuizId(countQuizId);
+        qsData.setNumOfQuestionInQuiz(counter);
+        qsData.setQuizId(quizId);
         qsData.setUserAnswer(answer);
         qsData.setCorrectAnswer(questions.getCorrectAnswer());
         qsData.setTypeQuestion(questions.getTypeQuestion());

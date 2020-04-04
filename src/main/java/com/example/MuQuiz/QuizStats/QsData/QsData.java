@@ -12,6 +12,7 @@ public class QsData {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long questionId;
+    private Integer numOfQuestionInQuiz;
     private Integer typeQuestion;
     private Long correctAnswer;
     private Long answerAltOne;
@@ -20,7 +21,7 @@ public class QsData {
     private Long answerAltFour;
     private Integer score;
     private Long userAnswer;
-    private Long countQuizId;
+    private Long quizId;
 
 
     public QsData() {
@@ -109,11 +110,19 @@ public class QsData {
         this.userAnswer = userAnswer;
     }
 
-    public Long getCountQuizId() {
-        return countQuizId;
+    public Long getQuizId() {
+        return quizId;
     }
 
-    public void setCountQuizId(Long countQuizId) {
-        this.countQuizId = countQuizId;
+    public void setQuizId(Long quizId) {
+        this.quizId = quizId;
+    }
+
+    public Integer getNumOfQuestionInQuiz() {
+        return numOfQuestionInQuiz;
+    }
+
+    public void setNumOfQuestionInQuiz(Integer numOfQuestionInQuiz) {
+        this.numOfQuestionInQuiz = numOfQuestionInQuiz;
     }
 }

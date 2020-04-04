@@ -27,25 +27,25 @@ public class questionsController {
     @Autowired
     private QuizDataService quizDataService;
 
-int counter  = 0;
-private Long quizId = 1L;
+    private int numOfQuestions = 0;
+    private Long quizId = 1L;
 
 
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
-        if(counter == 3){
-            counter = 0;
+        if(numOfQuestions == 3){
+            numOfQuestions = 0;
             quizDataService.saveCompletedQuiz(quizId);
             quizId++;
             return "redirect:/results";
         }
-        System.out.println("Counter: "+counter);
-        if(counter % 4 == 0) {
+        System.out.println("Counter: "+ numOfQuestions);
+        if(numOfQuestions % 4 == 0) {
             questions = questions.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url", questions.getMovieList());
 
         }
-        if(counter % 4 == 1){
+        if(numOfQuestions % 4 == 1){
            /* qu = qu.getCharacterQuestion(restTemplate);*/
             questions = questions.getWhatYearQuestion(restTemplate);
 
@@ -53,13 +53,13 @@ private Long quizId = 1L;
             model.addAttribute("overview", questions.getTheQuestion());
             model.addAttribute("answer", questions.getMovieList());
             model.addAttribute("score",highscore.getHighscore());
-            counter++;
+            numOfQuestions++;
             return "questiontype1";
             //qu = qu.getPosterQuestion(restTemplate);
         }
-        if (counter % 4 == 2) {
+        if (numOfQuestions % 4 == 2) {
             questions = questions.getActorsInMovie(restTemplate);
-            counter++;
+            numOfQuestions++;
             model.addAttribute("url", questions.getCastList());
             model.addAttribute("overview", questions.getTheQuestion());
             model.addAttribute("answer", questions.getCastList());
@@ -67,9 +67,9 @@ private Long quizId = 1L;
             return "questions";
         }
 
-        if (counter % 4 == 3) {
+        if (numOfQuestions % 4 == 3) {
             questions = questions.getCharacterQuestion(restTemplate);
-            counter++;
+            numOfQuestions++;
             model.addAttribute("url", questions.getCastList().get(questions.getRandForQandA()).profile_path);
             model.addAttribute("overview", questions.getTheQuestion());
             model.addAttribute("answer", questions.getCastList());
@@ -79,7 +79,7 @@ private Long quizId = 1L;
         model.addAttribute("score",highscore.getHighscore());
         model.addAttribute("overview", questions.getTheQuestion());
         model.addAttribute("correctId", questions.getCorrectAnswer());
-        counter++;
+        numOfQuestions++;
 
         return "questions";
     }
@@ -98,11 +98,11 @@ private Long quizId = 1L;
             highscore.setHighscore(currentScore);
 
             System.out.println("Highscore: "+ highscore.getHighscore());
-            qsDataService.postQuestionsDataToDB(questions, answer, score, quizId);
+            qsDataService.postQuestionsDataToDB(numOfQuestions,questions, answer, score, quizId);
         }
         else{
             System.err.println("Fel svar!");
-            qsDataService.postQuestionsDataToDB(questions, answer, quizId);
+            qsDataService.postQuestionsDataToDB(numOfQuestions,questions, answer, quizId);
         }
 
 

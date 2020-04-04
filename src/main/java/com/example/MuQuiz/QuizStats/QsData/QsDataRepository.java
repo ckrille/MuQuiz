@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 public interface QsDataRepository extends CrudRepository<QsData, Long> {
 
 
-    @Query("SELECT score FROM QsData u WHERE u.countQuizId = ?1")
+    @Query("SELECT score FROM QsData u WHERE u.quizId = ?1")
     Iterable<Integer> getTotalScoreFromQuizId(Long countQuizId);
 
 }

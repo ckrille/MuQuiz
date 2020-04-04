@@ -166,7 +166,7 @@ public class Questions {
         String correctReleaseDate = movieList.get(randForQandA).getRelease_date();
         correctAnswer = movieList.get(randForQandA).getId();
         System.out.println("FACIT: " + movieList.get(randForQandA).getRelease_date());
-        Questions questions = new Questions(("What date was " + movieList.get(randForQandA).getTitle()) + " released?"
+        Questions questions = new Questions(("What year was " + movieList.get(randForQandA).getTitle()) + " released?"
                 , movieList
                 , correctAnswer);
         questions.randForQandA = randForQandA;
