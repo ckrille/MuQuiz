@@ -2,7 +2,7 @@ package com.example.MuQuiz.ApiClasses;
 
 import java.util.List;
 
-public class Results {
+public class Movies {
 
     public Float popularity;
     public Long vote_count;
@@ -21,7 +21,7 @@ public class Results {
     public String character;
     public String profile_path;
 
-    public Results() {
+    public Movies() {
     }
 
     public Float getPopularity() {

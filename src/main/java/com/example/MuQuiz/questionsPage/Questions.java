@@ -6,8 +6,6 @@ import com.example.MuQuiz.ApiClasses.ApiService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.persistence.ManyToOne;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -16,7 +14,7 @@ import java.util.Random;
 public class Questions {
 
     private String theQuestion;
-    private List<Results> movieList;
+    private List<Movies> movieList;
     private List<Cast> castList;
     private List<ActorsMovies> actorsMoviesList;
     private Long correctAnswer;
@@ -26,7 +24,7 @@ public class Questions {
     public Questions() {
     }
 
-    public Questions(String theQuestion, List<Results> movieList, Long correctAnswer) {
+    public Questions(String theQuestion, List<Movies> movieList, Long correctAnswer) {
         this.theQuestion = theQuestion;
         this.movieList = movieList;
         this.correctAnswer = correctAnswer;
@@ -132,14 +130,14 @@ public class Questions {
 
     public Questions getWhatYearQuestion(RestTemplate restTemplate) {
 
-        List<Results> movieList = new ArrayList<>();
+        List<Movies> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
         boolean isLika = false;
         int firstYear = 0;
 
         while (movieList.size() < 4) {
-            Results results = apiService.getRandomMovie(restTemplate);
+            Movies results = apiService.getRandomMovie(restTemplate);
             String year = results.release_date.substring(0,4);
             results.release_date = year;
             int intYear = Integer.parseInt(year);
@@ -176,13 +174,13 @@ public class Questions {
 
     public Questions getYearForMovieQuestion(RestTemplate restTemplate) {
 
-        List<Results> movieList = new ArrayList<>();
+        List<Movies> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
         boolean isLika = false;
 
         while (movieList.size() < 4) {
-            Results results = apiService.getRandomMovie(restTemplate);
+            Movies results = apiService.getRandomMovie(restTemplate);
             String year = results.release_date.substring(0,4);
             results.release_date = year;
 
@@ -217,12 +215,12 @@ public class Questions {
 
   /*  public Questions getDescQuestion(RestTemplate restTemplate){
 
-        List<Results> movieList = new ArrayList<>();
+        List<Movies> movieList = new ArrayList<>();
         Random rand = new Random();
         CategoryService categoryService = new CategoryService();
 
         for (int i = 0; i < 4; i++) {
-            Results results = categoryService.getRandomMovie(restTemplate);
+            Movies results = categoryService.getRandomMovie(restTemplate);
             movieList.add(results);
         }
 
@@ -237,8 +235,8 @@ public class Questions {
 
   /*  public Questions getPosterQuestion(RestTemplate restTemplate){
         CategoryService categoryService = new CategoryService();
-        Results results = categoryService.getRandomMovie(restTemplate);
-        List<Results> movieList = new ArrayList<>();
+        Movies results = categoryService.getRandomMovie(restTemplate);
+        List<Movies> movieList = new ArrayList<>();
 
         movieList.add(results);
         this.theQuestion = "Vilken film är det på bilden?";
@@ -258,11 +256,11 @@ public class Questions {
         this.theQuestion = theQuestion;
     }
 
-    public List<Results> getMovieList() {
+    public List<Movies> getMovieList() {
         return movieList;
     }
 
-    public void setMovieList(List<Results> movieList) {
+    public void setMovieList(List<Movies> movieList) {
         this.movieList = movieList;
     }
 

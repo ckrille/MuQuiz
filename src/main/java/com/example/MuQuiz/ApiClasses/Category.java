@@ -1,14 +1,14 @@
 package com.example.MuQuiz.ApiClasses;
 
-public class Genres {
+public class Category {
 
     public Long id;
     public String name;
 
-    public Genres() {
+    public Category() {
     }
 
-    public Genres(Long id, String name) {
+    public Category(Long id, String name) {
         this.id = id;
         this.name = name;
     }

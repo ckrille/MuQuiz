@@ -33,7 +33,7 @@ public class questionsController {
 
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
-        if(numOfQuestions == 3){
+        if(numOfQuestions == 4){
             numOfQuestions = 0;
             quizDataService.saveCompletedQuiz(quizId);
             quizId++;
