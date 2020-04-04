@@ -1,4 +1,4 @@
-package com.example.MuQuiz.QuizStats;
+package com.example.MuQuiz.QuizStats.QsData;
 
 import org.springframework.stereotype.Service;
 
@@ -20,9 +20,10 @@ public class QsData {
     private Long answerAltFour;
     private Integer score;
     private Long userAnswer;
+    private Long countQuizId;
 
 
-    public QsData(){
+    public QsData() {
     }
 
     public QsData(Long specifiktQuizID, Integer typeQuestion, Long correctAnswer, Long wrongAnswer1, Long answerAltTwo, Long answerAltThree, Integer score, Long userAnswer) {
@@ -36,28 +37,12 @@ public class QsData {
         this.userAnswer = userAnswer;
     }
 
-    public Long getSpecifiktQuizID() {
+    public Long getQuestionId() {
         return questionId;
     }
 
-    public void setSpecifiktQuizID(Long specifiktQuizID) {
-        this.questionId = specifiktQuizID;
-    }
-
-    public Integer getScore() {
-        return score;
-    }
-
-    public void setScore(Integer score) {
-        this.score = score;
-    }
-
-    public Long getUserAnswer() {
-        return userAnswer;
-    }
-
-    public void setUserAnswer(Long userAnswer) {
-        this.userAnswer = userAnswer;
+    public void setQuestionId(Long questionId) {
+        this.questionId = questionId;
     }
 
     public Integer getTypeQuestion() {
@@ -76,12 +61,12 @@ public class QsData {
         this.correctAnswer = correctAnswer;
     }
 
-    public Long getWrongAnswer1() {
+    public Long getAnswerAltOne() {
         return answerAltOne;
     }
 
-    public void setWrongAnswer1(Long wrongAnswer1) {
-        this.answerAltOne = wrongAnswer1;
+    public void setAnswerAltOne(Long answerAltOne) {
+        this.answerAltOne = answerAltOne;
     }
 
     public Long getAnswerAltTwo() {
@@ -100,19 +85,35 @@ public class QsData {
         this.answerAltThree = answerAltThree;
     }
 
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
-    }
-
     public Long getAnswerAltFour() {
         return answerAltFour;
     }
 
     public void setAnswerAltFour(Long answerAltFour) {
         this.answerAltFour = answerAltFour;
+    }
+
+    public Integer getScore() {
+        return score;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Long getUserAnswer() {
+        return userAnswer;
+    }
+
+    public void setUserAnswer(Long userAnswer) {
+        this.userAnswer = userAnswer;
+    }
+
+    public Long getCountQuizId() {
+        return countQuizId;
+    }
+
+    public void setCountQuizId(Long countQuizId) {
+        this.countQuizId = countQuizId;
     }
 }

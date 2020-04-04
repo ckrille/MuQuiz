@@ -1,8 +1,8 @@
 package com.example.MuQuiz.questionsPage;
 
 
-        import com.example.MuQuiz.QuizStats.QsData;
-        import com.example.MuQuiz.QuizStats.QsDataService;
+        import com.example.MuQuiz.QuizStats.QuizData.QuizDataService;
+        import com.example.MuQuiz.QuizStats.QsData.QsDataService;
         import com.example.MuQuiz.QuizStats.QuizStats;
         import org.springframework.beans.factory.annotation.Autowired;
         import org.springframework.stereotype.Controller;
@@ -16,66 +16,69 @@ package com.example.MuQuiz.questionsPage;
 public class questionsController {
 
     @Autowired
-    Questions qu;
+    private Questions questions;
 
     @Autowired
-    QuizStats highscore;
+    private QuizStats highscore;
 
     @Autowired
-    QsData qsData;
+    private QsDataService qsDataService;
 
     @Autowired
-    QsDataService qsDataService;
+    private QuizDataService quizDataService;
 
 int counter  = 0;
+private Long quizId = 1L;
 
 
     @GetMapping("/questions")
     public String showStart(RestTemplate restTemplate,Model model){
-        if(counter == 11){
+        if(counter == 3){
             counter = 0;
+            quizDataService.saveCompletedQuiz(quizId);
+            quizId++;
             return "redirect:/results";
         }
         System.out.println("Counter: "+counter);
         if(counter % 4 == 0) {
-            qu = qu.getYearForMovieQuestion(restTemplate);
-            model.addAttribute("url",qu.getMovieList());
+            questions = questions.getYearForMovieQuestion(restTemplate);
+            model.addAttribute("url", questions.getMovieList());
 
         }
         if(counter % 4 == 1){
            /* qu = qu.getCharacterQuestion(restTemplate);*/
-            qu = qu.getWhatYearQuestion(restTemplate);
+            questions = questions.getWhatYearQuestion(restTemplate);
 
-            model.addAttribute("url",qu.getMovieList().get(qu.getRandForQandA()).poster_path);
-            model.addAttribute("overview",qu.getTheQuestion());
-            model.addAttribute("answer", qu.getMovieList());
+            model.addAttribute("url", questions.getMovieList().get(questions.getRandForQandA()).poster_path);
+            model.addAttribute("overview", questions.getTheQuestion());
+            model.addAttribute("answer", questions.getMovieList());
             model.addAttribute("score",highscore.getHighscore());
             counter++;
             return "questiontype1";
             //qu = qu.getPosterQuestion(restTemplate);
         }
         if (counter % 4 == 2) {
-            qu = qu.getActorsInMovie(restTemplate);
+            questions = questions.getActorsInMovie(restTemplate);
             counter++;
-            model.addAttribute("url", qu.getCastList());
-            model.addAttribute("overview",qu.getTheQuestion());
-            model.addAttribute("answer", qu.getCastList());
+            model.addAttribute("url", questions.getCastList());
+            model.addAttribute("overview", questions.getTheQuestion());
+            model.addAttribute("answer", questions.getCastList());
 
             return "questions";
         }
 
         if (counter % 4 == 3) {
-            qu = qu.getCharacterQuestion(restTemplate);
+            questions = questions.getCharacterQuestion(restTemplate);
             counter++;
-            model.addAttribute("url", qu.getCastList().get(qu.getRandForQandA()).profile_path);
-            model.addAttribute("overview",qu.getTheQuestion());
-            model.addAttribute("answer", qu.getCastList());
+            model.addAttribute("url", questions.getCastList().get(questions.getRandForQandA()).profile_path);
+            model.addAttribute("overview", questions.getTheQuestion());
+            model.addAttribute("answer", questions.getCastList());
             model.addAttribute("score",highscore.getHighscore());
             return "questiontype1";
         }
         model.addAttribute("score",highscore.getHighscore());
-        model.addAttribute("overview",qu.getTheQuestion());
-        model.addAttribute("correctId", qu.getCorrectAnswer());
+        model.addAttribute("overview", questions.getTheQuestion());
+        model.addAttribute("correctId", questions.getCorrectAnswer());
         counter++;
 
         return "questions";
@@ -85,9 +88,9 @@ int counter  = 0;
     @PostMapping("/questions")
     public String postShow(RestTemplate restTemplate,Model model,@RequestParam Long answer, Integer score){
 
-    
 
-        if(qu.getCorrectAnswer().equals(answer)) {
+
+        if(questions.getCorrectAnswer().equals(answer)) {
             System.out.println("RÄTT SVAR!!!");
             System.out.println(answer);
 
@@ -95,11 +98,11 @@ int counter  = 0;
             highscore.setHighscore(currentScore);
 
             System.out.println("Highscore: "+ highscore.getHighscore());
-            qsDataService.setQuestions(qu, answer, score);
+            qsDataService.postQuestionsDataToDB(questions, answer, score, quizId);
         }
         else{
             System.err.println("Fel svar!");
-            qsDataService.setQuestionsWithoutScore(qu, answer);
+            qsDataService.postQuestionsDataToDB(questions, answer, quizId);
         }
 
 
