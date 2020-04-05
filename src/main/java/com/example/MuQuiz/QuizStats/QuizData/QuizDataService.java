@@ -2,7 +2,7 @@ package com.example.MuQuiz.QuizStats.QuizData;
 
 import com.example.MuQuiz.QuizStats.QsData.QsData;
 import com.example.MuQuiz.QuizStats.QsData.QsDataRepository;
-import com.example.MuQuiz.questionsPage.Questions;
+import com.example.MuQuiz.questionsPage.QuestionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,8 +27,8 @@ public class QuizDataService {
         return quizDataList;
     }
 
-    public Questions getCompleteQuiz(Long quizId){
-        Questions questions = new Questions();
+    public QuestionsService getCompleteQuiz(Long quizId){
+        QuestionsService questionsService = new QuestionsService();
 
         List<QsData> longList = (List<QsData>)qsDataRepository.findByQuizId(quizId);
         System.out.println("*****");
@@ -42,7 +42,7 @@ public class QuizDataService {
 
 
 
-        return questions;
+        return questionsService;
     }
 
     public Integer getTotalScoreOnQuizId(Long quizId) {

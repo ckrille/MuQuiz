@@ -1,6 +1,6 @@
 package com.example.MuQuiz.QuizStats.QsData;
 
-import com.example.MuQuiz.questionsPage.Questions;
+import com.example.MuQuiz.questionsPage.QuestionsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,51 +14,51 @@ public class QsDataService {
     public QsDataService() {
     }
 
-    public void postQuestionsDataToDB(int numOfQuestions, Questions questions, Long answer, Integer score, Long quizId) {
+    public void postQuestionsDataToDB(int numOfQuestions, QuestionsService questionsService, Long answer, Integer score, Long quizId) {
         QsData qsData = new QsData();
 
         qsData.setNumOfQuestionInQuiz(numOfQuestions);
         qsData.setQuizId(quizId);
         qsData.setScore(score);
         qsData.setUserAnswer(answer);
-        qsData.setCorrectAnswer(questions.getCorrectAnswer());
-        qsData.setTypeQuestion(questions.getTypeQuestion());
-        if (questions.getMovieList() == null) {
-            System.out.println("size " + questions.getCastList().size());
-            qsData.setAnswerAltOne(questions.getCastList().get(0).getId());
-            qsData.setAnswerAltTwo(questions.getCastList().get(1).getId());
-            qsData.setAnswerAltThree(questions.getCastList().get(2).getId());
-            qsData.setAnswerAltFour(questions.getCastList().get(3).getId());
-        } else if (questions.getCastList() == null) {
-            System.out.println("size " + questions.getMovieList().size());
-            qsData.setAnswerAltOne(questions.getMovieList().get(0).getId());
-            qsData.setAnswerAltTwo(questions.getMovieList().get(1).getId());
-            qsData.setAnswerAltThree(questions.getMovieList().get(2).getId());
-            qsData.setAnswerAltFour(questions.getMovieList().get(3).getId());
+        qsData.setCorrectAnswer(questionsService.getCorrectAnswer());
+        qsData.setTypeQuestion(questionsService.getTypeQuestion());
+        if (questionsService.getMovieList() == null) {
+            System.out.println("size " + questionsService.getCastList().size());
+            qsData.setAnswerAltOne(questionsService.getCastList().get(0).getId());
+            qsData.setAnswerAltTwo(questionsService.getCastList().get(1).getId());
+            qsData.setAnswerAltThree(questionsService.getCastList().get(2).getId());
+            qsData.setAnswerAltFour(questionsService.getCastList().get(3).getId());
+        } else if (questionsService.getCastList() == null) {
+            System.out.println("size " + questionsService.getMovieList().size());
+            qsData.setAnswerAltOne(questionsService.getMovieList().get(0).getId());
+            qsData.setAnswerAltTwo(questionsService.getMovieList().get(1).getId());
+            qsData.setAnswerAltThree(questionsService.getMovieList().get(2).getId());
+            qsData.setAnswerAltFour(questionsService.getMovieList().get(3).getId());
         }
         qsDataRepository.save(qsData);
     }
 
-    public void postQuestionsDataToDB(int numOfQuestions,Questions questions, Long answer, Long quizId) {
+    public void postQuestionsDataToDB(int numOfQuestions, QuestionsService questionsService, Long answer, Long quizId) {
         QsData qsData = new QsData();
 
         qsData.setNumOfQuestionInQuiz(numOfQuestions);
         qsData.setQuizId(quizId);
         qsData.setUserAnswer(answer);
-        qsData.setCorrectAnswer(questions.getCorrectAnswer());
-        qsData.setTypeQuestion(questions.getTypeQuestion());
-        if (questions.getMovieList() == null) {
-            System.out.println("size " + questions.getCastList().size());
-            qsData.setAnswerAltOne(questions.getCastList().get(0).getId());
-            qsData.setAnswerAltTwo(questions.getCastList().get(1).getId());
-            qsData.setAnswerAltThree(questions.getCastList().get(2).getId());
-            qsData.setAnswerAltFour(questions.getCastList().get(3).getId());
-        } else if (questions.getCastList() == null) {
-            System.out.println("size " + questions.getMovieList().size());
-            qsData.setAnswerAltOne(questions.getMovieList().get(0).getId());
-            qsData.setAnswerAltTwo(questions.getMovieList().get(1).getId());
-            qsData.setAnswerAltThree(questions.getMovieList().get(2).getId());
-            qsData.setAnswerAltFour(questions.getMovieList().get(3).getId());
+        qsData.setCorrectAnswer(questionsService.getCorrectAnswer());
+        qsData.setTypeQuestion(questionsService.getTypeQuestion());
+        if (questionsService.getMovieList() == null) {
+            System.out.println("size " + questionsService.getCastList().size());
+            qsData.setAnswerAltOne(questionsService.getCastList().get(0).getId());
+            qsData.setAnswerAltTwo(questionsService.getCastList().get(1).getId());
+            qsData.setAnswerAltThree(questionsService.getCastList().get(2).getId());
+            qsData.setAnswerAltFour(questionsService.getCastList().get(3).getId());
+        } else if (questionsService.getCastList() == null) {
+            System.out.println("size " + questionsService.getMovieList().size());
+            qsData.setAnswerAltOne(questionsService.getMovieList().get(0).getId());
+            qsData.setAnswerAltTwo(questionsService.getMovieList().get(1).getId());
+            qsData.setAnswerAltThree(questionsService.getMovieList().get(2).getId());
+            qsData.setAnswerAltFour(questionsService.getMovieList().get(3).getId());
         }
         qsDataRepository.save(qsData);
     }
