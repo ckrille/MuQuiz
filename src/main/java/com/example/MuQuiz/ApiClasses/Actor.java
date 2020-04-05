@@ -12,7 +12,7 @@ public class Actor {
    private int order;
    private String profile_path;
    private String release_date;
-   private String poster_path;
+   private String poster_path; //Is not a part of the original JSON. Added to make a null-check in "th:if"-html.
 
     public Actor() {
     }

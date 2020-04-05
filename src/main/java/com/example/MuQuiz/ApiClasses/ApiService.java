@@ -7,6 +7,9 @@ import java.util.Random;
 @Service
 public class ApiService {
 
+    //  Selects a random category for other get-methods in this service. This is the first step in creating a penn to select results/questions from.
+    //  Many methods use previous methods with the purpose of "staying in the penn" and provide some control of what kind of results that are received.
+    //  Also validates what categories are selected to avoid inappropriate results.
     public Long getRandomCategory(RestTemplate restTemplate) {
         Long categoryId = 0L;
         boolean categoryCheck = true;
@@ -16,7 +19,10 @@ public class ApiService {
             int random = rand.nextInt(19);
 
             CategoryApiReceiver categoryApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/genre/movie/list?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", CategoryApiReceiver.class);
-            if(categoryApiReceiver.getGenres().get(random).getId() != 99L && categoryApiReceiver.getGenres().get(random).getId() != 10751L && categoryApiReceiver.getGenres().get(random).getId() != 10402L && categoryApiReceiver.getGenres().get(random).getId() != 10770L) {
+            if(categoryApiReceiver.getGenres().get(random).getId() != 99L
+                    && categoryApiReceiver.getGenres().get(random).getId() != 10751L
+                    && categoryApiReceiver.getGenres().get(random).getId() != 10402L
+                    && categoryApiReceiver.getGenres().get(random).getId() != 10770L) {
                 categoryId = categoryApiReceiver.getGenres().get(random).getId();
                 categoryCheck = false;
             }
@@ -24,11 +30,12 @@ public class ApiService {
         return categoryId;
     }
 
+    //  Selects a random movie from the random category provided by getRandomCategory().
+    //  The API-call is specified to show us the most popular results in each category.
     public Movie getRandomMovie(RestTemplate restTemplate) {
+        Long id = getRandomCategory(restTemplate);
         boolean randomMovieNull = true;
         Movie movie = new Movie();
-
-        Long id = getRandomCategory(restTemplate);
 
         while(randomMovieNull) {
             Random rand = new Random();
@@ -37,7 +44,9 @@ public class ApiService {
 
             MoviesApiReceiver moviesApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres=" + id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + page, MoviesApiReceiver.class);
             movie = moviesApiReceiver.getResults().get(random);
-            if (movie.getRelease_date() != null && movie.getRelease_date().length() >= 4 && movie.getPoster_path() != null) {
+            if (movie.getRelease_date() != null
+                    && movie.getRelease_date().length() >= 4
+                    && movie.getPoster_path() != null) {
                 randomMovieNull = false;
             }
 
@@ -45,22 +54,28 @@ public class ApiService {
         return movie;
     }
 
+    //  Selects a random movie character from the random movie provided by getRandomMovie().
+    //  This is used to get both actors or characters from movies.
     public Actor getRandomMovieCharacter(RestTemplate restTemplate) {
         boolean randomCharacterNull = true;
         Actor actor = new Actor();
-        while(randomCharacterNull) {
 
+        while(randomCharacterNull) {
         Random rand = new Random();
         int random = rand.nextInt(2);
 
         Movie result = getRandomMovie(restTemplate);
 
-            ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
+        ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
 
             if(actorsApiReceiver.getCast().size() >= 2) {
                 actor = actorsApiReceiver.getCast().get(random);
                 actor.setTitle(result.getTitle());
-                if(actor.getName() != null && actor.getName().length() >= 2 && actor.getCharacter() != null && actor.getCharacter().length() >= 2 && actor.getProfile_path() != null) {
+                if(actor.getName() != null
+                        && actor.getName().length() >= 2
+                        && actor.getCharacter() != null
+                        && actor.getCharacter().length() >= 2
+                        && actor.getProfile_path() != null) {
                     randomCharacterNull = false;
                 }
             }
@@ -68,10 +83,12 @@ public class ApiService {
         return actor;
     }
 
+    //  This method is made to give several characters or actors instead of just one like the method above.
     public ActorsApiReceiver getRandomMovieCharacters(RestTemplate restTemplate) {
+        ActorsApiReceiver actorsApiReceiver = new ActorsApiReceiver();
+
         boolean randomCharactersNull = true;
         int approvedCharacters = 0;
-        ActorsApiReceiver actorsApiReceiver = new ActorsApiReceiver();
 
         while(randomCharactersNull) {
             Movie movie = getRandomMovie(restTemplate);
@@ -80,7 +97,11 @@ public class ApiService {
                 actorsApiReceiver.getCast().get(i).setTitle(movie.getTitle());
             }
             for(int i = 0; i < 4; i++) {
-                if (actorsApiReceiver.getCast().get(i).getName() != null && actorsApiReceiver.getCast().get(i).getName().length() >= 2 && actorsApiReceiver.getCast().get(i).getCharacter() != null && actorsApiReceiver.getCast().get(i).getCharacter().length() >= 2 && actorsApiReceiver.getCast().get(i).getProfile_path() != null) {
+                if (actorsApiReceiver.getCast().get(i).getName() != null
+                        && actorsApiReceiver.getCast().get(i).getName().length() >= 2
+                        && actorsApiReceiver.getCast().get(i).getCharacter() != null
+                        && actorsApiReceiver.getCast().get(i).getCharacter().length() >= 2
+                        && actorsApiReceiver.getCast().get(i).getProfile_path() != null) {
                     approvedCharacters++;
                     if(approvedCharacters == 4) {
                         randomCharactersNull = false;
@@ -91,6 +112,7 @@ public class ApiService {
         return actorsApiReceiver;
     }
 
+    //  Used to get specific movies and rebuild a previous quiz with id provided from our database.
     public Movie getSpecificMovie(RestTemplate restTemplate, Long id) {
 
         Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + id + "?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Movie.class);
