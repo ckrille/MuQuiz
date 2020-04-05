@@ -1,4 +1,4 @@
-package com.example.MuQuiz.ApiClasses;
+package com.example.MuQuiz.ApiClasses.MoviesByActor;
 
 import java.util.List;
 

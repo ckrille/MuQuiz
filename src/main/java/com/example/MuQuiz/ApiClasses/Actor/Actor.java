@@ -1,4 +1,4 @@
-package com.example.MuQuiz.ApiClasses;
+package com.example.MuQuiz.ApiClasses.Actor;
 
 public class Actor {
 

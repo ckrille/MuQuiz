@@ -1,5 +1,10 @@
 package com.example.MuQuiz.ApiClasses;
 
+import com.example.MuQuiz.ApiClasses.Actor.Actor;
+import com.example.MuQuiz.ApiClasses.Actor.ActorsApiReceiver;
+import com.example.MuQuiz.ApiClasses.Category.CategoryApiReceiver;
+import com.example.MuQuiz.ApiClasses.Movie.Movie;
+import com.example.MuQuiz.ApiClasses.Movie.MoviesApiReceiver;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import java.util.Random;

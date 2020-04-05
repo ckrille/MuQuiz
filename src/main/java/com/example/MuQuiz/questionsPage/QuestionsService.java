@@ -1,7 +1,10 @@
 package com.example.MuQuiz.questionsPage;
 
-import com.example.MuQuiz.ApiClasses.*;
+import com.example.MuQuiz.ApiClasses.Actor.Actor;
+import com.example.MuQuiz.ApiClasses.Actor.ActorsApiReceiver;
 import com.example.MuQuiz.ApiClasses.ApiService;
+import com.example.MuQuiz.ApiClasses.Movie.Movie;
+import com.example.MuQuiz.ApiClasses.MoviesByActor.MoviesByActor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
