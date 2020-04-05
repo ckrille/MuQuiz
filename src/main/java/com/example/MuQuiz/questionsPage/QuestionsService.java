@@ -16,14 +16,14 @@ public class QuestionsService {
     private Long correctAnswer;
     private int randForQandA;
     private int typeQuestion;
-    private List<Movies> movieList;
-    private List<Actor> castList;
-    private List<MoviesByActor> actorsMoviesList;
+    private List<Movie> movieList;
+    private List<Actor> actorList;
+    private List<MoviesByActor> moviesByActorList;
 
     public QuestionsService() {
     }
 
-    public QuestionsService(String theQuestion, List<Movies> movieList, Long correctAnswer) {
+    public QuestionsService(String theQuestion, List<Movie> movieList, Long correctAnswer) {
         this.theQuestion = theQuestion;
         this.movieList = movieList;
         this.correctAnswer = correctAnswer;
@@ -31,7 +31,7 @@ public class QuestionsService {
 
     public QuestionsService getActorsInMovie(RestTemplate restTemplate) {
         QuestionsService questionsService = new QuestionsService();
-        List<Actor> castList = new ArrayList<>();
+        List<Actor> actorList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
@@ -41,17 +41,17 @@ public class QuestionsService {
         for (int i = 0; i < 4; i++) {
             if (randSort == i) {
                 Actor wrongAnswer = apiService.getRandomMovieCharacter(restTemplate);
-                castList.add(wrongAnswer);
+                actorList.add(wrongAnswer);
             } else
-                castList.add(actorsApiReceiver.getCast().get(i));
+                actorList.add(actorsApiReceiver.getCast().get(i));
         }
 
-        correctAnswer = castList.get(randSort).getId();
-        System.out.println("FACIT: " + castList.get(randSort).getName());
+        correctAnswer = actorList.get(randSort).getId();
+        System.out.println("FACIT: " + actorList.get(randSort).getName());
 
         questionsService.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(0).getTitle() + "?";
         questionsService.correctAnswer = correctAnswer;
-        questionsService.castList = castList;
+        questionsService.actorList = actorList;
         questionsService.typeQuestion = 1;
 
         return questionsService;
@@ -59,30 +59,30 @@ public class QuestionsService {
 
     public QuestionsService getCharacterQuestion(RestTemplate restTemplate) {
         QuestionsService questionsService = new QuestionsService();
-        List<Actor> castList = new ArrayList<>();
+        List<Actor> actorList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
 
         //fyll ArrayList med fyra Actor-objekt, säkerställ att det är samma kön
-        while (castList.size() < 4) {
+        while (actorList.size() < 4) {
             Actor actor = apiService.getRandomMovieCharacter(restTemplate);
-            if (castList.size() == 0) {
-                castList.add(actor);
+            if (actorList.size() == 0) {
+                actorList.add(actor);
                 continue;
             }
-            if (castList.get(0).getGender() == actor.getGender()) {
-                castList.add(actor);
+            if (actorList.get(0).getGender() == actor.getGender()) {
+                actorList.add(actor);
             }
         }
 
         //slumpa fram vilken av de fyra som ska vara den som efterfrågas och därmed också rätt svar
         int randForQandA = rand.nextInt(3);
-        correctAnswer = castList.get(randForQandA).getId();
-        System.out.println("FACIT: " + castList.get(randForQandA).getCharacter());
+        correctAnswer = actorList.get(randForQandA).getId();
+        System.out.println("FACIT: " + actorList.get(randForQandA).getCharacter());
 
-        questionsService.theQuestion = "What is the name of the character " + castList.get(randForQandA).getName() + " plays in " + castList.get(randForQandA).getTitle() + "?";
+        questionsService.theQuestion = "What is the name of the character " + actorList.get(randForQandA).getName() + " plays in " + actorList.get(randForQandA).getTitle() + "?";
         questionsService.correctAnswer = correctAnswer;
-        questionsService.castList = castList;
+        questionsService.actorList = actorList;
         questionsService.randForQandA = randForQandA;
         questionsService.typeQuestion = 2;
 
@@ -91,24 +91,24 @@ public class QuestionsService {
 
     public QuestionsService getWhatYearQuestion(RestTemplate restTemplate) {
         QuestionsService questionsService = new QuestionsService();
-        List<Movies> movieList = new ArrayList<>();
+        List<Movie> movieList = new ArrayList<>();
         ApiService apiService = new ApiService();
         boolean isSame = false;
         int firstYear = 0;
 
         while (movieList.size() < 4) {
-            Movies movies = apiService.getRandomMovie(restTemplate);
-            String year = movies.release_date.substring(0, 4);
-            movies.release_date = year;
+            Movie movie = apiService.getRandomMovie(restTemplate);
+            String year = movie.release_date.substring(0, 4);
+            movie.release_date = year;
             int intYear = Integer.parseInt(year);
 
             if (movieList.size() == 0) {
-                movieList.add(movies);
+                movieList.add(movie);
                 firstYear = Integer.parseInt(movieList.get(0).release_date);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(movies.getTitle()) || movieList.get(j).release_date.equals(movies.release_date) || Math.abs(intYear - firstYear) > 10) {
+                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).release_date.equals(movie.release_date) || Math.abs(intYear - firstYear) > 10) {
                     isSame = true;
                     break;
                 } else {
@@ -116,7 +116,7 @@ public class QuestionsService {
                 }
             }
             if (!isSame) {
-                movieList.add(movies);
+                movieList.add(movie);
             }
         }
 
@@ -134,22 +134,22 @@ public class QuestionsService {
 
     public QuestionsService getYearForMovieQuestion(RestTemplate restTemplate) {
         QuestionsService questionsService = new QuestionsService();
-        List<Movies> movieList = new ArrayList<>();
+        List<Movie> movieList = new ArrayList<>();
         Random rand = new Random();
         ApiService apiService = new ApiService();
         boolean isSame = false;
 
         while (movieList.size() < 4) {
-            Movies movies = apiService.getRandomMovie(restTemplate);
-            String year = movies.release_date.substring(0, 4);
-            movies.release_date = year;
+            Movie movie = apiService.getRandomMovie(restTemplate);
+            String year = movie.release_date.substring(0, 4);
+            movie.release_date = year;
 
             if (movieList.size() == 0) {
-                movieList.add(movies);
+                movieList.add(movie);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(movies.getTitle()) || movieList.get(j).release_date.equals(movies.release_date)) {
+                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).release_date.equals(movie.release_date)) {
                     isSame = true;
                     break;
                 } else {
@@ -157,7 +157,7 @@ public class QuestionsService {
                 }
             }
             if (!isSame) {
-                movieList.add(movies);
+                movieList.add(movie);
             }
         }
 
@@ -211,12 +211,12 @@ public class QuestionsService {
 
   /*  public Questions getDescQuestion(RestTemplate restTemplate){
 
-        List<Movies> movieList = new ArrayList<>();
+        List<Movie> movieList = new ArrayList<>();
         Random rand = new Random();
         CategoryService categoryService = new CategoryService();
 
         for (int i = 0; i < 4; i++) {
-            Movies results = categoryService.getRandomMovie(restTemplate);
+            Movie results = categoryService.getRandomMovie(restTemplate);
             movieList.add(results);
         }
 
@@ -231,8 +231,8 @@ public class QuestionsService {
 
   /*  public Questions getPosterQuestion(RestTemplate restTemplate){
         CategoryService categoryService = new CategoryService();
-        Movies results = categoryService.getRandomMovie(restTemplate);
-        List<Movies> movieList = new ArrayList<>();
+        Movie results = categoryService.getRandomMovie(restTemplate);
+        List<Movie> movieList = new ArrayList<>();
 
         movieList.add(results);
         this.theQuestion = "Vilken film är det på bilden?";
@@ -252,11 +252,11 @@ public class QuestionsService {
         this.theQuestion = theQuestion;
     }
 
-    public List<Movies> getMovieList() {
+    public List<Movie> getMovieList() {
         return movieList;
     }
 
-    public void setMovieList(List<Movies> movieList) {
+    public void setMovieList(List<Movie> movieList) {
         this.movieList = movieList;
     }
 
@@ -268,12 +268,12 @@ public class QuestionsService {
         this.correctAnswer = correctAnswer;
     }
 
-    public List<Actor> getCastList() {
-        return castList;
+    public List<Actor> getActorList() {
+        return actorList;
     }
 
-    public void setCastList(List<Actor> castList) {
-        this.castList = castList;
+    public void setActorList(List<Actor> actorList) {
+        this.actorList = actorList;
     }
 
     public int getRandForQandA() {
@@ -284,12 +284,12 @@ public class QuestionsService {
         this.randForQandA = randForQandA;
     }
 
-    public List<MoviesByActor> getActorsMoviesList() {
-        return actorsMoviesList;
+    public List<MoviesByActor> getMoviesByActorList() {
+        return moviesByActorList;
     }
 
-    public void setActorsMoviesList(List<MoviesByActor> actorsMoviesList) {
-        this.actorsMoviesList = actorsMoviesList;
+    public void setMoviesByActorList(List<MoviesByActor> moviesByActorList) {
+        this.moviesByActorList = moviesByActorList;
     }
 
     public int getTypeQuestion() {

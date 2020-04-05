@@ -24,9 +24,9 @@ public class ApiService {
         return categoryId;
     }
 
-    public Movies getRandomMovie(RestTemplate restTemplate) {
+    public Movie getRandomMovie(RestTemplate restTemplate) {
         boolean randomMovieNull = true;
-        Movies movies = new Movies();
+        Movie movie = new Movie();
 
         Long id = getRandomCategory(restTemplate);
 
@@ -36,13 +36,13 @@ public class ApiService {
             int page = rand.nextInt(  4)+1;
 
             MoviesApiReceiver moviesApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/discover/movie?api_key=31a12b6ca6c283fb200e5129823f37de&with_genres=" + id + "&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=" + page, MoviesApiReceiver.class);
-            movies = moviesApiReceiver.getResults().get(random);
-            if (movies.getRelease_date() != null && movies.getRelease_date().length() >= 4 && movies.getPoster_path() != null) {
+            movie = moviesApiReceiver.getResults().get(random);
+            if (movie.getRelease_date() != null && movie.getRelease_date().length() >= 4 && movie.getPoster_path() != null) {
                 randomMovieNull = false;
             }
 
         }
-        return movies;
+        return movie;
     }
 
     public Actor getRandomMovieCharacter(RestTemplate restTemplate) {
@@ -53,7 +53,7 @@ public class ApiService {
         Random rand = new Random();
         int random = rand.nextInt(2);
 
-        Movies result = getRandomMovie(restTemplate);
+        Movie result = getRandomMovie(restTemplate);
 
             ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
 
@@ -74,10 +74,10 @@ public class ApiService {
         ActorsApiReceiver actorsApiReceiver = new ActorsApiReceiver();
 
         while(randomCharactersNull) {
-            Movies movies = getRandomMovie(restTemplate);
-            actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movies.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
+            Movie movie = getRandomMovie(restTemplate);
+            actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
             for (int i = 0; i < actorsApiReceiver.getCast().size(); i++) {
-                actorsApiReceiver.getCast().get(i).setTitle(movies.getTitle());
+                actorsApiReceiver.getCast().get(i).setTitle(movie.getTitle());
             }
             for(int i = 0; i < 4; i++) {
                 if (actorsApiReceiver.getCast().get(i).getName() != null && actorsApiReceiver.getCast().get(i).getName().length() >= 2 && actorsApiReceiver.getCast().get(i).getCharacter() != null && actorsApiReceiver.getCast().get(i).getCharacter().length() >= 2 && actorsApiReceiver.getCast().get(i).getProfile_path() != null) {
@@ -90,6 +90,15 @@ public class ApiService {
         }
         return actorsApiReceiver;
     }
+
+    public Movie getSpecificMovie(RestTemplate restTemplate, Long id) {
+
+        Movie movie = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + id + "?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", Movie.class);
+
+        return movie;
+    }
+
+
     //Koden nedan har ingen validering och används inte just nu.
 /*
     public MoviesByActor getRandomActorCredit(RestTemplate restTemplate) {

@@ -61,18 +61,18 @@ public class QuestionsController {
         }
         if (numOfQuestions % 4 == 2) {
             questionsService = questionsService.getActorsInMovie(restTemplate);
-            model.addAttribute("url", questionsService.getCastList());
+            model.addAttribute("url", questionsService.getActorList());
             model.addAttribute("overview", questionsService.getTheQuestion());
-            model.addAttribute("answer", questionsService.getCastList());
+            model.addAttribute("answer", questionsService.getActorList());
             numOfQuestions++;
             return "questions";
         }
 
         if (numOfQuestions % 4 == 3) {
             questionsService = questionsService.getCharacterQuestion(restTemplate);
-            model.addAttribute("url", questionsService.getCastList().get(questionsService.getRandForQandA()).getProfile_path());
+            model.addAttribute("url", questionsService.getActorList().get(questionsService.getRandForQandA()).getProfile_path());
             model.addAttribute("overview", questionsService.getTheQuestion());
-            model.addAttribute("answer", questionsService.getCastList());
+            model.addAttribute("answer", questionsService.getActorList());
             model.addAttribute("score", highscore.getHighscore());
             numOfQuestions++;
             return "questiontype1";

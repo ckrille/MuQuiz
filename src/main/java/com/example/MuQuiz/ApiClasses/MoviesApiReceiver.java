@@ -7,12 +7,12 @@ public class MoviesApiReceiver {
     private String page;
     private String total_results;
     private String total_pages;
-    private List<Movies> results;
+    private List<Movie> results;
 
     public MoviesApiReceiver() {
     }
 
-    public MoviesApiReceiver(String page, String total_results, String total_pages, List<Movies> results) {
+    public MoviesApiReceiver(String page, String total_results, String total_pages, List<Movie> results) {
         this.page = page;
         this.total_results = total_results;
         this.total_pages = total_pages;
@@ -43,11 +43,11 @@ public class MoviesApiReceiver {
         this.total_pages = total_pages;
     }
 
-    public List<Movies> getResults() {
+    public List<Movie> getResults() {
         return results;
     }
 
-    public void setResults(List<Movies> results) {
+    public void setResults(List<Movie> results) {
         this.results = results;
     }
 }
