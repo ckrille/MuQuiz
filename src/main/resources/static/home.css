@@ -1,0 +1,21 @@
+#start {
+    background: url(img/startBak.jpg);
+    display: table;
+    height: 100%;
+    background-position: center center;
+    width: 100%;
+    background-size: cover;
+    background-attachment: fixed;
+}
+.landing-text {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 90px 0 200px;
+    height: 100%;
+    color: #D5D5D5;
+}
+
+.landing-text h1 {
+    font-weight: 700;
+}

@@ -3,34 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <title>Questions</title>
+    <!--    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!--     behöver nog inte den under -->
+    <!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">-->
+    <!--  jquery js file-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--  bootstrap js file-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--  egna css-->
+    <link href="navbarFooter.css" rel="stylesheet" />
+
 </head>
 <body>
 
-<h1>MuQuiz: <span th:text="${username}"></span></h1>
+<!--navbaren-->
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <!--            knapp för att få ner menyn vid liten sida-->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse-main">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <!--            ikonbilden längst upp till vänster-->
+            <a class="navbar-brand" href="/"><img src="img/MoQuizLogo.png" alt="Image" height="60" width="70">
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse-main">
+            <ul class="nav navbar-nav navbar-right">
+                <!--                navbarens alternativ förberet för länk-->
+                <li><a class="active" href="/">Home</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="/questions">New Game</a></li>
+                <li><a href="/results">High scores</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
-<div id="countdown"></div>
-<div th:text="${score}"></div>
-<p>Score:
-    <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
-    </meter>
-</p>
+<div id="questiontype1">
+    <h1>MoQuiz: <span th:text="${username}"></span></h1>
 
-<i><span th:text="${overview}"></span></i>
-<p>
-<div style="display: flex; flex-direction: row">
-    <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
-    <ul th:each="ans, iter : ${answer}">
-        <form action="/questions" method="post">
-            <div th:if="${ans.release_date != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
-            <div th:if="${ans.character != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
-            <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
-        </form>
-    </ul>
+    <div id="countdown"></div>
+    <div th:text="${score}"></div>
+    <p>Score:
+        <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
+        </meter>
+    </p>
+
+    <i><span th:text="${overview}"></span></i>
+    <p>
+        <div style="display: flex; flex-direction: row">
+            <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
+            <ul th:each="ans, iter : ${answer}">
+                <form action="/questions" method="post">
+                    <div th:if="${ans.release_date != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
+                    <div th:if="${ans.character != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
+                    <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
+                </form>
+            </ul>
+        </div>
+    </p>
+
+    <a href="/">Start</a>
+    <a href="/results">Results</a>
 </div>
-</p>
 
-<a href="/">Start</a>
-<a href="/results">Results</a>
+<footer class="container-fluid text-center">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>footer content</h3>
+        </div>
+        <div class="col-sm-4">
+            <h3>footer content</h3>
+        </div>
+        <div class="col-sm-4">
+            <h3>footer content</h3>
+        </div>
+    </div>
+</footer>
+
 </body>
 <script>
 var score = 10000;
