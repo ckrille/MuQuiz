@@ -9,7 +9,7 @@ public class StartController {
 
     @GetMapping("/")
     public String home() {
-        return "/start";
+        return "start";
     }
 
     @PostMapping("/start")
