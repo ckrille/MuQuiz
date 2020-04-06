@@ -20,9 +20,16 @@ public class QuizDataService {
     public QuizDataService() {
     }
 
+    public QuizData getNewestResult(){
+
+        QuizData quizData = quizDataRepository.findTop1ByOrderByCompletedQuizDesc();
+
+        return quizData;
+    }
+
     public List <QuizData> getHighScores(){
 
-        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findAllByOrderByTotalScoreDesc();
+        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findTop10ByOrderByTotalScoreDesc();
 
         return quizDataList;
     }
@@ -62,9 +69,9 @@ public class QuizDataService {
     }
 
     public void changeQuizPlayedBy(String quizPlayedBy) {
-        List<QuizData> quizData = (List<QuizData>) quizDataRepository.findFirstByOrderByCompletedQuizDesc();
-        quizData.get(0).setQuizPlayedBy(quizPlayedBy);
-        quizDataRepository.save(quizData.get(0));
+        QuizData quizData = quizDataRepository.findTop1ByOrderByCompletedQuizDesc();
+        quizData.setQuizPlayedBy(quizPlayedBy);
+        quizDataRepository.save(quizData);
     }
 
 

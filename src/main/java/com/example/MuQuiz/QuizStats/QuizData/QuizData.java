@@ -38,6 +38,10 @@ public class QuizData {
         this.quizPlayedBy = quizPlayedBy;
     }
 
+    public Long getCompletedQuiz() {
+        return completedQuiz;
+    }
+
     public void setCompletedQuiz(Long completedQuiz) {
         this.completedQuiz = completedQuiz;
     }

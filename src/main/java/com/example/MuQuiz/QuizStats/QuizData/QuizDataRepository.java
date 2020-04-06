@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface QuizDataRepository extends CrudRepository<QuizData,Long> {
 
-    public Iterable<QuizData> findFirstByOrderByCompletedQuizDesc();
+    public QuizData findTop1ByOrderByCompletedQuizDesc();
 
-    public Iterable<QuizData> findAllByOrderByTotalScoreDesc();
+    public Iterable<QuizData> findTop10ByOrderByTotalScoreDesc();
 }
