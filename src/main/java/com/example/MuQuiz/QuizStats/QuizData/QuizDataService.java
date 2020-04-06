@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class QuizDataService {
@@ -27,6 +28,13 @@ public class QuizDataService {
         return quizData;
     }
 
+    public QuizData getNewestResultOnSession(Long newPlayer){
+
+        QuizData quizData = quizDataRepository.findByCompletedQuiz(newPlayer);
+
+        return quizData;
+    }
+
     public List <QuizData> getHighScores(){
 
         List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findTop10ByOrderByTotalScoreDesc();
@@ -39,14 +47,7 @@ public class QuizDataService {
         QuestionsService questionsService = new QuestionsService();
 
         List<QsData> longList = (List<QsData>)qsDataRepository.findByQuizId(quizId);
-        System.out.println("*****");
-        System.out.println(longList.size());
-        System.out.println(longList.get(0).getAnswerAltOne());
-        System.out.println(longList.get(0).getAnswerAltTwo());
-        System.out.println(longList.get(0).getAnswerAltThree());
-        System.out.println(longList.get(0).getAnswerAltFour());
-        System.out.println(longList.get(0).getQuizId());
-        System.out.println("*****");
+
 
 
 
@@ -64,9 +65,20 @@ public class QuizDataService {
         return totalScore;
     }
 
+    public void saveIt(Long a){
+        QuizData quizData = new QuizData();
+        quizDataRepository.save(quizData);
+    }
+
     public void saveCompletedQuiz(Long quizId) {
         Integer totalScore = getTotalScoreOnQuizId(quizId);
-        quizDataRepository.save(new QuizData(totalScore, quizId));
+        Long uniqueQuizId = getUniqueQuizId();
+
+        QuizData quizData = quizDataRepository.findByCompletedQuiz(quizId);
+        quizData.setTotalScore(totalScore);
+        quizData.setQuizId(quizId);
+
+        quizDataRepository.save(quizData);
     }
 
     public void changeQuizPlayedBy(String quizPlayedBy) {
@@ -76,4 +88,15 @@ public class QuizDataService {
     }
 
 
+    public Long getUniqueQuizId() {
+        QuizData quizData = new QuizData();
+
+        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findAllByOrderByCompletedQuiz();
+        System.out.println("vad " +quizDataList.size());
+
+        //quizDataRepository.save(quizData);
+
+        return quizDataRepository.getNumOfPosts()+1;
+
+    }
 }

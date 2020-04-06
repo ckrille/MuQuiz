@@ -1,6 +1,7 @@
 package com.example.MuQuiz.questionsPage;
 
 
+import com.example.MuQuiz.QuizStats.QsData.QsData;
 import com.example.MuQuiz.QuizStats.QuizData.QuizDataService;
 import com.example.MuQuiz.QuizStats.QsData.QsDataService;
 import com.example.MuQuiz.QuizStats.QuizStats;
@@ -11,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class QuestionsController {
@@ -27,54 +30,76 @@ public class QuestionsController {
     @Autowired
     private QuizDataService quizDataService;
 
-    private int numOfQuestions = 0;
-    private Long quizId = 1L;
 
+    private Long quizId = 1L;
+    private int numOfQuestions;
+    public Long a;
 
     @GetMapping("/questions")
-    public String showStart(RestTemplate restTemplate, Model model) {
-        if (numOfQuestions == 2) {
+    public String showStart(HttpSession session, RestTemplate restTemplate, Model model) {
+        if(session.getAttribute("newPlayer") == null){
+            a = quizDataService.getUniqueQuizId();
+            quizDataService.saveIt(a);
             numOfQuestions = 0;
-            quizDataService.saveCompletedQuiz(quizId);
-            quizDataService.getCompleteQuiz(quizId);
+            int nyVariabel = 0;
+            session.setAttribute("newPlayer", a);
+            session.setAttribute("counter", nyVariabel);
+            System.out.println("NEWPLAYER FÅR VÄRDET " +a);
+        }
+        System.out.println("****");
+        System.out.println("****");
+        System.out.println("Vad är COUNTERN " +session.getAttribute("counter"));
+
+        if ((int)session.getAttribute("counter") == 4) {
+            numOfQuestions = 0;
+            quizDataService.saveCompletedQuiz((Long)session.getAttribute("newPlayer"));
+            System.out.println("SPARA på ID " +(Long)session.getAttribute("newPlayer"));
             quizId++;
             return "redirect:/results";
         }
         System.out.println("Counter: " + numOfQuestions);
-        if (numOfQuestions % 4 == 0) {
+        if ((int)session.getAttribute("counter") % 4 == 0) {
             questionsService = questionsService.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url", questionsService.getMovieList());
             model.addAttribute("score", highscore.getHighscore());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("correctId", questionsService.getCorrectAnswer());
-            numOfQuestions++;
+            int nyVariabel = (int)session.getAttribute("counter");
+            nyVariabel++;
+            session.setAttribute("counter",nyVariabel);
             return "questions";
         }
-        if (numOfQuestions % 4 == 1) {
+        if ((int)session.getAttribute("counter") % 4 == 1) {
             questionsService = questionsService.getWhatYearQuestion(restTemplate);
             model.addAttribute("url", questionsService.getMovieList().get(questionsService.getRandForQandA()).getPoster_path());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getMovieList());
             model.addAttribute("score", highscore.getHighscore());
-            numOfQuestions++;
+            int nyVariabel = (int)session.getAttribute("counter");
+            nyVariabel++;
+            session.setAttribute("counter",nyVariabel);
             return "questiontype1";
         }
-        if (numOfQuestions % 4 == 2) {
+        if ((int)session.getAttribute("counter") % 4 == 2) {
             questionsService = questionsService.getActorsInMovie(restTemplate);
             model.addAttribute("url", questionsService.getActorList());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getActorList());
-            numOfQuestions++;
+            int nyVariabel = (int)session.getAttribute("counter");
+            nyVariabel++;
+            session.setAttribute("counter",nyVariabel);
             return "questions";
         }
 
-        if (numOfQuestions % 4 == 3) {
+        if ((int)session.getAttribute("counter") % 4 == 3) {
             questionsService = questionsService.getCharacterQuestion(restTemplate);
             model.addAttribute("url", questionsService.getActorList().get(questionsService.getRandForQandA()).getProfile_path());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getActorList());
             model.addAttribute("score", highscore.getHighscore());
-            numOfQuestions++;
+            int nyVariabel = (int)session.getAttribute("counter");
+            nyVariabel++;
+            session.setAttribute("counter",nyVariabel);
             return "questiontype1";
         }
         return "questions";
@@ -82,7 +107,7 @@ public class QuestionsController {
 
 
     @PostMapping("/questions")
-    public String postShow(RestTemplate restTemplate, Model model, @RequestParam Long answer, Integer score) {
+    public String postShow(HttpSession session, RestTemplate restTemplate, Model model, @RequestParam Long answer, Integer score) {
 
 
         if (questionsService.getCorrectAnswer().equals(answer)) {
@@ -93,10 +118,10 @@ public class QuestionsController {
             highscore.setHighscore(currentScore);
 
             System.out.println("Highscore: " + highscore.getHighscore());
-            qsDataService.postQuestionsDataToDB(numOfQuestions, questionsService, answer, score, quizId);
+            qsDataService.postQuestionsDataToDB((int)session.getAttribute("counter"), questionsService, answer, score, (Long)session.getAttribute("newPlayer"));
         } else {
             System.err.println("Fel svar!");
-            qsDataService.postQuestionsDataToDB(numOfQuestions, questionsService, answer, quizId);
+            qsDataService.postQuestionsDataToDB((int)session.getAttribute("counter"), questionsService, answer, (Long)session.getAttribute("newPlayer"));
         }
 
 

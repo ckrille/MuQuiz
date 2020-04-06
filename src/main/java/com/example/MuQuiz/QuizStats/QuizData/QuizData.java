@@ -69,4 +69,6 @@ public class QuizData {
     public void setQuizPlayedBy(String quizPlayedBy) {
         this.quizPlayedBy = quizPlayedBy;
     }
+
+
 }
