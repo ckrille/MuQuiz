@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
-<!--    <meta charset="UTF-8">-->
+    <meta charset="UTF-8">
     <title>Questions</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!--    länken under förstör för navbaren-->
@@ -15,7 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--  egna css-->
     <link href="navbarFooter.css" rel="stylesheet" />
-
+    <link href="questiontype1.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -31,7 +31,7 @@
                 <span class="icon-bar"></span>
             </button>
             <!--            ikonbilden längst upp till vänster-->
-            <a class="navbar-brand" href="/"><img src="img/MoQuizLogo.png" alt="Image" height="60" width="70">
+            <a class="navbar-brand" href="/"><img src="img/MoQuizLogo.png" alt="Image" height="50" width="60">
             </a>
         </div>
         <div class="collapse navbar-collapse" id="navbar-collapse-main">
@@ -47,7 +47,7 @@
     </div>
 </nav>
 
-<div id="questiontype1">
+<div id="content">
     <h1>MoQuiz: <span th:text="${username}"></span></h1>
 
     <div id="countdown"></div>
@@ -71,8 +71,6 @@
         </div>
     </p>
 
-    <a href="/">Start</a>
-    <a href="/results">Results</a>
 </div>
 
 <footer class="container-fluid text-center">
