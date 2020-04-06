@@ -6,11 +6,14 @@
     display: table;
 }
 
-#svar {
-
-}
-h1 {
-    font-weight: 700;
+#content {
+    background: url(img/bakQ.jpg);
+    display: table;
+    height: 100%;
+    background-position: center center;
+    width: 100%;
+    background-size: cover;
+    background-attachment: fixed;
 }
 
 h1{
