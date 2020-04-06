@@ -8,6 +8,7 @@ import com.example.MuQuiz.ApiClasses.MoviesByActor.MoviesByActor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -52,7 +53,10 @@ public class QuestionsService {
         correctAnswer = actorList.get(randSort).getId();
         System.out.println("FACIT: " + actorList.get(randSort).getName());
 
-        questionsService.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(randSort).getTitle() + "?";
+        String date = actorsApiReceiver.getCast().get(randSort).getRelease_date();
+        Integer year = Integer.parseInt(date.substring(0,4));
+
+        questionsService.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(randSort).getTitle() + " ("+year+") " + "?";
         questionsService.correctAnswer = correctAnswer;
         questionsService.actorList = actorList;
         questionsService.typeQuestion = 1;
@@ -83,7 +87,7 @@ public class QuestionsService {
         correctAnswer = actorList.get(randForQandA).getId();
         System.out.println("FACIT: " + actorList.get(randForQandA).getCharacter());
 
-        questionsService.theQuestion = "What is the name of the character " + actorList.get(randForQandA).getName() + " plays in " + actorList.get(randForQandA).getTitle() + "?";
+        questionsService.theQuestion = "What is the name of the character " + actorList.get(randForQandA).getName() + " plays in " + actorList.get(randForQandA).getTitle() +" ("+actorList.get(randForQandA).getOrder()+")"+ " ?";
         questionsService.correctAnswer = correctAnswer;
         questionsService.actorList = actorList;
         questionsService.randForQandA = randForQandA;
