@@ -15,6 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--  egna css-->
     <link href="navbarFooter.css" rel="stylesheet" />
+    <link href="questions.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -46,37 +47,38 @@
     </div>
 </nav>
 
-<h1>MoQuiz <span th:text="${username}"></span></h1>
+<!--content-->
+<div id="content">
+    <h1>MoQuiz <span th:text="${username}"></span></h1>
 
-<div id="countdown"></div>
-<div th:text="${score}"></div>
-<p>Score:
-    <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
-    </meter>
-</p>
+    <div id="countdown"></div>
+    <div th:text="${score}"></div>
+
+    <p>Score:
+        <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
+        </meter>
+    </p>
 
 
-<form action="/questions" method="post">
-    <input type="submit" value="nästa">
-</form>
+    <form action="/questions" method="post">
+        <input type="submit" value="nästa">
+    </form>
 
-<a href="/questions">Questions</a>
-<a href="/results">Results</a>
-
-<i><span th:text="${overview}"></span></i>
-<p>
-<div style="display: flex; flex-direction: row">
-    <ul th:each="urlList,iter : ${url}">
-        <img th:if="${urlList.poster_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
-        <img th:if="${urlList.profile_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.profile_path}"></button>
-        <form action="/questions" method="post">
-            <button th:if="${urlList.poster_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.original_title}"></button>
-            <button th:if="${urlList.profile_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.name}"></button>
-            <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
-        </form>
-    </ul>
+    <i><span th:text="${overview}"></span></i>
+    <p>
+    <div style="display: flex; flex-direction: row">
+        <ul th:each="urlList,iter : ${url}">
+            <img th:if="${urlList.poster_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
+            <img th:if="${urlList.profile_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.profile_path}"></button>
+            <form action="/questions" method="post">
+                <button th:if="${urlList.poster_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.original_title}"></button>
+                <button th:if="${urlList.profile_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.name}"></button>
+                <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
+            </form>
+        </ul>
+    </div>
+    </p>
 </div>
-</p>
 
 <p>
 
