@@ -33,29 +33,28 @@ public class QuestionsController {
 
     private Long quizId = 1L;
     private int numOfQuestions;
-
+    public Long a;
 
     @GetMapping("/questions")
     public String showStart(HttpSession session, RestTemplate restTemplate, Model model) {
-    Long a = quizDataService.getUniqueQuizId();
         if(session.getAttribute("newPlayer") == null){
+            a = quizDataService.getUniqueQuizId();
+            quizDataService.saveIt(a);
             numOfQuestions = 0;
             int nyVariabel = 0;
             session.setAttribute("newPlayer", a);
             session.setAttribute("counter", nyVariabel);
             System.out.println("NEWPLAYER FÅR VÄRDET " +a);
-            quizDataService.saveIt(a);
         }
         System.out.println("****");
         System.out.println("****");
         System.out.println("Vad är COUNTERN " +session.getAttribute("counter"));
 
-        if ((int)session.getAttribute("counter") == 8) {
+        if ((int)session.getAttribute("counter") == 4) {
             numOfQuestions = 0;
             quizDataService.saveCompletedQuiz((Long)session.getAttribute("newPlayer"));
             System.out.println("SPARA på ID " +(Long)session.getAttribute("newPlayer"));
             quizId++;
-            session.setAttribute("newPlayer", null);
             return "redirect:/results";
         }
         System.out.println("Counter: " + numOfQuestions);
@@ -119,10 +118,10 @@ public class QuestionsController {
             highscore.setHighscore(currentScore);
 
             System.out.println("Highscore: " + highscore.getHighscore());
-            qsDataService.postQuestionsDataToDB(1, questionsService, answer, score, (Long)session.getAttribute("newPlayer"));
+            qsDataService.postQuestionsDataToDB((int)session.getAttribute("counter"), questionsService, answer, score, (Long)session.getAttribute("newPlayer"));
         } else {
             System.err.println("Fel svar!");
-            qsDataService.postQuestionsDataToDB(1, questionsService, answer, (Long)session.getAttribute("newPlayer"));
+            qsDataService.postQuestionsDataToDB((int)session.getAttribute("counter"), questionsService, answer, (Long)session.getAttribute("newPlayer"));
         }
 
 

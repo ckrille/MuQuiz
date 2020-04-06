@@ -19,4 +19,7 @@ public interface QuizDataRepository extends CrudRepository<QuizData,Long> {
     QuizData findByCompletedQuiz(Long uniqueQuizId);
 
  public Iterable<QuizData> findTop10ByOrderByTotalScoreDesc();
+
+ @Query("SELECT COUNT(*) FROM QuizData")
+ Long getNumOfPosts();
 }

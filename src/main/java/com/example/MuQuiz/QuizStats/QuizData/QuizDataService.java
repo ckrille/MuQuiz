@@ -28,6 +28,13 @@ public class QuizDataService {
         return quizData;
     }
 
+    public QuizData getNewestResultOnSession(Long newPlayer){
+
+        QuizData quizData = quizDataRepository.findByCompletedQuiz(newPlayer);
+
+        return quizData;
+    }
+
     public List <QuizData> getHighScores(){
 
         List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findTop10ByOrderByTotalScoreDesc();
@@ -89,7 +96,7 @@ public class QuizDataService {
 
         //quizDataRepository.save(quizData);
 
-        return quizDataList.size() == 0 ? 1L  : quizDataList.size() ;
+        return quizDataRepository.getNumOfPosts()+1;
 
     }
 }

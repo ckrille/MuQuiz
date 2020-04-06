@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -23,10 +24,11 @@ public class ResultsController {
     QuizDataService quizDataService;
 
     @GetMapping("/results")
-    public String showResults(Model model){
+    public String showResults(HttpSession session,Model model){
 
         List<QuizData> top10 = quizDataService.getHighScores();
         QuizData newestResult = quizDataService.getNewestResult();
+        QuizData lastResult = quizDataService.getNewestResultOnSession((Long)session.getAttribute("newPlayer"));
         Boolean gotHighscore = false;
 
         for(int i = 0; i < top10.size(); i++) {
@@ -39,7 +41,9 @@ public class ResultsController {
 
         model.addAttribute("highscore",quizDataService.getHighScores());
 
-        model.addAttribute("score",score.getHighscore());
+        model.addAttribute("score",lastResult.getTotalScore());
+
+        session.setAttribute("newPlayer", null);
 
         return "results";
     }
