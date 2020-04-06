@@ -70,7 +70,5 @@ public class QuizData {
         this.quizPlayedBy = quizPlayedBy;
     }
 
-    public Long getCompletedQuiz() {
-        return completedQuiz;
-    }
+
 }
