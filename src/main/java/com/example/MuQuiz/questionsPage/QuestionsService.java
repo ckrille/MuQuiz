@@ -101,17 +101,17 @@ public class QuestionsService {
 
         while (movieList.size() < 4) {
             Movie movie = apiService.getRandomMovie(restTemplate);
-            String year = movie.release_date.substring(0, 4);
-            movie.release_date = year;
+            String year = movie.getRelease_date().substring(0, 4);
+            movie.setRelease_date(year);
             int intYear = Integer.parseInt(year);
 
             if (movieList.size() == 0) {
                 movieList.add(movie);
-                firstYear = Integer.parseInt(movieList.get(0).release_date);
+                firstYear = Integer.parseInt(movieList.get(0).getRelease_date());
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).release_date.equals(movie.release_date) || Math.abs(intYear - firstYear) > 10) {
+                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).getRelease_date().equals(movie.getRelease_date()) || Math.abs(intYear - firstYear) > 10) {
                     isSame = true;
                     break;
                 } else {
@@ -144,15 +144,15 @@ public class QuestionsService {
 
         while (movieList.size() < 4) {
             Movie movie = apiService.getRandomMovie(restTemplate);
-            String year = movie.release_date.substring(0, 4);
-            movie.release_date = year;
+            String year = movie.getRelease_date().substring(0, 4);
+            movie.setRelease_date(year);
 
             if (movieList.size() == 0) {
                 movieList.add(movie);
             }
 
             for (int j = 0; j < movieList.size(); j++) {
-                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).release_date.equals(movie.release_date)) {
+                if (movieList.get(j).getTitle().equals(movie.getTitle()) || movieList.get(j).getRelease_date().equals(movie.getRelease_date())) {
                     isSame = true;
                     break;
                 } else {

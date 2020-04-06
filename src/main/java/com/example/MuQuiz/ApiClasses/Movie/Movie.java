@@ -17,7 +17,7 @@ public class Movie {
     private String title;
     private Double vote_average;
     private String overview;
-    public String release_date; //fungerade inte att get:a i oskars validering för year.
+    private String release_date;
     private String character;
     private String profile_path; //Is not a part of the original JSON. Added to make a null-check in "th:if"-html.
 
