@@ -52,7 +52,7 @@ public class QuestionsService {
         correctAnswer = actorList.get(randSort).getId();
         System.out.println("FACIT: " + actorList.get(randSort).getName());
 
-        questionsService.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(0).getTitle() + "?";
+        questionsService.theQuestion = "Which actor does not have a role in the movie " + actorsApiReceiver.getCast().get(randSort).getTitle() + "?";
         questionsService.correctAnswer = correctAnswer;
         questionsService.actorList = actorList;
         questionsService.typeQuestion = 1;
