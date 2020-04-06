@@ -65,4 +65,8 @@ public class QuizData {
     public void setQuizPlayedBy(String quizPlayedBy) {
         this.quizPlayedBy = quizPlayedBy;
     }
+
+    public Long getCompletedQuiz() {
+        return completedQuiz;
+    }
 }
