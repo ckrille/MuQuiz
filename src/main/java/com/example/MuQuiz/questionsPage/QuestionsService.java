@@ -87,7 +87,7 @@ public class QuestionsService {
         correctAnswer = actorList.get(randForQandA).getId();
         System.out.println("FACIT: " + actorList.get(randForQandA).getCharacter());
 
-        questionsService.theQuestion = "What is the name of the character " + actorList.get(randForQandA).getName() + " plays in " + actorList.get(randForQandA).getTitle() +" ("+actorList.get(randForQandA).getOrder()+")"+ " ?";
+        questionsService.theQuestion = "What is the name of the character " + actorList.get(randForQandA).getName() + " plays in " + actorList.get(randForQandA).getTitle() +" ("+actorList.get(randForQandA).getYear()+")"+ " ?";
         questionsService.correctAnswer = correctAnswer;
         questionsService.actorList = actorList;
         questionsService.randForQandA = randForQandA;
