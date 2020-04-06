@@ -66,13 +66,13 @@
 
     <i><span th:text="${overview}"></span></i>
     <p>
-    <div style="display: flex; flex-direction: row">
+    <div style="display: inline-flex;">
         <ul th:each="urlList,iter : ${url}">
             <img th:if="${urlList.poster_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.poster_path}"></button>
             <img th:if="${urlList.profile_path != null}" th:src="'https://image.tmdb.org/t/p/w200/' +${urlList.profile_path}"></button>
-            <form action="/questions" method="post">
-                <button th:if="${urlList.poster_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.original_title}"></button>
-                <button th:if="${urlList.profile_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.name}"></button>
+            <form action="/questions" method="post" style="padding-top: 5px;">
+                <button class="myButton" th:if="${urlList.poster_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.title}"></button>
+                <button class="myButton" th:if="${urlList.profile_path != null}" type="submit" th:value="${urlList.id}" name="answer" th:text="${urlList.name}"></button>
                 <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
             </form>
         </ul>
