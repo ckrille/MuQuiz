@@ -15,6 +15,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!--  egna css-->
     <link href="navbarFooter.css" rel="stylesheet" />
+    <link href="questiontype1.css" rel="stylesheet" />
 </head>
 <body>
 
@@ -46,8 +47,8 @@
     </div>
 </nav>
 
-<div id="questiontype1">
-    <h1>MoQuiz: <span th:text="${username}"></span></h1>
+<div id="content">
+    <h1>MoQuiz <span th:text="${username}"></span></h1>
 
     <div id="countdown"></div>
     <div th:text="${score}"></div>
@@ -58,20 +59,20 @@
 
     <i><span th:text="${overview}"></span></i>
     <p>
-        <div style="display: flex; flex-direction: row">
+        <div style="display: inline-flex;">
             <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
+            <br>
+            <p></p>
             <ul th:each="ans, iter : ${answer}">
                 <form action="/questions" method="post">
-                    <div th:if="${ans.release_date != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
-                    <div th:if="${ans.character != null}"> <button  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
+                    <div th:if="${ans.release_date != null}"> <button class="myButton"  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
+                    <div th:if="${ans.character != null}"> <button class="myButton"  type="submit" th:value="${ans.id}" th:text="${ans.character}"  name="answer"></button></div>
                     <input type="hidden" th:id="'score' +${iter.index}" name="score"/>
                 </form>
             </ul>
         </div>
     </p>
 
-    <a href="/">Start</a>
-    <a href="/results">Results</a>
 </div>
 
 <footer class="container-fluid text-center">

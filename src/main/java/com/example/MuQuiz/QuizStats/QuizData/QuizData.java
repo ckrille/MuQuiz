@@ -15,7 +15,7 @@ public class QuizData {
     private Long completedQuiz;
     private Integer totalScore;
     private Long quizId;
-    private String quizPlayedBy = "unknown";
+    private String quizPlayedBy = "";
 
 
     public QuizData() {
@@ -36,6 +36,10 @@ public class QuizData {
         this.totalScore = totalScore;
         this.quizId = quizId;
         this.quizPlayedBy = quizPlayedBy;
+    }
+
+    public Long getCompletedQuiz() {
+        return completedQuiz;
     }
 
     public void setCompletedQuiz(Long completedQuiz) {

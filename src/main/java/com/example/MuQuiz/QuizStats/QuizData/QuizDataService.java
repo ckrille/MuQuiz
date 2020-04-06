@@ -21,9 +21,17 @@ public class QuizDataService {
     public QuizDataService() {
     }
 
+    public QuizData getNewestResult(){
+
+        QuizData quizData = quizDataRepository.findTop1ByOrderByCompletedQuizDesc();
+
+        return quizData;
+    }
+
     public List <QuizData> getHighScores(){
 
-        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findAllByOrderByTotalScoreDesc();
+        List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findTop10ByOrderByTotalScoreDesc();
+
 
         return quizDataList;
     }
@@ -63,6 +71,12 @@ public class QuizDataService {
         quizData.setTotalScore(totalScore);
         quizData.setQuizId(quizId);
 
+        quizDataRepository.save(quizData);
+    }
+
+    public void changeQuizPlayedBy(String quizPlayedBy) {
+        QuizData quizData = quizDataRepository.findTop1ByOrderByCompletedQuizDesc();
+        quizData.setQuizPlayedBy(quizPlayedBy);
         quizDataRepository.save(quizData);
     }
 
