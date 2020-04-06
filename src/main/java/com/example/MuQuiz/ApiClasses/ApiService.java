@@ -76,6 +76,7 @@ public class ApiService {
             if(actorsApiReceiver.getCast().size() >= 2) {
                 actor = actorsApiReceiver.getCast().get(random);
                 actor.setTitle(result.getTitle());
+                actor.setYear(Integer.parseInt(result.getRelease_date().substring(0,4)));
                 if(actor.getName() != null
                         && actor.getName().length() >= 2
                         && actor.getCharacter() != null
@@ -100,6 +101,7 @@ public class ApiService {
             actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
             for (int i = 0; i < actorsApiReceiver.getCast().size(); i++) {
                 actorsApiReceiver.getCast().get(i).setTitle(movie.getTitle());
+                actorsApiReceiver.getCast().get(i).setRelease_date(movie.getRelease_date());
             }
             for(int i = 0; i < 4; i++) {
                 if (actorsApiReceiver.getCast().get(i).getName() != null

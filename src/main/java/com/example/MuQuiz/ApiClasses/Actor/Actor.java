@@ -13,6 +13,7 @@ public class Actor {
    private String profile_path;
    private String release_date;
    private String poster_path; //Is not a part of the original JSON. Added to make a null-check in "th:if"-html.
+    private int year;
 
     public Actor() {
     }
@@ -103,5 +104,13 @@ public class Actor {
 
     public void setPoster_path(String poster_path) {
         this.poster_path = poster_path;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 }
