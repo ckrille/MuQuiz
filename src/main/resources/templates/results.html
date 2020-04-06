@@ -49,12 +49,24 @@
 <!--content-->
 <div id="start">
     <div></div>
+
+
+
     <div class="landing-text">
+
+        <form th:if="${entered == false}" action="/results" method="POST">
+            <h1>Congratulations!</h1>
+            <h2> You made it to the top 10 list!</h2>
+            <input type="text" name="quizPlayedBy">
+            <br><input type="submit" value="Show my place!" class="button">
+        </form>
+        
+
         <h1>Your score</h1>
 
         <h1 th:text="${score}"></h1>
         <p></p>
-        <span>TEST HÄR UNDER</span>
+        <span>Highscore</span>
         <div th:each="highscorelist, iter : ${highscore}">
             <span th:text="${iter.index+1} +' ' + ${highscorelist.quizPlayedBy}"></span>
             <span th:text="${highscorelist.totalScore}"></span>

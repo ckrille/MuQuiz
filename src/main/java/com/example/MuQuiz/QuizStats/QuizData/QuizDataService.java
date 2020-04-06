@@ -61,5 +61,11 @@ public class QuizDataService {
         quizDataRepository.save(new QuizData(totalScore, quizId));
     }
 
+    public void changeQuizPlayedBy(String quizPlayedBy) {
+        List<QuizData> quizData = (List<QuizData>) quizDataRepository.findFirstByOrderByCompletedQuizDesc();
+        quizData.get(0).setQuizPlayedBy(quizPlayedBy);
+        quizDataRepository.save(quizData.get(0));
+    }
+
 
 }
