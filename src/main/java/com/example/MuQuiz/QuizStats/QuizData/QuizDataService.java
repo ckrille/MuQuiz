@@ -31,6 +31,7 @@ public class QuizDataService {
 
         List<QuizData> quizDataList = (List<QuizData>) quizDataRepository.findTop10ByOrderByTotalScoreDesc();
 
+
         return quizDataList;
     }
 

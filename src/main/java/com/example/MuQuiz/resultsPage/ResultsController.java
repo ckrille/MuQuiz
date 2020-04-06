@@ -27,15 +27,15 @@ public class ResultsController {
 
         List<QuizData> top10 = quizDataService.getHighScores();
         QuizData newestResult = quizDataService.getNewestResult();
-        Boolean gotHighscore = true;
+        Boolean gotHighscore = false;
 
         for(int i = 0; i < top10.size(); i++) {
             if(top10.get(i).getCompletedQuiz() == newestResult.getCompletedQuiz()) {
-                gotHighscore = false;
+                gotHighscore = true;
             }
         }
 
-        model.addAttribute("entered", gotHighscore);
+        model.addAttribute("gotHighscore", gotHighscore);
 
         model.addAttribute("highscore",quizDataService.getHighScores());
 
@@ -47,6 +47,9 @@ public class ResultsController {
     @PostMapping("/results")
     public String showResultsWithNewHighscore(Model model, @RequestParam String quizPlayedBy){
 
+       if(quizPlayedBy.equals("")) {
+           quizPlayedBy = "Anonymous";
+       }
         quizDataService.changeQuizPlayedBy(quizPlayedBy);
 
         model.addAttribute("entered", true);
