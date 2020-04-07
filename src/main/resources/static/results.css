@@ -1,0 +1,27 @@
+#start {
+    background: url(img/test5.jpg);
+    width: 100%;
+    padding: 100px;
+    display: table;
+    height: 100%;
+    background-position: center center;
+    background-
+    background-size: cover;
+    background-attachment: fixed;
+}
+.landing-text {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    padding: 90px 0 200px;
+    height: 100%;
+    color: #D5D5D5;
+}
+
+.landing-text h1{
+     font-family: Georgia, sans-serif;
+     font-size: 5em;
+     letter-spacing: -2px;
+     font-weight: 900;
+     color: #047364;
+}
