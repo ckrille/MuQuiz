@@ -41,9 +41,9 @@ public class QuestionsController {
             a = quizDataService.getUniqueQuizId();
             quizDataService.saveIt(a);
             numOfQuestions = 0;
-            int nyVariabel = 0;
+            int questionCount = 0;
             session.setAttribute("newPlayer", a);
-            session.setAttribute("counter", nyVariabel);
+            session.setAttribute("counter", questionCount);
             System.out.println("NEWPLAYER FÅR VÄRDET " +a);
         }
         System.out.println("****");
@@ -64,9 +64,10 @@ public class QuestionsController {
             model.addAttribute("score", highscore.getHighscore());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("correctId", questionsService.getCorrectAnswer());
-            int nyVariabel = (int)session.getAttribute("counter");
-            nyVariabel++;
-            session.setAttribute("counter",nyVariabel);
+            int questionCount = (int)session.getAttribute("counter");
+            questionCount++;
+            session.setAttribute("counter",questionCount);
+            model.addAttribute("counter", session.getAttribute("counter"));
             return "questions";
         }
         if ((int)session.getAttribute("counter") % 4 == 1) {
@@ -75,9 +76,10 @@ public class QuestionsController {
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getMovieList());
             model.addAttribute("score", highscore.getHighscore());
-            int nyVariabel = (int)session.getAttribute("counter");
-            nyVariabel++;
-            session.setAttribute("counter",nyVariabel);
+            int questionCount = (int)session.getAttribute("counter");
+            questionCount++;
+            session.setAttribute("counter",questionCount);
+            model.addAttribute("counter", session.getAttribute("counter"));
             return "questiontype1";
         }
         if ((int)session.getAttribute("counter") % 4 == 2) {
@@ -86,9 +88,10 @@ public class QuestionsController {
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getActorList());
             model.addAttribute("score", highscore.getHighscore());
-            int nyVariabel = (int)session.getAttribute("counter");
-            nyVariabel++;
-            session.setAttribute("counter",nyVariabel);
+            int questionCount = (int)session.getAttribute("counter");
+            questionCount++;
+            session.setAttribute("counter",questionCount);
+            model.addAttribute("counter", session.getAttribute("counter"));
             return "questions";
         }
 
@@ -98,9 +101,10 @@ public class QuestionsController {
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getActorList());
             model.addAttribute("score", highscore.getHighscore());
-            int nyVariabel = (int)session.getAttribute("counter");
-            nyVariabel++;
-            session.setAttribute("counter",nyVariabel);
+            int questionCount = (int)session.getAttribute("counter");
+            questionCount++;
+            session.setAttribute("counter",questionCount);
+            model.addAttribute("counter", session.getAttribute("counter"));
             return "questiontype1";
         }
         return "questions";

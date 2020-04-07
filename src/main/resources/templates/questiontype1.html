@@ -49,6 +49,7 @@
 
 <div id="content">
     <h1>MoQuiz <span th:text="${username}"></span></h1>
+    <h2 th:text="'Question ' + ${counter} + '/8'"></h2>
 
     <div id="countdown"></div>
     <div th:text="${score}"></div>
