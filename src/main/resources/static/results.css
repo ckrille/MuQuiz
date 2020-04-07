@@ -1,5 +1,5 @@
 #start {
-    background: url(img/test5.jpg);
+    background-color: f1f1f1;
     width: 100%;
     padding: 100px;
     display: table;
@@ -9,6 +9,9 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+body {background-color: #f1f1f1;}
+
 .landing-text {
     display: table-cell;
     text-align: center;
