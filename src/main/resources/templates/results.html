@@ -62,7 +62,7 @@
         <h1>Your score</h1>
         <h1 th:text="${score}"></h1>
         <p></p>
-        <span>Highscore</span>
+        <h3>Highscore</h3>
         <div th:each="highscorelist, iter : ${highscore}">
             <span th:if="${highscorelist.totalScore != null}" th:text="${iter.index+1} +' ' + ${highscorelist.quizPlayedBy}"></span>
             <span th:if="${highscorelist.totalScore != null}" th:text="${highscorelist.totalScore}"></span>
