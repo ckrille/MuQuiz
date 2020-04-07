@@ -59,10 +59,14 @@
 
     <i><span th:text="'Question ' + ${counter} + '/8'"></span></i>
     <p>
-        <div style="display: inline-flex;">
+        <div align="center" style="display: inline-flex;">
             <img class="myFrame" th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
             <br>
             <p></p>
+        </div>
+    </p>
+    <p>
+        <div style="display: inline-flex;">
             <ul th:each="ans, iter : ${answer}">
                 <form action="/questions" method="post">
                     <div th:if="${ans.release_date != null}"> <button class="myButton"  type="submit" th:value="${ans.id}" th:text="${ans.release_date}"  name="answer"></button></div>
