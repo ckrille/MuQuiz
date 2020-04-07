@@ -60,7 +60,7 @@
     <i><span th:text="${overview}"></span></i>
     <p>
         <div style="display: inline-flex;">
-            <img th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
+            <img class="myFrame" th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
             <br>
             <p></p>
             <ul th:each="ans, iter : ${answer}">
