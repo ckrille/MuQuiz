@@ -81,8 +81,10 @@ public class QuizDataService {
         quizDataRepository.save(quizData);
     }
 
-    public void changeQuizPlayedBy(String quizPlayedBy) {
-        QuizData quizData = quizDataRepository.findTop1ByOrderByCompletedQuizDesc();
+    public void changeQuizPlayedBy(Long newPlayer, String quizPlayedBy) {
+
+        QuizData quizData = quizDataRepository.findByCompletedQuiz(newPlayer);
+
         quizData.setQuizPlayedBy(quizPlayedBy);
         quizDataRepository.save(quizData);
     }

@@ -26,13 +26,18 @@ public class ResultsController {
     @GetMapping("/results")
     public String showResults(HttpSession session,Model model){
 
+        if(session.getAttribute("newPlayer")==null){
+            model.addAttribute("highscore",quizDataService.getHighScores());
+        }
+        else{
+
+
         List<QuizData> top10 = quizDataService.getHighScores();
-        QuizData newestResult = quizDataService.getNewestResult();
-        QuizData lastResult = quizDataService.getNewestResultOnSession((Long)session.getAttribute("newPlayer"));
+        QuizData newestResultOnSession = quizDataService.getNewestResultOnSession((Long)session.getAttribute("newPlayer"));
         Boolean gotHighscore = false;
 
         for(int i = 0; i < top10.size(); i++) {
-            if(top10.get(i).getCompletedQuiz() == newestResult.getCompletedQuiz()) {
+            if(top10.get(i).getCompletedQuiz() == newestResultOnSession.getCompletedQuiz()) {
                 gotHighscore = true;
             }
         }
@@ -41,25 +46,31 @@ public class ResultsController {
 
         model.addAttribute("highscore",quizDataService.getHighScores());
 
-        model.addAttribute("score",lastResult.getTotalScore());
+        model.addAttribute("score",newestResultOnSession.getTotalScore());
 
-        session.setAttribute("newPlayer", null);
-
+        if(gotHighscore==false){
+            session.setAttribute("newPlayer", null);
+        }
+        }
         return "results";
     }
 
     @PostMapping("/results")
-    public String showResultsWithNewHighscore(Model model, @RequestParam String quizPlayedBy){
+    public String showResultsWithNewHighscore(HttpSession session, Model model, @RequestParam String quizPlayedBy){
 
        if(quizPlayedBy.equals("")) {
            quizPlayedBy = "Anonymous";
        }
-        quizDataService.changeQuizPlayedBy(quizPlayedBy);
+        QuizData newestResultOnSession = quizDataService.getNewestResultOnSession((Long)session.getAttribute("newPlayer"));
+
+        quizDataService.changeQuizPlayedBy((Long)session.getAttribute("newPlayer"),quizPlayedBy);
 
         model.addAttribute("entered", true);
         model.addAttribute("highscore",quizDataService.getHighScores());
 
-        model.addAttribute("score",score.getHighscore());
+        model.addAttribute("score",newestResultOnSession.getTotalScore());
+
+        session.setAttribute("newPlayer", null);
 
         return "results";
     }

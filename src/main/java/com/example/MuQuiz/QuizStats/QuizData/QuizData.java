@@ -15,7 +15,7 @@ public class QuizData {
     private Long completedQuiz;
     private Integer totalScore;
     private Long quizId;
-    private String quizPlayedBy = "";
+    private String quizPlayedBy = "Anonymous";
 
 
     public QuizData() {
