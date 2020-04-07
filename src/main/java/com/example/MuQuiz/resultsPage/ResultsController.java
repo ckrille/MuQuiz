@@ -75,6 +75,14 @@ public class ResultsController {
         return "results";
     }
 
+    @GetMapping("/highscore")
+    public String showHighScore(HttpSession session,Model model){
+
+            model.addAttribute("highscore",quizDataService.getHighScores());
+
+        return "highscore";
+    }
+
    /* @PostMapping("/results")
     public String clearResults(){
         
