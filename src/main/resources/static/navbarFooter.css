@@ -6,8 +6,13 @@ html, body {
 .navbar {
     background-color: #047364;
     padding: 1% 0;
-    font-size: 1,2em;
+    font-size: 2em;
     border-bottom-width: 0px;
+
+}
+
+.collapse {
+    font-family: Comic Sans MS, cursive, sans-serif
 }
 
 .navbar-brand {
