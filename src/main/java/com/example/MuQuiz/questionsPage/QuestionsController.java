@@ -85,6 +85,7 @@ public class QuestionsController {
             model.addAttribute("url", questionsService.getActorList());
             model.addAttribute("overview", questionsService.getTheQuestion());
             model.addAttribute("answer", questionsService.getActorList());
+            model.addAttribute("score", highscore.getHighscore());
             int nyVariabel = (int)session.getAttribute("counter");
             nyVariabel++;
             session.setAttribute("counter",nyVariabel);
