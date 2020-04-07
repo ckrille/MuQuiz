@@ -55,6 +55,11 @@ public class ApiService {
                 randomMovieNull = false;
             }
 
+            // This if is to stop certain movies that are not appropriate.
+            if(movie.getId() == 86331) {
+                randomMovieNull = true;
+            }
+
         }
         return movie;
     }

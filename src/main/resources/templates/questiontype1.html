@@ -48,17 +48,16 @@
 </nav>
 
 <div id="content">
-    <h1>MoQuiz <span th:text="${username}"></span></h1>
-    <h2 th:text="'Question ' + ${counter} + '/8'"></h2>
+    <h2 th:text="${overview}"></h2>
 
     <div id="countdown"></div>
-    <div th:text="${score}"></div>
-    <p>Score:
+    <p>
         <meter id="myMeter" min="0" low="1000" high="9500" max="10000" value="10000">
         </meter>
     </p>
+    <!--<div th:text="${score}"></div><br>-->
 
-    <i><span th:text="${overview}"></span></i>
+    <i><span th:text="'Question ' + ${counter} + '/8'"></span></i>
     <p>
         <div style="display: inline-flex;">
             <img class="myFrame" th:src="'https://image.tmdb.org/t/p/w200/' +${url}">
