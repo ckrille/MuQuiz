@@ -74,19 +74,20 @@ public class ApiService {
         Random rand = new Random();
         int random = rand.nextInt(2);
 
-        Movie result = getRandomMovie(restTemplate);
+        Movie movie = getRandomMovie(restTemplate);
 
-        ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + result.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
+        ActorsApiReceiver actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);
 
             if(actorsApiReceiver.getCast().size() >= 2) {
                 actor = actorsApiReceiver.getCast().get(random);
-                actor.setTitle(result.getTitle());
-                actor.setYear(Integer.parseInt(result.getRelease_date().substring(0,4)));
+                actor.setTitle(movie.getTitle());
+                actor.setYear(Integer.parseInt(movie.getRelease_date().substring(0,4)));
                 if(actor.getName() != null
                         && actor.getName().length() >= 2
                         && actor.getCharacter() != null
                         && actor.getCharacter().length() >= 2
-                        && actor.getProfile_path() != null) {
+                        && actor.getProfile_path() != null
+                        && actor.getGender() >= 0) {
                     randomCharacterNull = false;
                 }
             }
@@ -101,6 +102,7 @@ public class ApiService {
         boolean randomCharactersNull = true;
         int approvedCharacters = 0;
 
+        //Validering för att se att filmen har 4 karaktärer med bild namn ect.
         while(randomCharactersNull) {
             Movie movie = getRandomMovie(restTemplate);
             actorsApiReceiver = restTemplate.getForObject("https://api.themoviedb.org/3/movie/" + movie.getId() + "/credits?api_key=31a12b6ca6c283fb200e5129823f37de&language=en-US", ActorsApiReceiver.class);

@@ -64,6 +64,37 @@ public class QuestionsService {
         return questionsService;
     }
 
+    public QuestionsService getActorInMovie(RestTemplate restTemplate) {
+        QuestionsService questionsService = new QuestionsService();
+        List<Actor> actorList = new ArrayList<>();
+        Random rand = new Random();
+        ApiService apiService = new ApiService();
+
+        Actor Answer = apiService.getRandomMovieCharacter(restTemplate);
+        actorList.add(Answer);
+
+        while (actorList.size()<4) {
+            Actor ranAct = apiService.getRandomMovieCharacter(restTemplate);
+            System.out.println(ranAct.getGender()+" "+ranAct.getName());
+            if (ranAct.getGender() == Answer.getGender())
+                actorList.add(ranAct);
+        }
+
+        int randSort = rand.nextInt(3);
+
+        correctAnswer = actorList.get(randSort).getId();
+        System.out.println("FACIT: " + actorList.get(randSort).getName());
+
+
+        questionsService.theQuestion = "Which actor plays " +actorList.get(randSort).getCharacter()+" in the movie "+ actorList.get(randSort).getTitle()+ "?";
+        questionsService.correctAnswer = correctAnswer;
+        questionsService.actorList = actorList;
+        questionsService.typeQuestion = 5;
+
+        return questionsService;
+    }
+
+
     public QuestionsService getCharacterQuestion(RestTemplate restTemplate) {
         QuestionsService questionsService = new QuestionsService();
         List<Actor> actorList = new ArrayList<>();

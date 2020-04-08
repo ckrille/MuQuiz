@@ -49,16 +49,34 @@ public class QuestionsController {
         System.out.println("****");
         System.out.println("****");
         System.out.println("Vad är COUNTERN " +session.getAttribute("counter"));
+        System.out.println("Counter: " + numOfQuestions);
 
-        if ((int)session.getAttribute("counter") == 4) {
+
+
+        if ((int)session.getAttribute("counter") == 8) {
             numOfQuestions = 0;
             quizDataService.saveCompletedQuiz((Long)session.getAttribute("newPlayer"));
             System.out.println("SPARA på ID " +(Long)session.getAttribute("newPlayer"));
             quizId++;
             return "redirect:/results";
         }
-        System.out.println("Counter: " + numOfQuestions);
-        if ((int)session.getAttribute("counter") % 4 == 0) {
+
+        if ((int)session.getAttribute("counter") % 5 == 0) {
+            questionsService = questionsService.getActorInMovie(restTemplate);
+            model.addAttribute("url", questionsService.getActorList());
+            model.addAttribute("overview", questionsService.getTheQuestion());
+            model.addAttribute("answer", questionsService.getActorList());
+            model.addAttribute("score", highscore.getHighscore());
+            int questionCount = (int)session.getAttribute("counter");
+            questionCount++;
+            session.setAttribute("counter",questionCount);
+            model.addAttribute("counter", session.getAttribute("counter"));
+            return "questions";
+        }
+
+
+
+        if ((int)session.getAttribute("counter") % 5 == 1) {
             questionsService = questionsService.getYearForMovieQuestion(restTemplate);
             model.addAttribute("url", questionsService.getMovieList());
             model.addAttribute("score", highscore.getHighscore());
@@ -70,7 +88,8 @@ public class QuestionsController {
             model.addAttribute("counter", session.getAttribute("counter"));
             return "questions";
         }
-        if ((int)session.getAttribute("counter") % 4 == 1) {
+
+        if ((int)session.getAttribute("counter") % 5 == 2) {
             questionsService = questionsService.getWhatYearQuestion(restTemplate);
             model.addAttribute("url", questionsService.getMovieList().get(questionsService.getRandForQandA()).getPoster_path());
             model.addAttribute("overview", questionsService.getTheQuestion());
@@ -82,7 +101,7 @@ public class QuestionsController {
             model.addAttribute("counter", session.getAttribute("counter"));
             return "questiontype1";
         }
-        if ((int)session.getAttribute("counter") % 4 == 2) {
+        if ((int)session.getAttribute("counter") % 5 == 3) {
             questionsService = questionsService.getActorsInMovie(restTemplate);
             model.addAttribute("url", questionsService.getActorList());
             model.addAttribute("overview", questionsService.getTheQuestion());
@@ -95,7 +114,9 @@ public class QuestionsController {
             return "questions";
         }
 
-        if ((int)session.getAttribute("counter") % 4 == 3) {
+
+
+        if ((int)session.getAttribute("counter") % 5 == 4) {
             questionsService = questionsService.getCharacterQuestion(restTemplate);
             model.addAttribute("url", questionsService.getActorList().get(questionsService.getRandForQandA()).getProfile_path());
             model.addAttribute("overview", questionsService.getTheQuestion());
