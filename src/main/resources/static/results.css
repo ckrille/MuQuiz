@@ -1,16 +1,12 @@
 #start {
-    background-color: f1f1f1;
-    width: 100%;
-    padding: 100px;
+    background: url(img/res1.jpg);
     display: table;
     height: 100%;
     background-position: center center;
-    background-
+    width: 100%;
     background-size: cover;
     background-attachment: fixed;
 }
-
-body {background-color: #171111;}
 
 .landing-text {
     display: table-cell;
