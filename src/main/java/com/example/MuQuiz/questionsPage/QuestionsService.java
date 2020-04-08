@@ -73,10 +73,21 @@ public class QuestionsService {
         Actor Answer = apiService.getRandomMovieCharacter(restTemplate);
         actorList.add(Answer);
 
+        boolean isSame = false;
         while (actorList.size()<4) {
             Actor ranAct = apiService.getRandomMovieCharacter(restTemplate);
             System.out.println(ranAct.getGender()+" "+ranAct.getName());
-            if (ranAct.getGender() == Answer.getGender())
+
+            for (int i = 0; i<actorList.size(); i++){
+                if (ranAct.getGender() != Answer.getGender() || ranAct.getName().equals(actorList.get(i).getName())) {
+                    isSame = true;
+                    break;
+                }
+                else {
+                    isSame = false;
+                }
+            }
+            if (!isSame)
                 actorList.add(ranAct);
         }
 
